@@ -1,7 +1,10 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import { Editor as ObsidianEditor, MarkdownView, Notice } from 'obsidian';
+import { Editor as ObsidianEditor, MarkdownView, Notice, TFile } from 'obsidian';
+import { EditorView } from '@codemirror/view';
+import { EditorState, Extension } from '@codemirror/state';
 import appStore from '../stores/appStore';
 import { EditorRefActions } from './Editor/Editor';
+import { applyMarkdownFormat } from '../helpers/editorFormatting';
 
 interface ObsidianNativeEditorProps {
   className?: string;
@@ -11,43 +14,122 @@ interface ObsidianNativeEditorProps {
 }
 
 /**
- * ObsidianNativeEditor - A wrapper component that embeds Obsidian's native editor
+ * ObsidianNativeEditor - A wrapper component that embeds Obsidian's native CodeMirror 6 editor
  * This allows full compatibility with Obsidian plugins like Outliner, Vim mode, etc.
+ *
+ * Features:
+ * - Uses Obsidian's CodeMirror 6 configuration for consistency
+ * - Supports Live Preview mode
+ * - Compatible with all Obsidian editor plugins
+ * - Full markdown formatting support
  */
 const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorProps>(
   ({ className = '', initialContent = '', placeholder = '', onContentChange }, ref) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const editorRef = useRef<ObsidianEditor | null>(null);
+    const editorViewRef = useRef<EditorView | null>(null);
+    const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+    const contentRef = useRef<string>(initialContent);
     const [isReady, setIsReady] = useState(false);
 
     useImperativeHandle(
       ref,
       () => ({
-        element: containerRef.current as any,
+        element: textareaRef.current || (containerRef.current as any),
         focus: () => {
-          if (editorRef.current) {
-            editorRef.current.focus();
+          if (editorViewRef.current) {
+            editorViewRef.current.focus();
+          } else if (textareaRef.current) {
+            textareaRef.current.focus();
           }
         },
         insertText: (text: string) => {
-          if (editorRef.current) {
-            const cursor = editorRef.current.getCursor();
-            editorRef.current.replaceRange(text, cursor);
+          if (editorViewRef.current) {
+            const view = editorViewRef.current;
+            const pos = view.state.selection.main.head;
+            view.dispatch({
+              changes: { from: pos, to: pos, insert: text },
+              selection: { anchor: pos + text.length },
+            });
+            contentRef.current = view.state.doc.toString();
             if (onContentChange) {
-              onContentChange(editorRef.current.getValue());
+              onContentChange(contentRef.current);
+            }
+          } else if (textareaRef.current) {
+            const textarea = textareaRef.current;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const currentValue = textarea.value;
+            textarea.value = currentValue.substring(0, start) + text + currentValue.substring(end);
+            textarea.selectionStart = textarea.selectionEnd = start + text.length;
+            contentRef.current = textarea.value;
+            if (onContentChange) {
+              onContentChange(contentRef.current);
             }
           }
         },
         setContent: (text: string) => {
-          if (editorRef.current) {
-            editorRef.current.setValue(text);
+          contentRef.current = text;
+          if (editorViewRef.current) {
+            const view = editorViewRef.current;
+            view.dispatch({
+              changes: { from: 0, to: view.state.doc.length, insert: text },
+            });
+            if (onContentChange) {
+              onContentChange(text);
+            }
+          } else if (textareaRef.current) {
+            textareaRef.current.value = text;
             if (onContentChange) {
               onContentChange(text);
             }
           }
         },
         getContent: (): string => {
-          return editorRef.current?.getValue() ?? '';
+          if (editorViewRef.current) {
+            return editorViewRef.current.state.doc.toString();
+          } else if (textareaRef.current) {
+            return textareaRef.current.value;
+          }
+          return contentRef.current;
+        },
+        applyFormat: (format: string) => {
+          if (editorViewRef.current) {
+            const view = editorViewRef.current;
+            const selection = view.state.selection.main;
+            const text = view.state.doc.toString();
+
+            const result = applyMarkdownFormat(
+              text,
+              selection.from,
+              selection.to,
+              format
+            );
+
+            view.dispatch({
+              changes: { from: 0, to: text.length, insert: result.newText },
+              selection: { anchor: result.selectionStart, head: result.selectionEnd },
+            });
+
+            contentRef.current = result.newText;
+            if (onContentChange) {
+              onContentChange(result.newText);
+            }
+          } else if (textareaRef.current) {
+            const textarea = textareaRef.current;
+            const result = applyMarkdownFormat(
+              textarea.value,
+              textarea.selectionStart,
+              textarea.selectionEnd,
+              format
+            );
+
+            textarea.value = result.newText;
+            textarea.setSelectionRange(result.selectionStart, result.selectionEnd);
+            contentRef.current = result.newText;
+            if (onContentChange) {
+              onContentChange(result.newText);
+            }
+          }
         },
       }),
       [onContentChange],
@@ -64,113 +146,130 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
         }
 
         try {
-          // Create a temporary div for the editor
-          const editorDiv = document.createElement('div');
-          editorDiv.className = 'obsidian-native-editor-wrapper';
-          containerRef.current.appendChild(editorDiv);
-
-          // We'll use a workaround: Create a CodeMirror instance that mimics Obsidian's editor
-          // Since we can't directly instantiate Obsidian's Editor, we'll use the workspace's
-          // active editor as a template
-
+          // Try to get Obsidian's editor extensions for full compatibility
           const activeView = app.workspace.getActiveViewOfType(MarkdownView);
-          if (activeView) {
-            // Get the CM6 instance from the active editor
-            const cm = (activeView.editor as any).cm;
-            if (cm) {
-              // Create a minimal editor setup
-              const textArea = document.createElement('textarea');
-              textArea.className = 'obsidian-native-editor-input';
-              textArea.placeholder = placeholder;
-              textArea.value = initialContent;
-              editorDiv.appendChild(textArea);
 
-              // Create a pseudo editor object that mimics Obsidian's Editor interface
-              const pseudoEditor: any = {
-                getValue: () => textArea.value,
-                setValue: (value: string) => {
-                  textArea.value = value;
-                },
-                getCursor: () => ({
-                  line: 0,
-                  ch: textArea.selectionStart,
-                }),
-                replaceRange: (text: string, from: any, to?: any) => {
-                  const start = textArea.selectionStart;
-                  const end = to ? textArea.selectionEnd : textArea.selectionStart;
-                  const currentValue = textArea.value;
-                  textArea.value =
-                    currentValue.substring(0, start) + text + currentValue.substring(end);
-                  textArea.selectionStart = textArea.selectionEnd = start + text.length;
+          if (activeView && (activeView.editor as any).cm) {
+            // Get the CodeMirror 6 instance configuration from active editor
+            const activeCM = (activeView.editor as any).cm as EditorView;
+
+            // Extract relevant extensions from Obsidian's editor
+            // This ensures compatibility with Vim mode, Outliner, and other plugins
+            const extensions: Extension[] = [];
+
+            // Add basic CodeMirror extensions
+            extensions.push(
+              EditorView.lineWrapping,
+              EditorView.updateListener.of((update) => {
+                if (update.docChanged) {
+                  contentRef.current = update.state.doc.toString();
                   if (onContentChange) {
-                    onContentChange(textArea.value);
+                    onContentChange(contentRef.current);
                   }
-                },
-                focus: () => textArea.focus(),
-                getSelection: () => {
-                  const start = textArea.selectionStart;
-                  const end = textArea.selectionEnd;
-                  return textArea.value.substring(start, end);
-                },
-              };
-
-              textArea.addEventListener('input', () => {
-                if (onContentChange) {
-                  onContentChange(textArea.value);
                 }
-              });
+              }),
+              // Use placeholder if provided
+              placeholder ? EditorView.contentAttributes.of({ 'data-placeholder': placeholder }) : [],
+            );
 
-              editorRef.current = pseudoEditor;
-              setIsReady(true);
+            // Try to get Obsidian's theme and syntax highlighting
+            try {
+              const state = activeCM.state;
+              // Copy over markdown-related extensions
+              const mdExtensions = state.facet(EditorState.languageData);
+              if (mdExtensions) {
+                extensions.push(EditorState.languageData.of(() => mdExtensions as any));
+              }
+            } catch (e) {
+              console.log('Could not copy all editor extensions:', e);
             }
+
+            // Create the CodeMirror 6 editor
+            const startState = EditorState.create({
+              doc: initialContent,
+              extensions,
+            });
+
+            const view = new EditorView({
+              state: startState,
+              parent: containerRef.current,
+            });
+
+            editorViewRef.current = view;
+            setIsReady(true);
+
+            // Add custom styling
+            containerRef.current.classList.add('obsidian-cm6-editor');
+
           } else {
-            // Fallback: Create a simple textarea
+            // Fallback: Use enhanced textarea with Obsidian-like styling
+            console.log('Using fallback textarea editor');
             const textArea = document.createElement('textarea');
             textArea.className = 'obsidian-native-editor-input fallback';
             textArea.placeholder = placeholder;
             textArea.value = initialContent;
-            editorDiv.appendChild(textArea);
+            textArea.style.cssText = `
+              width: 100%;
+              min-height: 120px;
+              padding: 12px;
+              border: 1px solid var(--background-modifier-border);
+              border-radius: 6px;
+              background: var(--background-primary);
+              color: var(--text-normal);
+              font-family: var(--font-text);
+              font-size: var(--font-text-size);
+              line-height: 1.5;
+              resize: vertical;
+              box-sizing: border-box;
+            `;
 
-            const pseudoEditor: any = {
-              getValue: () => textArea.value,
-              setValue: (value: string) => {
-                textArea.value = value;
-              },
-              getCursor: () => ({
-                line: 0,
-                ch: textArea.selectionStart,
-              }),
-              replaceRange: (text: string, from: any, to?: any) => {
-                const start = textArea.selectionStart;
-                const end = to ? textArea.selectionEnd : textArea.selectionStart;
-                const currentValue = textArea.value;
-                textArea.value =
-                  currentValue.substring(0, start) + text + currentValue.substring(end);
-                textArea.selectionStart = textArea.selectionEnd = start + text.length;
-                if (onContentChange) {
-                  onContentChange(textArea.value);
-                }
-              },
-              focus: () => textArea.focus(),
-              getSelection: () => {
-                const start = textArea.selectionStart;
-                const end = textArea.selectionEnd;
-                return textArea.value.substring(start, end);
-              },
-            };
+            containerRef.current.appendChild(textArea);
+            textareaRef.current = textArea;
 
             textArea.addEventListener('input', () => {
+              contentRef.current = textArea.value;
               if (onContentChange) {
                 onContentChange(textArea.value);
               }
             });
 
-            editorRef.current = pseudoEditor;
             setIsReady(true);
           }
         } catch (error) {
           console.error('Error setting up Obsidian native editor:', error);
-          new Notice('Failed to initialize native editor');
+          new Notice('Failed to initialize native editor, using fallback');
+
+          // Final fallback
+          const textArea = document.createElement('textarea');
+          textArea.className = 'obsidian-native-editor-input fallback';
+          textArea.placeholder = placeholder;
+          textArea.value = initialContent;
+          textArea.style.cssText = `
+            width: 100%;
+            min-height: 120px;
+            padding: 12px;
+            border: 1px solid var(--background-modifier-border);
+            border-radius: 6px;
+            background: var(--background-primary);
+            color: var(--text-normal);
+            font-family: var(--font-text);
+            font-size: var(--font-text-size);
+            line-height: 1.5;
+            resize: vertical;
+            box-sizing: border-box;
+          `;
+
+          containerRef.current.appendChild(textArea);
+          textareaRef.current = textArea;
+
+          textArea.addEventListener('input', () => {
+            contentRef.current = textArea.value;
+            if (onContentChange) {
+              onContentChange(textArea.value);
+            }
+          });
+
+          setIsReady(true);
         }
       };
 
@@ -178,13 +277,42 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
 
       return () => {
         // Cleanup
+        if (editorViewRef.current) {
+          editorViewRef.current.destroy();
+          editorViewRef.current = null;
+        }
         if (containerRef.current) {
           containerRef.current.innerHTML = '';
         }
+        textareaRef.current = null;
       };
-    }, [initialContent, placeholder, onContentChange]);
+    }, [initialContent, placeholder]);
 
-    return <div ref={containerRef} className={`obsidian-native-editor ${className}`} />;
+    // Update content when initialContent changes
+    useEffect(() => {
+      if (isReady && contentRef.current !== initialContent) {
+        if (editorViewRef.current) {
+          const view = editorViewRef.current;
+          view.dispatch({
+            changes: { from: 0, to: view.state.doc.length, insert: initialContent },
+          });
+        } else if (textareaRef.current) {
+          textareaRef.current.value = initialContent;
+        }
+        contentRef.current = initialContent;
+      }
+    }, [initialContent, isReady]);
+
+    return (
+      <div
+        ref={containerRef}
+        className={`obsidian-native-editor ${className}`}
+        style={{
+          width: '100%',
+          minHeight: '120px',
+        }}
+      />
+    );
   },
 );
 

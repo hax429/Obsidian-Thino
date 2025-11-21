@@ -766,13 +766,19 @@ const MemoEditor: React.FC<Props> = () => {
     handleContentChange(newContent);
   }, []);
 
-  const handleAudioRecorded = useCallback(async (audioBlob: Blob) => {
+  const handleAudioRecorded = useCallback(async (audioBlob: Blob, transcription?: string) => {
     try {
-      const audioPath = await audioService.saveAudioRecording(audioBlob);
+      // Save audio with transcription if available
+      const audioPath = await audioService.saveAudioRecording(audioBlob, transcription);
       const audioLink = audioService.getAudioLink(audioPath);
 
       if (editorRef.current) {
-        editorRef.current.insertText(`\n${audioLink}`);
+        // If we have a transcription, insert it along with the audio link
+        if (transcription) {
+          editorRef.current.insertText(`\n**Voice Note:** ${transcription}\n${audioLink}`);
+        } else {
+          editorRef.current.insertText(`\n${audioLink}`);
+        }
       }
 
       new Notice(t('Audio recording saved successfully'));

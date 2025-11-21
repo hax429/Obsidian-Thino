@@ -6,7 +6,7 @@ import StopSvg from '../icons/stop.svg?component';
 
 interface VoiceRecorderProps {
   onTranscription: (text: string, audioBlob?: Blob) => void;
-  onAudioRecorded?: (audioBlob: Blob) => void;
+  onAudioRecorded?: (audioBlob: Blob, transcription?: string) => void;
 }
 
 const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioRecorded }) => {
@@ -15,6 +15,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioR
   const [mediaRecorder, setMediaRecorder] = useState<MediaRecorder | null>(null);
   const [recognition, setRecognition] = useState<any>(null);
   const [audioChunks, setAudioChunks] = useState<Blob[]>([]);
+  const [fullTranscription, setFullTranscription] = useState<string>('');
 
   // Check for browser support
   React.useEffect(() => {
@@ -41,7 +42,10 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioR
         }
 
         if (finalTranscript) {
-          onTranscription(finalTranscript.trim());
+          const trimmedTranscript = finalTranscript.trim();
+          // Accumulate the full transcription for saving with audio
+          setFullTranscription(prev => prev ? `${prev} ${trimmedTranscript}` : trimmedTranscript);
+          onTranscription(trimmedTranscript);
         }
       };
 
@@ -80,9 +84,12 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioR
           const audioBlob = new Blob(chunks, { type: 'audio/webm' });
           setAudioChunks([]);
           if (onAudioRecorded) {
-            onAudioRecorded(audioBlob);
+            // Pass the accumulated transcription along with the audio blob
+            onAudioRecorded(audioBlob, fullTranscription || undefined);
           }
           stream.getTracks().forEach(track => track.stop());
+          // Reset transcription for next recording
+          setFullTranscription('');
         };
 
         recorder.start();
@@ -94,6 +101,8 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioR
       if (recognition) {
         recognition.start();
         setIsRecording(true);
+        // Clear any previous transcription when starting new recording
+        setFullTranscription('');
         new Notice(t('Voice recording started...'));
       }
     } catch (error) {
@@ -101,7 +110,7 @@ const VoiceRecorder: React.FC<VoiceRecorderProps> = ({ onTranscription, onAudioR
       new Notice('Failed to start voice recording. Please check microphone permissions.');
       setIsRecording(false);
     }
-  }, [recognition, onAudioRecorded]);
+  }, [recognition, onAudioRecorded, fullTranscription]);
 
   const stopRecording = useCallback(() => {
     if (recognition) {
