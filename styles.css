@@ -68,7 +68,7 @@ div[data-type='memos_view'] #root {
   font-style: normal;
 }
 div[data-type='memos_view'] {
-  font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans", "Noto Sans CJK SC", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  font-family: var(--font-interface), -apple-system, BlinkMacSystemFont, "PingFang SC", "Noto Sans", "Noto Sans CJK SC", "Microsoft YaHei UI", "Microsoft YaHei", "WenQuanYi Micro Hei", sans-serif, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   /*text-align: var();*/
   -webkit-font-smoothing: subpixel-antialiased;
 }
@@ -249,13 +249,10 @@ div[data-type='memos_view'] .view-content:not(.images-wrapper) img {
 .theme-dark div[data-type='memos_view'] svg {
   fill: #cdcdcd;
 }
-<<<<<<< HEAD
-=======
 .theme-dark .dialog-wrapper .btn-group,
 .theme-dark .dialog-wrapper .btns-container {
   fill: #cdcdcd;
 }
->>>>>>> 4a164c298b6ec45f63cfe1973279f2e915033675
 .mono-font-family {
   font-family: 'ubuntu-mono', SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier, monospace;
 }
@@ -2413,6 +2410,21 @@ div[data-type='memos_view'] .image-container > img {
 .theme-light div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .btn.delete-btn.final-confirm {
   font-weight: bold;
 }
+.theme-light div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .menu-separator {
+  width: 100%;
+  height: 1px;
+  background-color: #e0e0e0;
+  margin: 4px 0;
+}
+.theme-light div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .word-count {
+  width: 100%;
+  padding: 8px 0 8px 24px;
+  font-size: 12px;
+  color: #999;
+  text-align: left;
+  cursor: default;
+  pointer-events: none;
+}
 .theme-light div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container .btn {
   display: flex;
   flex-direction: row;
@@ -2577,11 +2589,7 @@ div[data-type='memos_view'] .image-container > img {
   padding: 12px 18px;
   background-color: #303030;
   border-radius: 8px;
-<<<<<<< HEAD
-  border: 1px solid #818181;
-=======
   border: 1px solid #4a4a4a;
->>>>>>> 4a164c298b6ec45f63cfe1973279f2e915033675
 }
 .theme-dark div[data-type='memos_view'] .memo-wrapper:hover {
   border-color: #353535;
@@ -2682,6 +2690,21 @@ div[data-type='memos_view'] .image-container > img {
 }
 .theme-dark div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .btn.delete-btn.final-confirm {
   font-weight: bold;
+}
+.theme-dark div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .menu-separator {
+  width: 100%;
+  height: 1px;
+  background-color: #3a3a3a;
+  margin: 4px 0;
+}
+.theme-dark div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container > .more-action-btns-wrapper > .more-action-btns-container > .word-count {
+  width: 100%;
+  padding: 8px 0 8px 24px;
+  font-size: 12px;
+  color: #888;
+  text-align: left;
+  cursor: default;
+  pointer-events: none;
 }
 .theme-dark div[data-type='memos_view'] .memo-wrapper > .memo-top-wrapper > .memo-top-right-wrapper > .btns-container .btn {
   display: flex;
@@ -3085,6 +3108,79 @@ div[data-type='memos_view'] .image-container > img {
 }
 div[data-type='memos_view'] .memo-editor-wrapper .confirm-btn {
   margin-right: unset;
+}
+.obsidian-native-editor {
+  width: 100%;
+  min-height: 120px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.obsidian-native-editor .obsidian-cm6-editor {
+  width: 100%;
+  min-height: 120px;
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-editor {
+  height: 100%;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-text);
+  font-size: var(--font-text-size);
+  line-height: 1.5;
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-editor .cm-scroller {
+  padding: 12px;
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-editor .cm-line {
+  padding: 0;
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-editor .cm-content {
+  padding: 0;
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-editor.cm-focused {
+  outline: none;
+  border-color: var(--interactive-accent);
+}
+.obsidian-native-editor .obsidian-cm6-editor .cm-line:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--text-muted);
+  pointer-events: none;
+  position: absolute;
+}
+.obsidian-native-editor .obsidian-native-editor-input {
+  width: 100%;
+  min-height: 120px;
+  padding: 12px;
+  border: none;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  font-family: var(--font-text);
+  font-size: var(--font-text-size);
+  line-height: 1.5;
+  resize: vertical;
+  box-sizing: border-box;
+}
+.obsidian-native-editor .obsidian-native-editor-input:focus {
+  outline: none;
+}
+.obsidian-native-editor .obsidian-native-editor-input::placeholder {
+  color: var(--text-muted);
+}
+.obsidian-native-editor .obsidian-native-editor-input.fallback {
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 6px;
+}
+.obsidian-native-editor .cm-editor.cm-focused .cm-activeLineGutter {
+  background-color: var(--background-secondary);
+}
+.obsidian-native-editor .markdown-source-view.mod-cm6 .cm-editor .cm-line .cm-header {
+  font-weight: var(--font-weight-bold);
+}
+.obsidian-native-editor .markdown-source-view.mod-cm6 .cm-editor .cm-line .cm-strong {
+  font-weight: var(--font-weight-bold);
+}
+.obsidian-native-editor .markdown-source-view.mod-cm6 .cm-editor .cm-line .cm-em {
+  font-style: italic;
 }
 .mono-font-family {
   font-family: 'ubuntu-mono', SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier, monospace;
@@ -7652,8 +7748,6 @@ div[data-type='memos_view'].mobile-view #page-wrapper > .content-wrapper {
   height: auto;
   opacity: 0.8;
   fill: #cdcdcd;
-<<<<<<< HEAD
-=======
 }
 .theme-dark div[data-type='memos_view'].mobile-view .search-bar-container > .search-bar-inputer > .text-input {
   width: 100%;
@@ -7662,7 +7756,6 @@ div[data-type='memos_view'].mobile-view #page-wrapper > .content-wrapper {
 }
 .theme-dark div[data-type='memos_view'].mobile-view .search-bar-container > .search-bar-inputer:hover + .quickly-action-wrapper {
   display: flex;
->>>>>>> 4a164c298b6ec45f63cfe1973279f2e915033675
 }
 .theme-dark div[data-type='memos_view'].mobile-view .search-bar-container > .quickly-action-wrapper {
   display: none;
@@ -8967,6 +9060,84 @@ div[data-type='memos_view'].mobile-view .memos-header-container > .title-text > 
   width: auto;
   max-height: 128px;
   border-radius: 8px;
+}
+.mono-font-family {
+  font-family: 'ubuntu-mono', SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier, monospace;
+}
+.hide-scroll-bar {
+  scrollbar-width: none;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  cursor: pointer;
+}
+.hide-scroll-bar::-webkit-scrollbar-thumb {
+  width: 0;
+  height: 0;
+  border-radius: 8px;
+  background-color: #d5d5d5;
+}
+.hide-scroll-bar::-webkit-scrollbar-thumb:hover {
+  background-color: #ccc;
+}
+.hide-scroll-bar::-webkit-scrollbar {
+  display: none;
+}
+.memo-archive-page {
+  @apply w-full, flex, flex-col, justify-start, items-start, relative, pb-4;
+}
+.memo-archive-page > .page-container {
+  @apply w-full, max-w-full, flex, flex-col, justify-start, items-start, px-4;
+}
+.memo-archive-page > .page-container > .page-header {
+  @apply sticky top-0 bg-white dark:bg-zinc-800 w-full flex flex-row justify-between items-center w-full h-14 pt-4 pb-2 z-2 mb-2 hide-scrollbar;
+}
+.memo-archive-page > .page-container > .page-header > .title-container {
+  @apply flex, flex-row, justify-start, items-center;
+}
+.memo-archive-page > .page-container > .page-header > .title-container > .icon-img {
+  @apply w-6, h-auto, mr-2, opacity-60;
+}
+.memo-archive-page > .page-container > .page-header > .title-container > .title-text {
+  @apply font-bold text-2xl opacity-80 dark:text-gray-200;
+}
+.memo-archive-page > .page-container > .page-header > .toggle-sidebar-btn {
+  @apply border flex md:hidden justify-center items-center w-8 h-8 p-1 rounded shadow hover:opacity-80 hover:shadow-inner;
+}
+.memo-archive-page > .page-container > .empty-state {
+  @apply w-full, flex, flex-col, items-center, justify-center, py-12, text-center;
+}
+.memo-archive-page > .page-container > .empty-state > .empty-icon {
+  @apply w-24, h-24, opacity-30, mb-4;
+}
+.memo-archive-page > .page-container > .empty-state > .empty-text {
+  @apply text-gray-500 dark:text-gray-400 text-lg;
+}
+.memo-archive-page > .page-container > .archived-memos-wrapper {
+  @apply w-full, flex, flex-col, justify-start, items-start;
+}
+.memo-archive-page > .page-container > .archived-memos-wrapper > .archived-memo {
+  @apply w-full, mb-4, opacity-80;
+}
+.archived-memo {
+  border-left: 3px solid var(--interactive-accent);
+  background: var(--background-secondary);
+}
+.archived-memo .archive-icon {
+  @apply w-4, h-4, inline-block, mr-1, opacity-60;
+}
+.archived-memo .unarchive-btn {
+  @apply text-green-600 dark:text-green-400;
+}
+.archived-memo .unarchive-btn:hover {
+  @apply bg-green-100 dark:bg-green-900;
+}
+.archive-btn {
+  @apply text-orange-600 dark:text-orange-400;
+}
+.archive-btn:hover {
+  @apply bg-orange-100 dark:bg-orange-900;
 }
 .mono-font-family {
   font-family: 'ubuntu-mono', SFMono-Regular, Menlo, Consolas, 'PT Mono', 'Liberation Mono', Courier, monospace;
