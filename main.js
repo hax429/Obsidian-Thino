@@ -41895,9 +41895,11 @@ class Memos extends require$$0.ItemView {
     UseDailyOrPeriodic = this.plugin.settings.UseDailyOrPeriodic;
     ShowLeftSideBar = this.plugin.settings.ShowLeftSideBar;
     this.memosComponent = React.createElement(StrictApp);
-    ReactDOM.render(this.memosComponent, this.contentEl);
+    const rootEl = this.contentEl.createDiv({ attr: { id: "root" } });
+    ReactDOM.render(this.memosComponent, rootEl);
   }
   async onClose() {
+    ReactDOM.unmountComponentAtNode(this.contentEl);
   }
 }
 let InsertAfter;

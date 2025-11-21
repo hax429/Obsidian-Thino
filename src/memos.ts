@@ -167,12 +167,15 @@ export class Memos extends ItemView {
 
     this.memosComponent = React.createElement(App);
 
+    // Create a root div element for React to render into
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ReactDOM.render(this.memosComponent, (this as any).contentEl);
+    const rootEl = (this as any).contentEl.createDiv({ attr: { id: 'root' } });
+    ReactDOM.render(this.memosComponent, rootEl);
   }
 
   async onClose() {
-    // Nothing to clean up.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    ReactDOM.unmountComponentAtNode((this as any).contentEl);
   }
 }
 
