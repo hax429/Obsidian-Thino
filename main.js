@@ -1333,26 +1333,26 @@ function requireReact_development() {
           }
           return dispatcher;
         }
-        function useContext(Context, unstable_observedBits) {
+        function useContext(Context2, unstable_observedBits) {
           var dispatcher = resolveDispatcher();
           {
             if (unstable_observedBits !== void 0) {
               error("useContext() second argument is reserved for future use in React. Passing it is not supported. You passed: %s.%s", unstable_observedBits, typeof unstable_observedBits === "number" && Array.isArray(arguments[2]) ? "\n\nDid you call array.map(useContext)? Calling Hooks inside a loop is not supported. Learn more at https://reactjs.org/link/rules-of-hooks" : "");
             }
-            if (Context._context !== void 0) {
-              var realContext = Context._context;
-              if (realContext.Consumer === Context) {
+            if (Context2._context !== void 0) {
+              var realContext = Context2._context;
+              if (realContext.Consumer === Context2) {
                 error("Calling useContext(Context.Consumer) is not supported, may cause bugs, and will be removed in a future major release. Did you mean to call useContext(Context) instead?");
-              } else if (realContext.Provider === Context) {
+              } else if (realContext.Provider === Context2) {
                 error("Calling useContext(Context.Provider) is not supported. Did you mean to call useContext(Context) instead?");
               }
             }
           }
-          return dispatcher.useContext(Context, unstable_observedBits);
+          return dispatcher.useContext(Context2, unstable_observedBits);
         }
-        function useState(initialState) {
+        function useState(initialState2) {
           var dispatcher = resolveDispatcher();
-          return dispatcher.useState(initialState);
+          return dispatcher.useState(initialState2);
         }
         function useReducer(reducer2, initialArg, init) {
           var dispatcher = resolveDispatcher();
@@ -2320,12 +2320,12 @@ function requireScheduler_development() {
           var _setTimeout = window.setTimeout;
           var _clearTimeout = window.clearTimeout;
           if (typeof console !== "undefined") {
-            var requestAnimationFrame = window.requestAnimationFrame;
-            var cancelAnimationFrame = window.cancelAnimationFrame;
-            if (typeof requestAnimationFrame !== "function") {
+            var requestAnimationFrame2 = window.requestAnimationFrame;
+            var cancelAnimationFrame2 = window.cancelAnimationFrame;
+            if (typeof requestAnimationFrame2 !== "function") {
               console["error"]("This browser doesn't support requestAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills");
             }
-            if (typeof cancelAnimationFrame !== "function") {
+            if (typeof cancelAnimationFrame2 !== "function") {
               console["error"]("This browser doesn't support cancelAnimationFrame. Make sure that you load a polyfill in older browsers. https://reactjs.org/link/react-polyfills");
             }
           }
@@ -11164,15 +11164,15 @@ function requireReactDom_development() {
         };
       }
       var warnValidStyle$1 = warnValidStyle;
-      function createDangerousStringForStyles(styles) {
+      function createDangerousStringForStyles(styles2) {
         {
           var serialized = "";
           var delimiter = "";
-          for (var styleName in styles) {
-            if (!styles.hasOwnProperty(styleName)) {
+          for (var styleName in styles2) {
+            if (!styles2.hasOwnProperty(styleName)) {
               continue;
             }
-            var styleValue = styles[styleName];
+            var styleValue = styles2[styleName];
             if (styleValue != null) {
               var isCustomProperty = styleName.indexOf("--") === 0;
               serialized += delimiter + (isCustomProperty ? styleName : hyphenateStyleName(styleName)) + ":";
@@ -11183,19 +11183,19 @@ function requireReactDom_development() {
           return serialized || null;
         }
       }
-      function setValueForStyles(node, styles) {
+      function setValueForStyles(node, styles2) {
         var style2 = node.style;
-        for (var styleName in styles) {
-          if (!styles.hasOwnProperty(styleName)) {
+        for (var styleName in styles2) {
+          if (!styles2.hasOwnProperty(styleName)) {
             continue;
           }
           var isCustomProperty = styleName.indexOf("--") === 0;
           {
             if (!isCustomProperty) {
-              warnValidStyle$1(styleName, styles[styleName]);
+              warnValidStyle$1(styleName, styles2[styleName]);
             }
           }
-          var styleValue = dangerousStyleValue(styleName, styles[styleName], isCustomProperty);
+          var styleValue = dangerousStyleValue(styleName, styles2[styleName], isCustomProperty);
           if (styleName === "float") {
             styleName = "cssFloat";
           }
@@ -11209,9 +11209,9 @@ function requireReactDom_development() {
       function isValueEmpty(value) {
         return value == null || typeof value === "boolean" || value === "";
       }
-      function expandShorthandMap(styles) {
+      function expandShorthandMap(styles2) {
         var expanded = {};
-        for (var key in styles) {
+        for (var key in styles2) {
           var longhands = shorthandToLonghand[key] || [key];
           for (var i = 0; i < longhands.length; i++) {
             expanded[longhands[i]] = key;
@@ -16351,7 +16351,7 @@ function requireReactDom_development() {
         return textNode;
       }
       var scheduleTimeout = typeof setTimeout === "function" ? setTimeout : void 0;
-      var cancelTimeout = typeof clearTimeout === "function" ? clearTimeout : void 0;
+      var cancelTimeout2 = typeof clearTimeout === "function" ? clearTimeout : void 0;
       var noTimeout = -1;
       function commitMount(domElement, type, newProps, internalInstanceHandle) {
         if (shouldAutoFocusHostComponent(type, newProps)) {
@@ -19827,18 +19827,18 @@ function requireReactDom_development() {
       }
       function mountReducer(reducer2, initialArg, init) {
         var hook = mountWorkInProgressHook();
-        var initialState;
+        var initialState2;
         if (init !== void 0) {
-          initialState = init(initialArg);
+          initialState2 = init(initialArg);
         } else {
-          initialState = initialArg;
+          initialState2 = initialArg;
         }
-        hook.memoizedState = hook.baseState = initialState;
+        hook.memoizedState = hook.baseState = initialState2;
         var queue = hook.queue = {
           pending: null,
           dispatch: null,
           lastRenderedReducer: reducer2,
-          lastRenderedState: initialState
+          lastRenderedState: initialState2
         };
         var dispatch = queue.dispatch = dispatchAction.bind(null, currentlyRenderingFiber$1, queue);
         return [hook.memoizedState, dispatch];
@@ -20094,25 +20094,25 @@ function requireReactDom_development() {
         var hook = updateWorkInProgressHook();
         return useMutableSource(hook, source, getSnapshot, subscribe);
       }
-      function mountState(initialState) {
+      function mountState(initialState2) {
         var hook = mountWorkInProgressHook();
-        if (typeof initialState === "function") {
-          initialState = initialState();
+        if (typeof initialState2 === "function") {
+          initialState2 = initialState2();
         }
-        hook.memoizedState = hook.baseState = initialState;
+        hook.memoizedState = hook.baseState = initialState2;
         var queue = hook.queue = {
           pending: null,
           dispatch: null,
           lastRenderedReducer: basicStateReducer,
-          lastRenderedState: initialState
+          lastRenderedState: initialState2
         };
         var dispatch = queue.dispatch = dispatchAction.bind(null, currentlyRenderingFiber$1, queue);
         return [hook.memoizedState, dispatch];
       }
-      function updateState(initialState) {
+      function updateState(initialState2) {
         return updateReducer(basicStateReducer);
       }
-      function rerenderState(initialState) {
+      function rerenderState(initialState2) {
         return rerenderReducer(basicStateReducer);
       }
       function pushEffect(tag, create, destroy, deps) {
@@ -20576,13 +20576,13 @@ function requireReactDom_development() {
             mountHookTypesDev();
             return mountRef(initialValue);
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             mountHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
             try {
-              return mountState(initialState);
+              return mountState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -20670,13 +20670,13 @@ function requireReactDom_development() {
             updateHookTypesDev();
             return mountRef(initialValue);
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             updateHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
             try {
-              return mountState(initialState);
+              return mountState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -20764,13 +20764,13 @@ function requireReactDom_development() {
             updateHookTypesDev();
             return updateRef();
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             updateHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
             try {
-              return updateState(initialState);
+              return updateState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -20858,13 +20858,13 @@ function requireReactDom_development() {
             updateHookTypesDev();
             return updateRef();
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             updateHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnRerenderInDEV;
             try {
-              return rerenderState(initialState);
+              return rerenderState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -20961,14 +20961,14 @@ function requireReactDom_development() {
             mountHookTypesDev();
             return mountRef(initialValue);
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             warnInvalidHookAccess();
             mountHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnMountInDEV;
             try {
-              return mountState(initialState);
+              return mountState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -21070,14 +21070,14 @@ function requireReactDom_development() {
             updateHookTypesDev();
             return updateRef();
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             warnInvalidHookAccess();
             updateHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
             try {
-              return updateState(initialState);
+              return updateState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -21179,14 +21179,14 @@ function requireReactDom_development() {
             updateHookTypesDev();
             return updateRef();
           },
-          useState: function(initialState) {
+          useState: function(initialState2) {
             currentHookNameInDev = "useState";
             warnInvalidHookAccess();
             updateHookTypesDev();
             var prevDispatcher = ReactCurrentDispatcher$1.current;
             ReactCurrentDispatcher$1.current = InvalidNestedHooksDispatcherOnUpdateInDEV;
             try {
-              return rerenderState(initialState);
+              return rerenderState(initialState2);
             } finally {
               ReactCurrentDispatcher$1.current = prevDispatcher;
             }
@@ -24800,7 +24800,7 @@ function requireReactDom_development() {
         var timeoutHandle = root2.timeoutHandle;
         if (timeoutHandle !== noTimeout) {
           root2.timeoutHandle = noTimeout;
-          cancelTimeout(timeoutHandle);
+          cancelTimeout2(timeoutHandle);
         }
         if (workInProgress !== null) {
           var interruptedWork = workInProgress.return;
@@ -28376,7 +28376,7 @@ const Provider = (props) => {
   const {
     children,
     store,
-    context: Context
+    context: Context2
   } = props;
   const [appState, setAppState] = react.exports.useState(store.getState());
   react.exports.useEffect(() => {
@@ -28387,7 +28387,7 @@ const Provider = (props) => {
       unsubscribe();
     };
   }, []);
-  return /* @__PURE__ */ jsx(Context.Provider, {
+  return /* @__PURE__ */ jsx(Context2.Provider, {
     value: appState,
     children
   });
@@ -28435,12 +28435,12 @@ function createStore(preloadedState, reducer2) {
       isSubscribed = false;
     };
   };
-  const getState = () => {
+  const getState2 = () => {
     return currentState;
   };
   return {
     dispatch,
-    getState,
+    getState: getState2,
     subscribe
   };
 }
@@ -33150,8 +33150,8 @@ const toImage = async (element, options) => {
   const canvas = await toCanvas(element, options);
   return canvas.toDataURL();
 };
-function useToggle(initialState = false) {
-  const [state, setState] = react.exports.useState(initialState);
+function useToggle(initialState2 = false) {
+  const [state, setState] = react.exports.useState(initialState2);
   const toggle = react.exports.useCallback((nextState) => {
     if (nextState !== void 0) {
       setState(nextState);
@@ -33161,8 +33161,8 @@ function useToggle(initialState = false) {
   }, []);
   return [state, toggle];
 }
-function useLoading(initialState = true) {
-  const [state, setState] = react.exports.useState({ isLoading: initialState, isFailed: false, isSucceed: false });
+function useLoading(initialState2 = true) {
+  const [state, setState] = react.exports.useState({ isLoading: initialState2, isFailed: false, isSucceed: false });
   return {
     ...state,
     setLoading: () => {
@@ -33192,13 +33192,1754 @@ function useLoading(initialState = true) {
   };
 }
 const previewImageDialog = "";
+var roundNumber = function(num, decimal) {
+  return Number(num.toFixed(decimal));
+};
+var checkIsNumber = function(num, defaultValue) {
+  return typeof num === "number" ? num : defaultValue;
+};
+var handleCallback = function(context, event, callback) {
+  if (callback && typeof callback === "function") {
+    callback(context, event);
+  }
+};
+var easeOut = function(t2) {
+  return -Math.cos(t2 * Math.PI) / 2 + 0.5;
+};
+var linear = function(t2) {
+  return t2;
+};
+var easeInQuad = function(t2) {
+  return t2 * t2;
+};
+var easeOutQuad = function(t2) {
+  return t2 * (2 - t2);
+};
+var easeInOutQuad = function(t2) {
+  return t2 < 0.5 ? 2 * t2 * t2 : -1 + (4 - 2 * t2) * t2;
+};
+var easeInCubic = function(t2) {
+  return t2 * t2 * t2;
+};
+var easeOutCubic = function(t2) {
+  return --t2 * t2 * t2 + 1;
+};
+var easeInOutCubic = function(t2) {
+  return t2 < 0.5 ? 4 * t2 * t2 * t2 : (t2 - 1) * (2 * t2 - 2) * (2 * t2 - 2) + 1;
+};
+var easeInQuart = function(t2) {
+  return t2 * t2 * t2 * t2;
+};
+var easeOutQuart = function(t2) {
+  return 1 - --t2 * t2 * t2 * t2;
+};
+var easeInOutQuart = function(t2) {
+  return t2 < 0.5 ? 8 * t2 * t2 * t2 * t2 : 1 - 8 * --t2 * t2 * t2 * t2;
+};
+var easeInQuint = function(t2) {
+  return t2 * t2 * t2 * t2 * t2;
+};
+var easeOutQuint = function(t2) {
+  return 1 + --t2 * t2 * t2 * t2 * t2;
+};
+var easeInOutQuint = function(t2) {
+  return t2 < 0.5 ? 16 * t2 * t2 * t2 * t2 * t2 : 1 + 16 * --t2 * t2 * t2 * t2 * t2;
+};
+var animations = {
+  easeOut,
+  linear,
+  easeInQuad,
+  easeOutQuad,
+  easeInOutQuad,
+  easeInCubic,
+  easeOutCubic,
+  easeInOutCubic,
+  easeInQuart,
+  easeOutQuart,
+  easeInOutQuart,
+  easeInQuint,
+  easeOutQuint,
+  easeInOutQuint
+};
+var handleCancelAnimationFrame = function(animation) {
+  if (typeof animation === "number") {
+    cancelAnimationFrame(animation);
+  }
+};
+var handleCancelAnimation = function(contextInstance) {
+  if (!contextInstance.mounted)
+    return;
+  handleCancelAnimationFrame(contextInstance.animation);
+  contextInstance.animate = false;
+  contextInstance.animation = null;
+  contextInstance.velocity = null;
+};
+function handleSetupAnimation(contextInstance, animationName, animationTime, callback) {
+  if (!contextInstance.mounted)
+    return;
+  var startTime = new Date().getTime();
+  var lastStep = 1;
+  handleCancelAnimation(contextInstance);
+  contextInstance.animation = function() {
+    if (!contextInstance.mounted) {
+      return handleCancelAnimationFrame(contextInstance.animation);
+    }
+    var frameTime = new Date().getTime() - startTime;
+    var animationProgress = frameTime / animationTime;
+    var animationType = animations[animationName];
+    var step = animationType(animationProgress);
+    if (frameTime >= animationTime) {
+      callback(lastStep);
+      contextInstance.animation = null;
+    } else if (contextInstance.animation) {
+      callback(step);
+      requestAnimationFrame(contextInstance.animation);
+    }
+  };
+  requestAnimationFrame(contextInstance.animation);
+}
+function isValidTargetState(targetState) {
+  var scale = targetState.scale, positionX2 = targetState.positionX, positionY = targetState.positionY;
+  if (Number.isNaN(scale) || Number.isNaN(positionX2) || Number.isNaN(positionY)) {
+    return false;
+  }
+  return true;
+}
+function animate(contextInstance, targetState, animationTime, animationName) {
+  var isValid = isValidTargetState(targetState);
+  if (!contextInstance.mounted || !isValid)
+    return;
+  var setTransformState = contextInstance.setTransformState;
+  var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+  var scaleDiff = targetState.scale - scale;
+  var positionXDiff = targetState.positionX - positionX2;
+  var positionYDiff = targetState.positionY - positionY;
+  if (animationTime === 0) {
+    setTransformState(targetState.scale, targetState.positionX, targetState.positionY);
+  } else {
+    handleSetupAnimation(contextInstance, animationName, animationTime, function(step) {
+      var newScale = scale + scaleDiff * step;
+      var newPositionX = positionX2 + positionXDiff * step;
+      var newPositionY = positionY + positionYDiff * step;
+      setTransformState(newScale, newPositionX, newPositionY);
+    });
+  }
+}
+function getComponentsSizes(wrapperComponent, contentComponent, newScale) {
+  var wrapperWidth = wrapperComponent.offsetWidth;
+  var wrapperHeight = wrapperComponent.offsetHeight;
+  var contentWidth = contentComponent.offsetWidth;
+  var contentHeight = contentComponent.offsetHeight;
+  var newContentWidth = contentWidth * newScale;
+  var newContentHeight = contentHeight * newScale;
+  var newDiffWidth = wrapperWidth - newContentWidth;
+  var newDiffHeight = wrapperHeight - newContentHeight;
+  return {
+    wrapperWidth,
+    wrapperHeight,
+    newContentWidth,
+    newDiffWidth,
+    newContentHeight,
+    newDiffHeight
+  };
+}
+var getBounds = function(wrapperWidth, newContentWidth, diffWidth, wrapperHeight, newContentHeight, diffHeight, centerZoomedOut) {
+  var scaleWidthFactor = wrapperWidth > newContentWidth ? diffWidth * (centerZoomedOut ? 1 : 0.5) : 0;
+  var scaleHeightFactor = wrapperHeight > newContentHeight ? diffHeight * (centerZoomedOut ? 1 : 0.5) : 0;
+  var minPositionX = wrapperWidth - newContentWidth - scaleWidthFactor;
+  var maxPositionX = scaleWidthFactor;
+  var minPositionY = wrapperHeight - newContentHeight - scaleHeightFactor;
+  var maxPositionY = scaleHeightFactor;
+  return {
+    minPositionX,
+    maxPositionX,
+    minPositionY,
+    maxPositionY
+  };
+};
+var calculateBounds = function(contextInstance, newScale) {
+  var wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent;
+  var centerZoomedOut = contextInstance.setup.centerZoomedOut;
+  if (!wrapperComponent || !contentComponent) {
+    throw new Error("Components are not mounted");
+  }
+  var _a = getComponentsSizes(wrapperComponent, contentComponent, newScale), wrapperWidth = _a.wrapperWidth, wrapperHeight = _a.wrapperHeight, newContentWidth = _a.newContentWidth, newDiffWidth = _a.newDiffWidth, newContentHeight = _a.newContentHeight, newDiffHeight = _a.newDiffHeight;
+  var bounds = getBounds(wrapperWidth, newContentWidth, newDiffWidth, wrapperHeight, newContentHeight, newDiffHeight, Boolean(centerZoomedOut));
+  return bounds;
+};
+var boundLimiter = function(value, minBound, maxBound, isActive) {
+  if (!isActive)
+    return roundNumber(value, 2);
+  if (value < minBound)
+    return roundNumber(minBound, 2);
+  if (value > maxBound)
+    return roundNumber(maxBound, 2);
+  return roundNumber(value, 2);
+};
+var handleCalculateBounds = function(contextInstance, newScale) {
+  var bounds = calculateBounds(contextInstance, newScale);
+  contextInstance.bounds = bounds;
+  return bounds;
+};
+function getMouseBoundedPosition(positionX2, positionY, bounds, limitToBounds, paddingValueX, paddingValueY, wrapperComponent) {
+  var minPositionX = bounds.minPositionX, minPositionY = bounds.minPositionY, maxPositionX = bounds.maxPositionX, maxPositionY = bounds.maxPositionY;
+  var paddingX = 0;
+  var paddingY = 0;
+  if (wrapperComponent) {
+    paddingX = paddingValueX;
+    paddingY = paddingValueY;
+  }
+  var x = boundLimiter(positionX2, minPositionX - paddingX, maxPositionX + paddingX, limitToBounds);
+  var y = boundLimiter(positionY, minPositionY - paddingY, maxPositionY + paddingY, limitToBounds);
+  return {
+    x,
+    y
+  };
+}
+function handleCalculateZoomPositions(contextInstance, mouseX, mouseY, newScale, bounds, limitToBounds) {
+  var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+  var scaleDifference = newScale - scale;
+  if (typeof mouseX !== "number" || typeof mouseY !== "number") {
+    console.error("Mouse X and Y position were not provided!");
+    return {
+      x: positionX2,
+      y: positionY
+    };
+  }
+  var calculatedPositionX = positionX2 - mouseX * scaleDifference;
+  var calculatedPositionY = positionY - mouseY * scaleDifference;
+  var newPositions = getMouseBoundedPosition(calculatedPositionX, calculatedPositionY, bounds, limitToBounds, 0, 0, null);
+  return newPositions;
+}
+function checkZoomBounds(zoom, minScale, maxScale, zoomPadding, enablePadding) {
+  var scalePadding = enablePadding ? zoomPadding : 0;
+  var minScaleWithPadding = minScale - scalePadding;
+  if (!Number.isNaN(maxScale) && zoom >= maxScale)
+    return maxScale;
+  if (!Number.isNaN(minScale) && zoom <= minScaleWithPadding)
+    return minScaleWithPadding;
+  return zoom;
+}
+var isPanningStartAllowed = function(contextInstance, event) {
+  var excluded = contextInstance.setup.panning.excluded;
+  var isInitialized = contextInstance.isInitialized, wrapperComponent = contextInstance.wrapperComponent;
+  var target = event.target;
+  var targetIsShadowDom = "shadowRoot" in target && "composedPath" in event;
+  var isWrapperChild = targetIsShadowDom ? event.composedPath().some(function(el) {
+    if (!(el instanceof Element)) {
+      return false;
+    }
+    return wrapperComponent === null || wrapperComponent === void 0 ? void 0 : wrapperComponent.contains(el);
+  }) : wrapperComponent === null || wrapperComponent === void 0 ? void 0 : wrapperComponent.contains(target);
+  var isAllowed = isInitialized && target && isWrapperChild;
+  if (!isAllowed)
+    return false;
+  var isExcluded = isExcludedNode(target, excluded);
+  if (isExcluded)
+    return false;
+  return true;
+};
+var isPanningAllowed = function(contextInstance) {
+  var isInitialized = contextInstance.isInitialized, isPanning = contextInstance.isPanning, setup = contextInstance.setup;
+  var disabled = setup.panning.disabled;
+  var isAllowed = isInitialized && isPanning && !disabled;
+  if (!isAllowed)
+    return false;
+  return true;
+};
+var handlePanningSetup = function(contextInstance, event) {
+  var _a = contextInstance.transformState, positionX2 = _a.positionX, positionY = _a.positionY;
+  contextInstance.isPanning = true;
+  var x = event.clientX;
+  var y = event.clientY;
+  contextInstance.startCoords = {
+    x: x - positionX2,
+    y: y - positionY
+  };
+};
+var handleTouchPanningSetup = function(contextInstance, event) {
+  var touches = event.touches;
+  var _a = contextInstance.transformState, positionX2 = _a.positionX, positionY = _a.positionY;
+  contextInstance.isPanning = true;
+  var oneFingerTouch = touches.length === 1;
+  if (oneFingerTouch) {
+    var x = touches[0].clientX;
+    var y = touches[0].clientY;
+    contextInstance.startCoords = {
+      x: x - positionX2,
+      y: y - positionY
+    };
+  }
+};
+function handlePanToBounds(contextInstance) {
+  var _a = contextInstance.transformState, positionX2 = _a.positionX, positionY = _a.positionY, scale = _a.scale;
+  var _b = contextInstance.setup, disabled = _b.disabled, limitToBounds = _b.limitToBounds, centerZoomedOut = _b.centerZoomedOut;
+  var wrapperComponent = contextInstance.wrapperComponent;
+  if (disabled || !wrapperComponent || !contextInstance.bounds)
+    return;
+  var _c = contextInstance.bounds, maxPositionX = _c.maxPositionX, minPositionX = _c.minPositionX, maxPositionY = _c.maxPositionY, minPositionY = _c.minPositionY;
+  var xChanged = positionX2 > maxPositionX || positionX2 < minPositionX;
+  var yChanged = positionY > maxPositionY || positionY < minPositionY;
+  var mousePosX = positionX2 > maxPositionX ? wrapperComponent.offsetWidth : contextInstance.setup.minPositionX || 0;
+  var mousePosY = positionY > maxPositionY ? wrapperComponent.offsetHeight : contextInstance.setup.minPositionY || 0;
+  var _d = handleCalculateZoomPositions(contextInstance, mousePosX, mousePosY, scale, contextInstance.bounds, limitToBounds || centerZoomedOut), x = _d.x, y = _d.y;
+  return {
+    scale,
+    positionX: xChanged ? x : positionX2,
+    positionY: yChanged ? y : positionY
+  };
+}
+function handleNewPosition(contextInstance, newPositionX, newPositionY, paddingValueX, paddingValueY) {
+  var limitToBounds = contextInstance.setup.limitToBounds;
+  var wrapperComponent = contextInstance.wrapperComponent, bounds = contextInstance.bounds;
+  var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+  if (wrapperComponent === null || bounds === null || newPositionX === positionX2 && newPositionY === positionY) {
+    return;
+  }
+  var _b = getMouseBoundedPosition(newPositionX, newPositionY, bounds, limitToBounds, paddingValueX, paddingValueY, wrapperComponent), x = _b.x, y = _b.y;
+  contextInstance.setTransformState(scale, x, y);
+}
+var getPanningClientPosition = function(contextInstance, clientX, clientY) {
+  var startCoords = contextInstance.startCoords, transformState = contextInstance.transformState;
+  var panning = contextInstance.setup.panning;
+  var lockAxisX = panning.lockAxisX, lockAxisY = panning.lockAxisY;
+  var positionX2 = transformState.positionX, positionY = transformState.positionY;
+  if (!startCoords) {
+    return {
+      x: positionX2,
+      y: positionY
+    };
+  }
+  var mouseX = clientX - startCoords.x;
+  var mouseY = clientY - startCoords.y;
+  var newPositionX = lockAxisX ? positionX2 : mouseX;
+  var newPositionY = lockAxisY ? positionY : mouseY;
+  return {
+    x: newPositionX,
+    y: newPositionY
+  };
+};
+var getPaddingValue = function(contextInstance, size) {
+  var setup = contextInstance.setup, transformState = contextInstance.transformState;
+  var scale = transformState.scale;
+  var minScale = setup.minScale, disablePadding = setup.disablePadding;
+  if (size > 0 && scale >= minScale && !disablePadding) {
+    return size;
+  }
+  return 0;
+};
+var isVelocityCalculationAllowed = function(contextInstance) {
+  var mounted = contextInstance.mounted;
+  var _a = contextInstance.setup, disabled = _a.disabled, velocityAnimation = _a.velocityAnimation;
+  var scale = contextInstance.transformState.scale;
+  var disabledVelocity = velocityAnimation.disabled;
+  var isAllowed = !disabledVelocity || scale > 1 || !disabled || mounted;
+  if (!isAllowed)
+    return false;
+  return true;
+};
+var isVelocityAllowed = function(contextInstance) {
+  var mounted = contextInstance.mounted, velocity = contextInstance.velocity, bounds = contextInstance.bounds;
+  var _a = contextInstance.setup, disabled = _a.disabled, velocityAnimation = _a.velocityAnimation;
+  var scale = contextInstance.transformState.scale;
+  var disabledVelocity = velocityAnimation.disabled;
+  var isAllowed = !disabledVelocity || scale > 1 || !disabled || mounted;
+  if (!isAllowed)
+    return false;
+  if (!velocity || !bounds)
+    return false;
+  return true;
+};
+function getVelocityMoveTime(contextInstance, velocity) {
+  var velocityAnimation = contextInstance.setup.velocityAnimation;
+  var equalToMove = velocityAnimation.equalToMove, animationTime = velocityAnimation.animationTime, sensitivity = velocityAnimation.sensitivity;
+  if (equalToMove) {
+    return animationTime * velocity * sensitivity;
+  }
+  return animationTime;
+}
+function getVelocityPosition(newPosition, startPosition, currentPosition, isLocked, limitToBounds, minPosition, maxPosition, minTarget, maxTarget, step) {
+  if (limitToBounds) {
+    if (startPosition > maxPosition && currentPosition > maxPosition) {
+      var calculatedPosition = maxPosition + (newPosition - maxPosition) * step;
+      if (calculatedPosition > maxTarget)
+        return maxTarget;
+      if (calculatedPosition < maxPosition)
+        return maxPosition;
+      return calculatedPosition;
+    }
+    if (startPosition < minPosition && currentPosition < minPosition) {
+      var calculatedPosition = minPosition + (newPosition - minPosition) * step;
+      if (calculatedPosition < minTarget)
+        return minTarget;
+      if (calculatedPosition > minPosition)
+        return minPosition;
+      return calculatedPosition;
+    }
+  }
+  if (isLocked)
+    return startPosition;
+  return boundLimiter(newPosition, minPosition, maxPosition, limitToBounds);
+}
+function getSizeMultiplier(wrapperComponent, equalToMove) {
+  var defaultMultiplier = 1;
+  if (equalToMove) {
+    return Math.min(defaultMultiplier, wrapperComponent.offsetWidth / window.innerWidth);
+  }
+  return defaultMultiplier;
+}
+function handleCalculateVelocity(contextInstance, position) {
+  var isAllowed = isVelocityCalculationAllowed(contextInstance);
+  if (!isAllowed) {
+    return;
+  }
+  var lastMousePosition = contextInstance.lastMousePosition, velocityTime = contextInstance.velocityTime, setup = contextInstance.setup;
+  var wrapperComponent = contextInstance.wrapperComponent;
+  var equalToMove = setup.velocityAnimation.equalToMove;
+  var now = Date.now();
+  if (lastMousePosition && velocityTime && wrapperComponent) {
+    var sizeMultiplier = getSizeMultiplier(wrapperComponent, equalToMove);
+    var distanceX = position.x - lastMousePosition.x;
+    var distanceY = position.y - lastMousePosition.y;
+    var velocityX = distanceX / sizeMultiplier;
+    var velocityY = distanceY / sizeMultiplier;
+    var interval = now - velocityTime;
+    var speed = distanceX * distanceX + distanceY * distanceY;
+    var velocity = Math.sqrt(speed) / interval;
+    contextInstance.velocity = {
+      velocityX,
+      velocityY,
+      total: velocity
+    };
+  }
+  contextInstance.lastMousePosition = position;
+  contextInstance.velocityTime = now;
+}
+function handleVelocityPanning(contextInstance) {
+  var velocity = contextInstance.velocity, bounds = contextInstance.bounds, setup = contextInstance.setup, wrapperComponent = contextInstance.wrapperComponent;
+  var isAllowed = isVelocityAllowed(contextInstance);
+  if (!isAllowed || !velocity || !bounds || !wrapperComponent) {
+    return;
+  }
+  var velocityX = velocity.velocityX, velocityY = velocity.velocityY, total = velocity.total;
+  var maxPositionX = bounds.maxPositionX, minPositionX = bounds.minPositionX, maxPositionY = bounds.maxPositionY, minPositionY = bounds.minPositionY;
+  var limitToBounds = setup.limitToBounds, alignmentAnimation = setup.alignmentAnimation;
+  var zoomAnimation = setup.zoomAnimation, panning = setup.panning;
+  var lockAxisY = panning.lockAxisY, lockAxisX = panning.lockAxisX;
+  var animationType = zoomAnimation.animationType;
+  var sizeX = alignmentAnimation.sizeX, sizeY = alignmentAnimation.sizeY, velocityAlignmentTime = alignmentAnimation.velocityAlignmentTime;
+  var alignAnimationTime = velocityAlignmentTime;
+  var moveAnimationTime = getVelocityMoveTime(contextInstance, total);
+  var finalAnimationTime = Math.max(moveAnimationTime, alignAnimationTime);
+  var paddingValueX = getPaddingValue(contextInstance, sizeX);
+  var paddingValueY = getPaddingValue(contextInstance, sizeY);
+  var paddingX = paddingValueX * wrapperComponent.offsetWidth / 100;
+  var paddingY = paddingValueY * wrapperComponent.offsetHeight / 100;
+  var maxTargetX = maxPositionX + paddingX;
+  var minTargetX = minPositionX - paddingX;
+  var maxTargetY = maxPositionY + paddingY;
+  var minTargetY = minPositionY - paddingY;
+  var startState = contextInstance.transformState;
+  var startTime = new Date().getTime();
+  handleSetupAnimation(contextInstance, animationType, finalAnimationTime, function(step) {
+    var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+    var frameTime = new Date().getTime() - startTime;
+    var animationProgress = frameTime / alignAnimationTime;
+    var alignAnimation = animations[alignmentAnimation.animationType];
+    var alignStep = 1 - alignAnimation(Math.min(1, animationProgress));
+    var customStep = 1 - step;
+    var newPositionX = positionX2 + velocityX * customStep;
+    var newPositionY = positionY + velocityY * customStep;
+    var currentPositionX = getVelocityPosition(newPositionX, startState.positionX, positionX2, lockAxisX, limitToBounds, minPositionX, maxPositionX, minTargetX, maxTargetX, alignStep);
+    var currentPositionY = getVelocityPosition(newPositionY, startState.positionY, positionY, lockAxisY, limitToBounds, minPositionY, maxPositionY, minTargetY, maxTargetY, alignStep);
+    if (positionX2 !== newPositionX || positionY !== newPositionY) {
+      contextInstance.setTransformState(scale, currentPositionX, currentPositionY);
+    }
+  });
+}
+function handlePanningStart(contextInstance, event) {
+  var scale = contextInstance.transformState.scale;
+  handleCancelAnimation(contextInstance);
+  handleCalculateBounds(contextInstance, scale);
+  if (window.TouchEvent !== void 0 && event instanceof TouchEvent) {
+    handleTouchPanningSetup(contextInstance, event);
+  } else {
+    handlePanningSetup(contextInstance, event);
+  }
+}
+function handleAlignToBounds(contextInstance, customAnimationTime) {
+  var scale = contextInstance.transformState.scale;
+  var _a = contextInstance.setup, minScale = _a.minScale, alignmentAnimation = _a.alignmentAnimation;
+  var disabled = alignmentAnimation.disabled, sizeX = alignmentAnimation.sizeX, sizeY = alignmentAnimation.sizeY, animationTime = alignmentAnimation.animationTime, animationType = alignmentAnimation.animationType;
+  var isDisabled = disabled || scale < minScale || !sizeX && !sizeY;
+  if (isDisabled)
+    return;
+  var targetState = handlePanToBounds(contextInstance);
+  if (targetState) {
+    animate(contextInstance, targetState, customAnimationTime !== null && customAnimationTime !== void 0 ? customAnimationTime : animationTime, animationType);
+  }
+}
+function handlePanning(contextInstance, clientX, clientY) {
+  var startCoords = contextInstance.startCoords, setup = contextInstance.setup;
+  var _a = setup.alignmentAnimation, sizeX = _a.sizeX, sizeY = _a.sizeY;
+  if (!startCoords)
+    return;
+  var _b = getPanningClientPosition(contextInstance, clientX, clientY), x = _b.x, y = _b.y;
+  var paddingValueX = getPaddingValue(contextInstance, sizeX);
+  var paddingValueY = getPaddingValue(contextInstance, sizeY);
+  handleCalculateVelocity(contextInstance, {
+    x,
+    y
+  });
+  handleNewPosition(contextInstance, x, y, paddingValueX, paddingValueY);
+}
+function handlePanningEnd(contextInstance) {
+  if (contextInstance.isPanning) {
+    var velocityDisabled = contextInstance.setup.panning.velocityDisabled;
+    var velocity = contextInstance.velocity, wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent;
+    contextInstance.isPanning = false;
+    contextInstance.animate = false;
+    contextInstance.animation = null;
+    var wrapperRect = wrapperComponent === null || wrapperComponent === void 0 ? void 0 : wrapperComponent.getBoundingClientRect();
+    var contentRect = contentComponent === null || contentComponent === void 0 ? void 0 : contentComponent.getBoundingClientRect();
+    var wrapperWidth = (wrapperRect === null || wrapperRect === void 0 ? void 0 : wrapperRect.width) || 0;
+    var wrapperHeight = (wrapperRect === null || wrapperRect === void 0 ? void 0 : wrapperRect.height) || 0;
+    var contentWidth = (contentRect === null || contentRect === void 0 ? void 0 : contentRect.width) || 0;
+    var contentHeight = (contentRect === null || contentRect === void 0 ? void 0 : contentRect.height) || 0;
+    var isZoomed = wrapperWidth < contentWidth || wrapperHeight < contentHeight;
+    var shouldAnimate = !velocityDisabled && velocity && (velocity === null || velocity === void 0 ? void 0 : velocity.total) > 0.1 && isZoomed;
+    if (shouldAnimate) {
+      handleVelocityPanning(contextInstance);
+    } else {
+      handleAlignToBounds(contextInstance);
+    }
+  }
+}
+function handleZoomToPoint(contextInstance, scale, mouseX, mouseY) {
+  var _a = contextInstance.setup, minScale = _a.minScale, maxScale = _a.maxScale, limitToBounds = _a.limitToBounds;
+  var newScale = checkZoomBounds(roundNumber(scale, 2), minScale, maxScale, 0, false);
+  var bounds = handleCalculateBounds(contextInstance, newScale);
+  var _b = handleCalculateZoomPositions(contextInstance, mouseX, mouseY, newScale, bounds, limitToBounds), x = _b.x, y = _b.y;
+  return {
+    scale: newScale,
+    positionX: x,
+    positionY: y
+  };
+}
+function handleAlignToScaleBounds(contextInstance, mousePositionX, mousePositionY) {
+  var scale = contextInstance.transformState.scale;
+  var wrapperComponent = contextInstance.wrapperComponent;
+  var _a = contextInstance.setup, minScale = _a.minScale, limitToBounds = _a.limitToBounds, zoomAnimation = _a.zoomAnimation;
+  var disabled = zoomAnimation.disabled, animationTime = zoomAnimation.animationTime, animationType = zoomAnimation.animationType;
+  var isDisabled = disabled || scale >= minScale;
+  if (scale >= 1 || limitToBounds) {
+    handleAlignToBounds(contextInstance);
+  }
+  if (isDisabled || !wrapperComponent || !contextInstance.mounted)
+    return;
+  var mouseX = mousePositionX || wrapperComponent.offsetWidth / 2;
+  var mouseY = mousePositionY || wrapperComponent.offsetHeight / 2;
+  var targetState = handleZoomToPoint(contextInstance, minScale, mouseX, mouseY);
+  if (targetState) {
+    animate(contextInstance, targetState, animationTime, animationType);
+  }
+}
+var __assign = function() {
+  __assign = Object.assign || function __assign2(t2) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+      for (var p in s)
+        if (Object.prototype.hasOwnProperty.call(s, p))
+          t2[p] = s[p];
+    }
+    return t2;
+  };
+  return __assign.apply(this, arguments);
+};
+function __spreadArray(to, from, pack) {
+  if (pack || arguments.length === 2)
+    for (var i = 0, l = from.length, ar2; i < l; i++) {
+      if (ar2 || !(i in from)) {
+        if (!ar2)
+          ar2 = Array.prototype.slice.call(from, 0, i);
+        ar2[i] = from[i];
+      }
+    }
+  return to.concat(ar2 || Array.prototype.slice.call(from));
+}
+typeof SuppressedError === "function" ? SuppressedError : function(error, suppressed, message) {
+  var e = new Error(message);
+  return e.name = "SuppressedError", e.error = error, e.suppressed = suppressed, e;
+};
+var initialState = {
+  previousScale: 1,
+  scale: 1,
+  positionX: 0,
+  positionY: 0
+};
+var initialSetup = {
+  disabled: false,
+  minPositionX: null,
+  maxPositionX: null,
+  minPositionY: null,
+  maxPositionY: null,
+  minScale: 1,
+  maxScale: 8,
+  limitToBounds: true,
+  centerZoomedOut: false,
+  centerOnInit: false,
+  disablePadding: false,
+  smooth: true,
+  wheel: {
+    step: 0.2,
+    disabled: false,
+    smoothStep: 1e-3,
+    wheelDisabled: false,
+    touchPadDisabled: false,
+    activationKeys: [],
+    excluded: []
+  },
+  panning: {
+    disabled: false,
+    velocityDisabled: false,
+    lockAxisX: false,
+    lockAxisY: false,
+    allowLeftClickPan: true,
+    allowMiddleClickPan: true,
+    allowRightClickPan: true,
+    wheelPanning: false,
+    activationKeys: [],
+    excluded: []
+  },
+  pinch: {
+    step: 5,
+    disabled: false,
+    excluded: []
+  },
+  doubleClick: {
+    disabled: false,
+    step: 0.7,
+    mode: "zoomIn",
+    animationType: "easeOut",
+    animationTime: 200,
+    excluded: []
+  },
+  zoomAnimation: {
+    disabled: false,
+    size: 0.4,
+    animationTime: 200,
+    animationType: "easeOut"
+  },
+  alignmentAnimation: {
+    disabled: false,
+    sizeX: 100,
+    sizeY: 100,
+    animationTime: 200,
+    velocityAlignmentTime: 400,
+    animationType: "easeOut"
+  },
+  velocityAnimation: {
+    disabled: false,
+    sensitivity: 1,
+    animationTime: 400,
+    animationType: "easeOut",
+    equalToMove: true
+  }
+};
+var baseClasses = {
+  wrapperClass: "react-transform-wrapper",
+  contentClass: "react-transform-component"
+};
+var createState = function(props) {
+  var _a, _b, _c, _d;
+  return {
+    previousScale: (_a = props.initialScale) !== null && _a !== void 0 ? _a : initialState.scale,
+    scale: (_b = props.initialScale) !== null && _b !== void 0 ? _b : initialState.scale,
+    positionX: (_c = props.initialPositionX) !== null && _c !== void 0 ? _c : initialState.positionX,
+    positionY: (_d = props.initialPositionY) !== null && _d !== void 0 ? _d : initialState.positionY
+  };
+};
+var createSetup = function(props) {
+  var newSetup = __assign({}, initialSetup);
+  Object.keys(props).forEach(function(key) {
+    var validValue = typeof props[key] !== "undefined";
+    var validParameter = typeof initialSetup[key] !== "undefined";
+    if (validParameter && validValue) {
+      var dataType = Object.prototype.toString.call(initialSetup[key]);
+      var isObject = dataType === "[object Object]";
+      var isArray = dataType === "[object Array]";
+      if (isObject) {
+        newSetup[key] = __assign(__assign({}, initialSetup[key]), props[key]);
+      } else if (isArray) {
+        newSetup[key] = __spreadArray(__spreadArray([], initialSetup[key], true), props[key], true);
+      } else {
+        newSetup[key] = props[key];
+      }
+    }
+  });
+  return newSetup;
+};
+var handleCalculateButtonZoom = function(contextInstance, delta, step) {
+  var scale = contextInstance.transformState.scale;
+  var wrapperComponent = contextInstance.wrapperComponent, setup = contextInstance.setup;
+  var maxScale = setup.maxScale, minScale = setup.minScale, zoomAnimation = setup.zoomAnimation, smooth = setup.smooth;
+  var size = zoomAnimation.size;
+  if (!wrapperComponent) {
+    throw new Error("Wrapper is not mounted");
+  }
+  var targetScale = smooth ? scale * Math.exp(delta * step) : scale + delta * step;
+  var newScale = checkZoomBounds(roundNumber(targetScale, 3), minScale, maxScale, size, false);
+  return newScale;
+};
+function handleZoomToViewCenter(contextInstance, delta, step, animationTime, animationType) {
+  var wrapperComponent = contextInstance.wrapperComponent;
+  var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+  if (!wrapperComponent)
+    return console.error("No WrapperComponent found");
+  var wrapperWidth = wrapperComponent.offsetWidth;
+  var wrapperHeight = wrapperComponent.offsetHeight;
+  var mouseX = (wrapperWidth / 2 - positionX2) / scale;
+  var mouseY = (wrapperHeight / 2 - positionY) / scale;
+  var newScale = handleCalculateButtonZoom(contextInstance, delta, step);
+  var targetState = handleZoomToPoint(contextInstance, newScale, mouseX, mouseY);
+  if (!targetState) {
+    return console.error("Error during zoom event. New transformation state was not calculated.");
+  }
+  animate(contextInstance, targetState, animationTime, animationType);
+}
+function resetTransformations(contextInstance, animationTime, animationType, onResetTransformation) {
+  var setup = contextInstance.setup, wrapperComponent = contextInstance.wrapperComponent;
+  var limitToBounds = setup.limitToBounds;
+  var initialTransformation = createState(contextInstance.props);
+  var _a = contextInstance.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+  if (!wrapperComponent)
+    return;
+  var newBounds = calculateBounds(contextInstance, initialTransformation.scale);
+  var boundedPositions = getMouseBoundedPosition(initialTransformation.positionX, initialTransformation.positionY, newBounds, limitToBounds, 0, 0, wrapperComponent);
+  var newState = {
+    scale: initialTransformation.scale,
+    positionX: boundedPositions.x,
+    positionY: boundedPositions.y
+  };
+  if (scale === initialTransformation.scale && positionX2 === initialTransformation.positionX && positionY === initialTransformation.positionY) {
+    return;
+  }
+  onResetTransformation === null || onResetTransformation === void 0 ? void 0 : onResetTransformation();
+  animate(contextInstance, newState, animationTime, animationType);
+}
+function getOffset(element, wrapper, content, state) {
+  var offset2 = element.getBoundingClientRect();
+  var wrapperOffset = wrapper.getBoundingClientRect();
+  var contentOffset = content.getBoundingClientRect();
+  var xOff = wrapperOffset.x * state.scale;
+  var yOff = wrapperOffset.y * state.scale;
+  return {
+    x: (offset2.x - contentOffset.x + xOff) / state.scale,
+    y: (offset2.y - contentOffset.y + yOff) / state.scale
+  };
+}
+function calculateZoomToNode(contextInstance, node, customZoom) {
+  var wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent, transformState = contextInstance.transformState;
+  var _a = contextInstance.setup, limitToBounds = _a.limitToBounds, minScale = _a.minScale, maxScale = _a.maxScale;
+  if (!wrapperComponent || !contentComponent)
+    return transformState;
+  var wrapperRect = wrapperComponent.getBoundingClientRect();
+  var nodeRect = node.getBoundingClientRect();
+  var nodeOffset = getOffset(node, wrapperComponent, contentComponent, transformState);
+  var nodeLeft = nodeOffset.x;
+  var nodeTop = nodeOffset.y;
+  var nodeWidth = nodeRect.width / transformState.scale;
+  var nodeHeight = nodeRect.height / transformState.scale;
+  var scaleX = wrapperComponent.offsetWidth / nodeWidth;
+  var scaleY = wrapperComponent.offsetHeight / nodeHeight;
+  var newScale = checkZoomBounds(customZoom || Math.min(scaleX, scaleY), minScale, maxScale, 0, false);
+  var offsetX = (wrapperRect.width - nodeWidth * newScale) / 2;
+  var offsetY = (wrapperRect.height - nodeHeight * newScale) / 2;
+  var newPositionX = (wrapperRect.left - nodeLeft) * newScale + offsetX;
+  var newPositionY = (wrapperRect.top - nodeTop) * newScale + offsetY;
+  var bounds = calculateBounds(contextInstance, newScale);
+  var _b = getMouseBoundedPosition(newPositionX, newPositionY, bounds, limitToBounds, 0, 0, wrapperComponent), x = _b.x, y = _b.y;
+  return {
+    positionX: x,
+    positionY: y,
+    scale: newScale
+  };
+}
+var zoomIn = function(contextInstance) {
+  return function(step, animationTime, animationType) {
+    if (step === void 0) {
+      step = 0.5;
+    }
+    if (animationTime === void 0) {
+      animationTime = 300;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    handleZoomToViewCenter(contextInstance, 1, step, animationTime, animationType);
+  };
+};
+var zoomOut = function(contextInstance) {
+  return function(step, animationTime, animationType) {
+    if (step === void 0) {
+      step = 0.5;
+    }
+    if (animationTime === void 0) {
+      animationTime = 300;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    handleZoomToViewCenter(contextInstance, -1, step, animationTime, animationType);
+  };
+};
+var setTransform = function(contextInstance) {
+  return function(newPositionX, newPositionY, newScale, animationTime, animationType) {
+    if (animationTime === void 0) {
+      animationTime = 300;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    var _a = contextInstance.transformState, positionX2 = _a.positionX, positionY = _a.positionY, scale = _a.scale;
+    var wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent;
+    var disabled = contextInstance.setup.disabled;
+    if (disabled || !wrapperComponent || !contentComponent)
+      return;
+    var targetState = {
+      positionX: Number.isNaN(newPositionX) ? positionX2 : newPositionX,
+      positionY: Number.isNaN(newPositionY) ? positionY : newPositionY,
+      scale: Number.isNaN(newScale) ? scale : newScale
+    };
+    animate(contextInstance, targetState, animationTime, animationType);
+  };
+};
+var resetTransform = function(contextInstance) {
+  return function(animationTime, animationType) {
+    if (animationTime === void 0) {
+      animationTime = 200;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    resetTransformations(contextInstance, animationTime, animationType);
+  };
+};
+var centerView = function(contextInstance) {
+  return function(scale, animationTime, animationType) {
+    if (animationTime === void 0) {
+      animationTime = 200;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    var transformState = contextInstance.transformState, wrapperComponent = contextInstance.wrapperComponent, contentComponent = contextInstance.contentComponent;
+    if (wrapperComponent && contentComponent) {
+      var targetState = getCenterPosition(scale || transformState.scale, wrapperComponent, contentComponent);
+      animate(contextInstance, targetState, animationTime, animationType);
+    }
+  };
+};
+var zoomToElement = function(contextInstance) {
+  return function(node, scale, animationTime, animationType) {
+    if (animationTime === void 0) {
+      animationTime = 600;
+    }
+    if (animationType === void 0) {
+      animationType = "easeOut";
+    }
+    handleCancelAnimation(contextInstance);
+    var wrapperComponent = contextInstance.wrapperComponent;
+    var target = typeof node === "string" ? document.getElementById(node) : node;
+    if (wrapperComponent && target && wrapperComponent.contains(target)) {
+      var targetState = calculateZoomToNode(contextInstance, target, scale);
+      animate(contextInstance, targetState, animationTime, animationType);
+    }
+  };
+};
+var getControls = function(contextInstance) {
+  return {
+    instance: contextInstance,
+    zoomIn: zoomIn(contextInstance),
+    zoomOut: zoomOut(contextInstance),
+    setTransform: setTransform(contextInstance),
+    resetTransform: resetTransform(contextInstance),
+    centerView: centerView(contextInstance),
+    zoomToElement: zoomToElement(contextInstance)
+  };
+};
+var getState = function(contextInstance) {
+  return {
+    instance: contextInstance,
+    state: contextInstance.transformState
+  };
+};
+var getContext = function(contextInstance) {
+  var ref = {};
+  Object.assign(ref, getState(contextInstance));
+  Object.assign(ref, getControls(contextInstance));
+  return ref;
+};
+var passiveSupported = false;
+function makePassiveEventOption() {
+  try {
+    var options = {
+      get passive() {
+        passiveSupported = true;
+        return false;
+      }
+    };
+    return options;
+  } catch (err) {
+    passiveSupported = false;
+    return passiveSupported;
+  }
+}
+var matchPrefix = ".".concat(baseClasses.wrapperClass);
+var isExcludedNode = function(node, excluded) {
+  return excluded.some(function(exclude) {
+    return node.matches("".concat(matchPrefix, " ").concat(exclude, ", ").concat(matchPrefix, " .").concat(exclude, ", ").concat(matchPrefix, " ").concat(exclude, " *, ").concat(matchPrefix, " .").concat(exclude, " *"));
+  });
+};
+var cancelTimeout = function(timeout) {
+  if (timeout) {
+    clearTimeout(timeout);
+  }
+};
+var getTransformStyles = function(x, y, scale) {
+  return "translate(".concat(x, "px, ").concat(y, "px) scale(").concat(scale, ")");
+};
+var getCenterPosition = function(scale, wrapperComponent, contentComponent) {
+  var contentWidth = contentComponent.offsetWidth * scale;
+  var contentHeight = contentComponent.offsetHeight * scale;
+  var centerPositionX = (wrapperComponent.offsetWidth - contentWidth) / 2;
+  var centerPositionY = (wrapperComponent.offsetHeight - contentHeight) / 2;
+  return {
+    scale,
+    positionX: centerPositionX,
+    positionY: centerPositionY
+  };
+};
+function mergeRefs(refs) {
+  return function(value) {
+    refs.forEach(function(ref) {
+      if (typeof ref === "function") {
+        ref(value);
+      } else if (ref != null) {
+        ref.current = value;
+      }
+    });
+  };
+}
+var isWheelAllowed = function(contextInstance, event) {
+  var _a = contextInstance.setup.wheel, disabled = _a.disabled, wheelDisabled = _a.wheelDisabled, touchPadDisabled = _a.touchPadDisabled, excluded = _a.excluded;
+  var isInitialized = contextInstance.isInitialized, isPanning = contextInstance.isPanning;
+  var target = event.target;
+  var isAllowed = isInitialized && !isPanning && !disabled && target;
+  if (!isAllowed)
+    return false;
+  if (wheelDisabled && !event.ctrlKey)
+    return false;
+  if (touchPadDisabled && event.ctrlKey)
+    return false;
+  var isExcluded = isExcludedNode(target, excluded);
+  if (isExcluded)
+    return false;
+  return true;
+};
+var getDeltaY = function(event) {
+  if (event) {
+    return event.deltaY < 0 ? 1 : -1;
+  }
+  return 0;
+};
+function getDelta(event, customDelta) {
+  var deltaY = getDeltaY(event);
+  var delta = checkIsNumber(customDelta, deltaY);
+  return delta;
+}
+function getMousePosition(event, contentComponent, scale) {
+  var contentRect = contentComponent.getBoundingClientRect();
+  var mouseX = 0;
+  var mouseY = 0;
+  if ("clientX" in event) {
+    mouseX = (event.clientX - contentRect.left) / scale;
+    mouseY = (event.clientY - contentRect.top) / scale;
+  } else {
+    var touch = event.touches[0];
+    mouseX = (touch.clientX - contentRect.left) / scale;
+    mouseY = (touch.clientY - contentRect.top) / scale;
+  }
+  if (Number.isNaN(mouseX) || Number.isNaN(mouseY))
+    console.error("No mouse or touch offset found");
+  return {
+    x: mouseX,
+    y: mouseY
+  };
+}
+var handleCalculateWheelZoom = function(contextInstance, delta, step, disable, getTarget) {
+  var scale = contextInstance.transformState.scale;
+  var wrapperComponent = contextInstance.wrapperComponent, setup = contextInstance.setup;
+  var maxScale = setup.maxScale, minScale = setup.minScale, zoomAnimation = setup.zoomAnimation, disablePadding = setup.disablePadding;
+  var size = zoomAnimation.size, disabled = zoomAnimation.disabled;
+  if (!wrapperComponent) {
+    throw new Error("Wrapper is not mounted");
+  }
+  var targetScale = scale + delta * step;
+  if (getTarget)
+    return targetScale;
+  var paddingEnabled = disable ? false : !disabled;
+  var newScale = checkZoomBounds(roundNumber(targetScale, 3), minScale, maxScale, size, paddingEnabled && !disablePadding);
+  return newScale;
+};
+var handleWheelZoomStop = function(contextInstance, event) {
+  var previousWheelEvent = contextInstance.previousWheelEvent;
+  var scale = contextInstance.transformState.scale;
+  var _a = contextInstance.setup, maxScale = _a.maxScale, minScale = _a.minScale;
+  if (!previousWheelEvent)
+    return false;
+  if (scale < maxScale || scale > minScale)
+    return true;
+  if (Math.sign(previousWheelEvent.deltaY) !== Math.sign(event.deltaY))
+    return true;
+  if (previousWheelEvent.deltaY > 0 && previousWheelEvent.deltaY < event.deltaY)
+    return true;
+  if (previousWheelEvent.deltaY < 0 && previousWheelEvent.deltaY > event.deltaY)
+    return true;
+  if (Math.sign(previousWheelEvent.deltaY) !== Math.sign(event.deltaY))
+    return true;
+  return false;
+};
+var isPinchStartAllowed = function(contextInstance, event) {
+  var _a = contextInstance.setup.pinch, disabled = _a.disabled, excluded = _a.excluded;
+  var isInitialized = contextInstance.isInitialized;
+  var target = event.target;
+  var isAllowed = isInitialized && !disabled && target;
+  if (!isAllowed)
+    return false;
+  var isExcluded = isExcludedNode(target, excluded);
+  if (isExcluded)
+    return false;
+  return true;
+};
+var isPinchAllowed = function(contextInstance) {
+  var disabled = contextInstance.setup.pinch.disabled;
+  var isInitialized = contextInstance.isInitialized, pinchStartDistance = contextInstance.pinchStartDistance;
+  var isAllowed = isInitialized && !disabled && pinchStartDistance;
+  if (!isAllowed)
+    return false;
+  return true;
+};
+var calculateTouchMidPoint = function(event, scale, contentComponent) {
+  var contentRect = contentComponent.getBoundingClientRect();
+  var touches = event.touches;
+  var firstPointX = roundNumber(touches[0].clientX - contentRect.left, 5);
+  var firstPointY = roundNumber(touches[0].clientY - contentRect.top, 5);
+  var secondPointX = roundNumber(touches[1].clientX - contentRect.left, 5);
+  var secondPointY = roundNumber(touches[1].clientY - contentRect.top, 5);
+  return {
+    x: (firstPointX + secondPointX) / 2 / scale,
+    y: (firstPointY + secondPointY) / 2 / scale
+  };
+};
+var getTouchDistance = function(event) {
+  return Math.sqrt(Math.pow(event.touches[0].pageX - event.touches[1].pageX, 2) + Math.pow(event.touches[0].pageY - event.touches[1].pageY, 2));
+};
+var calculatePinchZoom = function(contextInstance, currentDistance) {
+  var pinchStartScale = contextInstance.pinchStartScale, pinchStartDistance = contextInstance.pinchStartDistance, setup = contextInstance.setup;
+  var maxScale = setup.maxScale, minScale = setup.minScale, zoomAnimation = setup.zoomAnimation, disablePadding = setup.disablePadding;
+  var size = zoomAnimation.size, disabled = zoomAnimation.disabled;
+  if (!pinchStartScale || pinchStartDistance === null || !currentDistance) {
+    throw new Error("Pinch touches distance was not provided");
+  }
+  if (currentDistance < 0) {
+    return contextInstance.transformState.scale;
+  }
+  var touchProportion = currentDistance / pinchStartDistance;
+  var scaleDifference = touchProportion * pinchStartScale;
+  return checkZoomBounds(roundNumber(scaleDifference, 2), minScale, maxScale, size, !disabled && !disablePadding);
+};
+var wheelStopEventTime = 160;
+var wheelAnimationTime = 100;
+var handleWheelStart = function(contextInstance, event) {
+  var _a = contextInstance.props, onWheelStart = _a.onWheelStart, onZoomStart = _a.onZoomStart;
+  if (!contextInstance.wheelStopEventTimer) {
+    handleCancelAnimation(contextInstance);
+    handleCallback(getContext(contextInstance), event, onWheelStart);
+    handleCallback(getContext(contextInstance), event, onZoomStart);
+  }
+};
+var handleWheelZoom = function(contextInstance, event) {
+  var _a = contextInstance.props, onWheel = _a.onWheel, onZoom = _a.onZoom;
+  var contentComponent = contextInstance.contentComponent, setup = contextInstance.setup, transformState = contextInstance.transformState;
+  var scale = transformState.scale;
+  var limitToBounds = setup.limitToBounds, centerZoomedOut = setup.centerZoomedOut, zoomAnimation = setup.zoomAnimation, wheel = setup.wheel, disablePadding = setup.disablePadding, smooth = setup.smooth;
+  var size = zoomAnimation.size, disabled = zoomAnimation.disabled;
+  var step = wheel.step, smoothStep = wheel.smoothStep;
+  if (!contentComponent) {
+    throw new Error("Component not mounted");
+  }
+  event.preventDefault();
+  event.stopPropagation();
+  var delta = getDelta(event, null);
+  var zoomStep = smooth ? smoothStep * Math.abs(event.deltaY) : step;
+  var newScale = handleCalculateWheelZoom(contextInstance, delta, zoomStep, !event.ctrlKey);
+  if (scale === newScale)
+    return;
+  var bounds = handleCalculateBounds(contextInstance, newScale);
+  var mousePosition = getMousePosition(event, contentComponent, scale);
+  var isPaddingDisabled = disabled || size === 0 || centerZoomedOut || disablePadding;
+  var isLimitedToBounds = limitToBounds && isPaddingDisabled;
+  var _b = handleCalculateZoomPositions(contextInstance, mousePosition.x, mousePosition.y, newScale, bounds, isLimitedToBounds), x = _b.x, y = _b.y;
+  contextInstance.previousWheelEvent = event;
+  contextInstance.setTransformState(newScale, x, y);
+  handleCallback(getContext(contextInstance), event, onWheel);
+  handleCallback(getContext(contextInstance), event, onZoom);
+};
+var handleWheelStop = function(contextInstance, event) {
+  var _a = contextInstance.props, onWheelStop = _a.onWheelStop, onZoomStop = _a.onZoomStop;
+  cancelTimeout(contextInstance.wheelAnimationTimer);
+  contextInstance.wheelAnimationTimer = setTimeout(function() {
+    if (!contextInstance.mounted)
+      return;
+    handleAlignToScaleBounds(contextInstance, event.x, event.y);
+    contextInstance.wheelAnimationTimer = null;
+  }, wheelAnimationTime);
+  var hasStoppedZooming = handleWheelZoomStop(contextInstance, event);
+  if (hasStoppedZooming) {
+    cancelTimeout(contextInstance.wheelStopEventTimer);
+    contextInstance.wheelStopEventTimer = setTimeout(function() {
+      if (!contextInstance.mounted)
+        return;
+      contextInstance.wheelStopEventTimer = null;
+      handleCallback(getContext(contextInstance), event, onWheelStop);
+      handleCallback(getContext(contextInstance), event, onZoomStop);
+    }, wheelStopEventTime);
+  }
+};
+var getTouchCenter = function(event) {
+  var totalX = 0;
+  var totalY = 0;
+  for (var i = 0; i < 2; i += 1) {
+    totalX += event.touches[i].clientX;
+    totalY += event.touches[i].clientY;
+  }
+  var x = totalX / 2;
+  var y = totalY / 2;
+  return {
+    x,
+    y
+  };
+};
+var handlePinchStart = function(contextInstance, event) {
+  var distance = getTouchDistance(event);
+  contextInstance.pinchStartDistance = distance;
+  contextInstance.lastDistance = distance;
+  contextInstance.pinchStartScale = contextInstance.transformState.scale;
+  contextInstance.isPanning = false;
+  var center = getTouchCenter(event);
+  contextInstance.pinchLastCenterX = center.x;
+  contextInstance.pinchLastCenterY = center.y;
+  handleCancelAnimation(contextInstance);
+};
+var handlePinchZoom = function(contextInstance, event) {
+  var contentComponent = contextInstance.contentComponent, pinchStartDistance = contextInstance.pinchStartDistance, wrapperComponent = contextInstance.wrapperComponent;
+  var scale = contextInstance.transformState.scale;
+  var _a = contextInstance.setup, limitToBounds = _a.limitToBounds, centerZoomedOut = _a.centerZoomedOut, zoomAnimation = _a.zoomAnimation, alignmentAnimation = _a.alignmentAnimation;
+  var disabled = zoomAnimation.disabled, size = zoomAnimation.size;
+  if (pinchStartDistance === null || !contentComponent)
+    return;
+  var midPoint = calculateTouchMidPoint(event, scale, contentComponent);
+  if (!Number.isFinite(midPoint.x) || !Number.isFinite(midPoint.y))
+    return;
+  var currentDistance = getTouchDistance(event);
+  var newScale = calculatePinchZoom(contextInstance, currentDistance);
+  var center = getTouchCenter(event);
+  var panX = center.x - (contextInstance.pinchLastCenterX || 0);
+  var panY = center.y - (contextInstance.pinchLastCenterY || 0);
+  if (newScale === scale && panX === 0 && panY === 0)
+    return;
+  contextInstance.pinchLastCenterX = center.x;
+  contextInstance.pinchLastCenterY = center.y;
+  var bounds = handleCalculateBounds(contextInstance, newScale);
+  var isPaddingDisabled = disabled || size === 0 || centerZoomedOut;
+  var isLimitedToBounds = limitToBounds && isPaddingDisabled;
+  var _b = handleCalculateZoomPositions(contextInstance, midPoint.x, midPoint.y, newScale, bounds, isLimitedToBounds), x = _b.x, y = _b.y;
+  contextInstance.pinchMidpoint = midPoint;
+  contextInstance.lastDistance = currentDistance;
+  var sizeX = alignmentAnimation.sizeX, sizeY = alignmentAnimation.sizeY;
+  var paddingValueX = getPaddingValue(contextInstance, sizeX);
+  var paddingValueY = getPaddingValue(contextInstance, sizeY);
+  var newPositionX = x + panX;
+  var newPositionY = y + panY;
+  var _c = getMouseBoundedPosition(newPositionX, newPositionY, bounds, limitToBounds, paddingValueX, paddingValueY, wrapperComponent), finalX = _c.x, finalY = _c.y;
+  contextInstance.setTransformState(newScale, finalX, finalY);
+};
+var handlePinchStop = function(contextInstance) {
+  var pinchMidpoint = contextInstance.pinchMidpoint;
+  contextInstance.velocity = null;
+  contextInstance.lastDistance = null;
+  contextInstance.pinchMidpoint = null;
+  contextInstance.pinchStartScale = null;
+  contextInstance.pinchStartDistance = null;
+  handleAlignToScaleBounds(contextInstance, pinchMidpoint === null || pinchMidpoint === void 0 ? void 0 : pinchMidpoint.x, pinchMidpoint === null || pinchMidpoint === void 0 ? void 0 : pinchMidpoint.y);
+};
+var handleDoubleClickStop = function(contextInstance, event) {
+  var onZoomStop = contextInstance.props.onZoomStop;
+  var animationTime = contextInstance.setup.doubleClick.animationTime;
+  cancelTimeout(contextInstance.doubleClickStopEventTimer);
+  contextInstance.doubleClickStopEventTimer = setTimeout(function() {
+    contextInstance.doubleClickStopEventTimer = null;
+    handleCallback(getContext(contextInstance), event, onZoomStop);
+  }, animationTime);
+};
+var handleDoubleClickResetMode = function(contextInstance, event) {
+  var _a = contextInstance.props, onZoomStart = _a.onZoomStart, onZoom = _a.onZoom;
+  var _b = contextInstance.setup.doubleClick, animationTime = _b.animationTime, animationType = _b.animationType;
+  handleCallback(getContext(contextInstance), event, onZoomStart);
+  resetTransformations(contextInstance, animationTime, animationType, function() {
+    return handleCallback(getContext(contextInstance), event, onZoom);
+  });
+  handleDoubleClickStop(contextInstance, event);
+};
+function getDoubleClickScale(mode, scale) {
+  if (mode === "toggle") {
+    return scale === 1 ? 1 : -1;
+  }
+  return mode === "zoomOut" ? -1 : 1;
+}
+function handleDoubleClick(contextInstance, event) {
+  var setup = contextInstance.setup, doubleClickStopEventTimer = contextInstance.doubleClickStopEventTimer, transformState = contextInstance.transformState, contentComponent = contextInstance.contentComponent;
+  var scale = transformState.scale;
+  var _a = contextInstance.props, onZoomStart = _a.onZoomStart, onZoom = _a.onZoom;
+  var _b = setup.doubleClick, disabled = _b.disabled, mode = _b.mode, step = _b.step, animationTime = _b.animationTime, animationType = _b.animationType;
+  if (disabled)
+    return;
+  if (doubleClickStopEventTimer)
+    return;
+  if (mode === "reset") {
+    return handleDoubleClickResetMode(contextInstance, event);
+  }
+  if (!contentComponent)
+    return console.error("No ContentComponent found");
+  var delta = getDoubleClickScale(mode, contextInstance.transformState.scale);
+  var newScale = handleCalculateButtonZoom(contextInstance, delta, step);
+  if (scale === newScale)
+    return;
+  handleCallback(getContext(contextInstance), event, onZoomStart);
+  var mousePosition = getMousePosition(event, contentComponent, scale);
+  var targetState = handleZoomToPoint(contextInstance, newScale, mousePosition.x, mousePosition.y);
+  if (!targetState) {
+    return console.error("Error during zoom event. New transformation state was not calculated.");
+  }
+  handleCallback(getContext(contextInstance), event, onZoom);
+  animate(contextInstance, targetState, animationTime, animationType);
+  handleDoubleClickStop(contextInstance, event);
+}
+var isDoubleClickAllowed = function(contextInstance, event) {
+  var isInitialized = contextInstance.isInitialized, setup = contextInstance.setup, wrapperComponent = contextInstance.wrapperComponent;
+  var _a = setup.doubleClick, disabled = _a.disabled, excluded = _a.excluded;
+  var target = event.target;
+  var isWrapperChild = wrapperComponent === null || wrapperComponent === void 0 ? void 0 : wrapperComponent.contains(target);
+  var isAllowed = isInitialized && target && isWrapperChild && !disabled;
+  if (!isAllowed)
+    return false;
+  var isExcluded = isExcludedNode(target, excluded);
+  if (isExcluded)
+    return false;
+  return true;
+};
+var ZoomPanPinch = function() {
+  function ZoomPanPinch2(props) {
+    var _this = this;
+    this.mounted = true;
+    this.pinchLastCenterX = null;
+    this.pinchLastCenterY = null;
+    this.onChangeCallbacks = /* @__PURE__ */ new Set();
+    this.onInitCallbacks = /* @__PURE__ */ new Set();
+    this.wrapperComponent = null;
+    this.contentComponent = null;
+    this.isInitialized = false;
+    this.bounds = null;
+    this.previousWheelEvent = null;
+    this.wheelStopEventTimer = null;
+    this.wheelAnimationTimer = null;
+    this.isPanning = false;
+    this.isWheelPanning = false;
+    this.startCoords = null;
+    this.lastTouch = null;
+    this.distance = null;
+    this.lastDistance = null;
+    this.pinchStartDistance = null;
+    this.pinchStartScale = null;
+    this.pinchMidpoint = null;
+    this.doubleClickStopEventTimer = null;
+    this.velocity = null;
+    this.velocityTime = null;
+    this.lastMousePosition = null;
+    this.animate = false;
+    this.animation = null;
+    this.maxBounds = null;
+    this.pressedKeys = {};
+    this.mount = function() {
+      _this.initializeWindowEvents();
+    };
+    this.unmount = function() {
+      _this.cleanupWindowEvents();
+    };
+    this.update = function(newProps) {
+      _this.props = newProps;
+      handleCalculateBounds(_this, _this.transformState.scale);
+      _this.setup = createSetup(newProps);
+    };
+    this.initializeWindowEvents = function() {
+      var _a, _b;
+      var passive2 = makePassiveEventOption();
+      var currentDocument = (_a = _this.wrapperComponent) === null || _a === void 0 ? void 0 : _a.ownerDocument;
+      var currentWindow = currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.defaultView;
+      (_b = _this.wrapperComponent) === null || _b === void 0 ? void 0 : _b.addEventListener("wheel", _this.onWheelPanning, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.addEventListener("mousedown", _this.onPanningStart, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.addEventListener("mousemove", _this.onPanning, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.addEventListener("mouseup", _this.onPanningStop, passive2);
+      currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.addEventListener("mouseleave", _this.clearPanning, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.addEventListener("keyup", _this.setKeyUnPressed, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.addEventListener("keydown", _this.setKeyPressed, passive2);
+    };
+    this.cleanupWindowEvents = function() {
+      var _a, _b;
+      var passive2 = makePassiveEventOption();
+      var currentDocument = (_a = _this.wrapperComponent) === null || _a === void 0 ? void 0 : _a.ownerDocument;
+      var currentWindow = currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.defaultView;
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.removeEventListener("mousedown", _this.onPanningStart, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.removeEventListener("mousemove", _this.onPanning, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.removeEventListener("mouseup", _this.onPanningStop, passive2);
+      currentDocument === null || currentDocument === void 0 ? void 0 : currentDocument.removeEventListener("mouseleave", _this.clearPanning, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.removeEventListener("keyup", _this.setKeyUnPressed, passive2);
+      currentWindow === null || currentWindow === void 0 ? void 0 : currentWindow.removeEventListener("keydown", _this.setKeyPressed, passive2);
+      document.removeEventListener("mouseleave", _this.clearPanning, passive2);
+      handleCancelAnimation(_this);
+      (_b = _this.observer) === null || _b === void 0 ? void 0 : _b.disconnect();
+    };
+    this.handleInitializeWrapperEvents = function(wrapper) {
+      var passive2 = makePassiveEventOption();
+      wrapper.addEventListener("wheel", _this.onWheelZoom, passive2);
+      wrapper.addEventListener("dblclick", _this.onDoubleClick, passive2);
+      wrapper.addEventListener("touchstart", _this.onTouchPanningStart, passive2);
+      wrapper.addEventListener("touchmove", _this.onTouchPanning, passive2);
+      wrapper.addEventListener("touchend", _this.onTouchPanningStop, passive2);
+    };
+    this.handleInitialize = function(wrapper, contentComponent) {
+      var isCentered = false;
+      var centerOnInit = _this.setup.centerOnInit;
+      var hasTarget = function(entries, target) {
+        for (var _i = 0, entries_1 = entries; _i < entries_1.length; _i++) {
+          var entry = entries_1[_i];
+          if (entry.target === target) {
+            return true;
+          }
+        }
+        return false;
+      };
+      _this.applyTransformation();
+      _this.onInitCallbacks.forEach(function(callback) {
+        callback(getContext(_this));
+      });
+      _this.observer = new ResizeObserver(function(entries) {
+        if (hasTarget(entries, wrapper) || hasTarget(entries, contentComponent)) {
+          if (centerOnInit && !isCentered) {
+            var currentWidth = contentComponent.offsetWidth;
+            var currentHeight = contentComponent.offsetHeight;
+            if (currentWidth > 0 || currentHeight > 0) {
+              isCentered = true;
+              _this.setCenter();
+            }
+          } else {
+            handleCancelAnimation(_this);
+            handleCalculateBounds(_this, _this.transformState.scale);
+            handleAlignToBounds(_this, 0);
+          }
+        }
+      });
+      _this.observer.observe(wrapper);
+      _this.observer.observe(contentComponent);
+    };
+    this.onWheelZoom = function(event) {
+      var disabled = _this.setup.disabled;
+      if (disabled)
+        return;
+      var isAllowed = isWheelAllowed(_this, event);
+      if (!isAllowed)
+        return;
+      var keysPressed = _this.isPressingKeys(_this.setup.wheel.activationKeys);
+      if (!keysPressed)
+        return;
+      handleWheelStart(_this, event);
+      handleWheelZoom(_this, event);
+      handleWheelStop(_this, event);
+    };
+    this.onWheelPanning = function(event) {
+      var _a = _this.setup, disabled = _a.disabled, wheel = _a.wheel, panning = _a.panning;
+      if (!_this.wrapperComponent || !_this.contentComponent || disabled || !wheel.wheelDisabled || panning.disabled || !panning.wheelPanning || event.ctrlKey) {
+        return;
+      }
+      event.preventDefault();
+      event.stopPropagation();
+      var _b = _this.transformState, positionX2 = _b.positionX, positionY = _b.positionY;
+      var mouseX = positionX2 - event.deltaX;
+      var mouseY = positionY - event.deltaY;
+      var newPositionX = panning.lockAxisX ? positionX2 : mouseX;
+      var newPositionY = panning.lockAxisY ? positionY : mouseY;
+      var _c = _this.setup.alignmentAnimation, sizeX = _c.sizeX, sizeY = _c.sizeY;
+      var paddingValueX = getPaddingValue(_this, sizeX);
+      var paddingValueY = getPaddingValue(_this, sizeY);
+      if (newPositionX === positionX2 && newPositionY === positionY)
+        return;
+      handleNewPosition(_this, newPositionX, newPositionY, paddingValueX, paddingValueY);
+    };
+    this.onPanningStart = function(event) {
+      var disabled = _this.setup.disabled;
+      var onPanningStart = _this.props.onPanningStart;
+      if (disabled)
+        return;
+      var isAllowed = isPanningStartAllowed(_this, event);
+      if (!isAllowed)
+        return;
+      var keysPressed = _this.isPressingKeys(_this.setup.panning.activationKeys);
+      if (!keysPressed)
+        return;
+      if (event.button === 0 && !_this.setup.panning.allowLeftClickPan)
+        return;
+      if (event.button === 1 && !_this.setup.panning.allowMiddleClickPan)
+        return;
+      if (event.button === 2 && !_this.setup.panning.allowRightClickPan)
+        return;
+      event.preventDefault();
+      event.stopPropagation();
+      handleCancelAnimation(_this);
+      handlePanningStart(_this, event);
+      handleCallback(getContext(_this), event, onPanningStart);
+    };
+    this.onPanning = function(event) {
+      var disabled = _this.setup.disabled;
+      var onPanning = _this.props.onPanning;
+      if (disabled)
+        return;
+      var isAllowed = isPanningAllowed(_this);
+      if (!isAllowed)
+        return;
+      var keysPressed = _this.isPressingKeys(_this.setup.panning.activationKeys);
+      if (!keysPressed)
+        return;
+      event.preventDefault();
+      event.stopPropagation();
+      handlePanning(_this, event.clientX, event.clientY);
+      handleCallback(getContext(_this), event, onPanning);
+    };
+    this.onPanningStop = function(event) {
+      var onPanningStop = _this.props.onPanningStop;
+      if (_this.isPanning) {
+        handlePanningEnd(_this);
+        handleCallback(getContext(_this), event, onPanningStop);
+      }
+    };
+    this.onPinchStart = function(event) {
+      var disabled = _this.setup.disabled;
+      var _a = _this.props, onPinchingStart = _a.onPinchingStart, onZoomStart = _a.onZoomStart;
+      if (disabled)
+        return;
+      var isAllowed = isPinchStartAllowed(_this, event);
+      if (!isAllowed)
+        return;
+      handlePinchStart(_this, event);
+      handleCancelAnimation(_this);
+      handleCallback(getContext(_this), event, onPinchingStart);
+      handleCallback(getContext(_this), event, onZoomStart);
+    };
+    this.onPinch = function(event) {
+      var disabled = _this.setup.disabled;
+      var _a = _this.props, onPinching = _a.onPinching, onZoom = _a.onZoom;
+      if (disabled)
+        return;
+      var isAllowed = isPinchAllowed(_this);
+      if (!isAllowed)
+        return;
+      event.preventDefault();
+      event.stopPropagation();
+      handlePinchZoom(_this, event);
+      handleCallback(getContext(_this), event, onPinching);
+      handleCallback(getContext(_this), event, onZoom);
+    };
+    this.onPinchStop = function(event) {
+      var _a = _this.props, onPinchingStop = _a.onPinchingStop, onZoomStop = _a.onZoomStop;
+      if (_this.pinchStartScale) {
+        handlePinchStop(_this);
+        handleCallback(getContext(_this), event, onPinchingStop);
+        handleCallback(getContext(_this), event, onZoomStop);
+      }
+    };
+    this.onTouchPanningStart = function(event) {
+      var disabled = _this.setup.disabled;
+      var onPanningStart = _this.props.onPanningStart;
+      if (disabled)
+        return;
+      var isAllowed = isPanningStartAllowed(_this, event);
+      if (!isAllowed)
+        return;
+      var isDoubleTap = _this.lastTouch && +new Date() - _this.lastTouch < 200 && event.touches.length === 1;
+      if (!isDoubleTap) {
+        _this.lastTouch = +new Date();
+        handleCancelAnimation(_this);
+        var touches = event.touches;
+        var isPanningAction = touches.length === 1;
+        var isPinchAction = touches.length === 2;
+        if (isPanningAction) {
+          handleCancelAnimation(_this);
+          handlePanningStart(_this, event);
+          handleCallback(getContext(_this), event, onPanningStart);
+        }
+        if (isPinchAction) {
+          _this.onPinchStart(event);
+        }
+      }
+    };
+    this.onTouchPanning = function(event) {
+      var disabled = _this.setup.disabled;
+      var onPanning = _this.props.onPanning;
+      if (_this.isPanning && event.touches.length === 1) {
+        if (disabled)
+          return;
+        var isAllowed = isPanningAllowed(_this);
+        if (!isAllowed)
+          return;
+        event.preventDefault();
+        event.stopPropagation();
+        var touch = event.touches[0];
+        handlePanning(_this, touch.clientX, touch.clientY);
+        handleCallback(getContext(_this), event, onPanning);
+      } else if (event.touches.length > 1) {
+        _this.onPinch(event);
+      }
+    };
+    this.onTouchPanningStop = function(event) {
+      _this.onPanningStop(event);
+      _this.onPinchStop(event);
+    };
+    this.onDoubleClick = function(event) {
+      var disabled = _this.setup.disabled;
+      if (disabled)
+        return;
+      var isAllowed = isDoubleClickAllowed(_this, event);
+      if (!isAllowed)
+        return;
+      handleDoubleClick(_this, event);
+    };
+    this.clearPanning = function(event) {
+      if (_this.isPanning) {
+        _this.onPanningStop(event);
+      }
+    };
+    this.setKeyPressed = function(e) {
+      _this.pressedKeys[e.key] = true;
+    };
+    this.setKeyUnPressed = function(e) {
+      _this.pressedKeys[e.key] = false;
+    };
+    this.isPressingKeys = function(keys) {
+      if (!keys.length) {
+        return true;
+      }
+      return Boolean(keys.find(function(key) {
+        return _this.pressedKeys[key];
+      }));
+    };
+    this.setTransformState = function(scale, positionX2, positionY) {
+      var onTransformed = _this.props.onTransformed;
+      if (!Number.isNaN(scale) && !Number.isNaN(positionX2) && !Number.isNaN(positionY)) {
+        if (scale !== _this.transformState.scale) {
+          _this.transformState.previousScale = _this.transformState.scale;
+          _this.transformState.scale = scale;
+        }
+        _this.transformState.positionX = positionX2;
+        _this.transformState.positionY = positionY;
+        _this.applyTransformation();
+        var ctx_1 = getContext(_this);
+        _this.onChangeCallbacks.forEach(function(callback) {
+          return callback(ctx_1);
+        });
+        handleCallback(ctx_1, {
+          scale,
+          positionX: positionX2,
+          positionY
+        }, onTransformed);
+      } else {
+        console.error("Detected NaN set state values");
+      }
+    };
+    this.setCenter = function() {
+      if (_this.wrapperComponent && _this.contentComponent) {
+        var targetState = getCenterPosition(_this.transformState.scale, _this.wrapperComponent, _this.contentComponent);
+        _this.setTransformState(targetState.scale, targetState.positionX, targetState.positionY);
+      }
+    };
+    this.handleTransformStyles = function(x, y, scale) {
+      if (_this.props.customTransform) {
+        return _this.props.customTransform(x, y, scale);
+      }
+      return getTransformStyles(x, y, scale);
+    };
+    this.applyTransformation = function() {
+      if (!_this.mounted || !_this.contentComponent)
+        return;
+      var _a = _this.transformState, scale = _a.scale, positionX2 = _a.positionX, positionY = _a.positionY;
+      var transform = _this.handleTransformStyles(positionX2, positionY, scale);
+      _this.contentComponent.style.transform = transform;
+    };
+    this.getContext = function() {
+      return getContext(_this);
+    };
+    this.onChange = function(callback) {
+      if (!_this.onChangeCallbacks.has(callback)) {
+        _this.onChangeCallbacks.add(callback);
+      }
+      return function() {
+        _this.onChangeCallbacks.delete(callback);
+      };
+    };
+    this.onInit = function(callback) {
+      if (!_this.onInitCallbacks.has(callback)) {
+        _this.onInitCallbacks.add(callback);
+      }
+      return function() {
+        _this.onInitCallbacks.delete(callback);
+      };
+    };
+    this.init = function(wrapperComponent, contentComponent) {
+      _this.cleanupWindowEvents();
+      _this.wrapperComponent = wrapperComponent;
+      _this.contentComponent = contentComponent;
+      handleCalculateBounds(_this, _this.transformState.scale);
+      _this.handleInitializeWrapperEvents(wrapperComponent);
+      _this.handleInitialize(wrapperComponent, contentComponent);
+      _this.initializeWindowEvents();
+      _this.isInitialized = true;
+      var ctx = getContext(_this);
+      handleCallback(ctx, void 0, _this.props.onInit);
+    };
+    this.props = props;
+    this.setup = createSetup(this.props);
+    this.transformState = createState(this.props);
+  }
+  return ZoomPanPinch2;
+}();
+var Context = React.createContext(null);
+var getContent = function(children, ctx) {
+  if (typeof children === "function") {
+    return children(ctx);
+  }
+  return children;
+};
+var TransformWrapper = React.forwardRef(function(props, ref) {
+  var instance = react.exports.useRef(new ZoomPanPinch(props)).current;
+  var content = getContent(props.children, getControls(instance));
+  react.exports.useImperativeHandle(ref, function() {
+    return getControls(instance);
+  }, [instance]);
+  react.exports.useEffect(function() {
+    instance.update(props);
+  }, [instance, props]);
+  return /* @__PURE__ */ jsx(Context.Provider, {
+    value: instance,
+    children: content
+  });
+});
+React.forwardRef(function(props, ref) {
+  var localRef = react.exports.useRef(null);
+  var instance = react.exports.useContext(Context);
+  react.exports.useEffect(function() {
+    return instance.onChange(function(ctx) {
+      if (localRef.current) {
+        var positionX2 = 0;
+        var positionY = 0;
+        localRef.current.style.transform = instance.handleTransformStyles(positionX2, positionY, 1 / ctx.instance.transformState.scale);
+      }
+    });
+  }, [instance]);
+  return /* @__PURE__ */ jsx("div", {
+    ...__assign({}, props, {
+      ref: mergeRefs([localRef, ref])
+    })
+  });
+});
+function styleInject(css, ref) {
+  if (ref === void 0)
+    ref = {};
+  var insertAt = ref.insertAt;
+  if (!css || typeof document === "undefined") {
+    return;
+  }
+  var head = document.head || document.getElementsByTagName("head")[0];
+  var style = document.createElement("style");
+  style.type = "text/css";
+  if (insertAt === "top") {
+    if (head.firstChild) {
+      head.insertBefore(style, head.firstChild);
+    } else {
+      head.appendChild(style);
+    }
+  } else {
+    head.appendChild(style);
+  }
+  if (style.styleSheet) {
+    style.styleSheet.cssText = css;
+  } else {
+    style.appendChild(document.createTextNode(css));
+  }
+}
+var css_248z = ".transform-component-module_wrapper__SPB86 {\n  position: relative;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  overflow: hidden;\n  -webkit-touch-callout: none; /* iOS Safari */\n  -webkit-user-select: none; /* Safari */\n  -khtml-user-select: none; /* Konqueror HTML */\n  -moz-user-select: none; /* Firefox */\n  -ms-user-select: none; /* Internet Explorer/Edge */\n  user-select: none;\n  margin: 0;\n  padding: 0;\n  transform: translate3d(0, 0, 0);\n}\n.transform-component-module_content__FBWxo {\n  display: flex;\n  flex-wrap: wrap;\n  width: -moz-fit-content;\n  width: fit-content;\n  height: -moz-fit-content;\n  height: fit-content;\n  margin: 0;\n  padding: 0;\n  transform-origin: 0% 0%;\n}\n.transform-component-module_content__FBWxo img {\n  pointer-events: none;\n}\n";
+var styles = {
+  "wrapper": "transform-component-module_wrapper__SPB86",
+  "content": "transform-component-module_content__FBWxo"
+};
+styleInject(css_248z);
+var TransformComponent = function(_a) {
+  var children = _a.children, _b = _a.wrapperClass, wrapperClass = _b === void 0 ? "" : _b, _c = _a.contentClass, contentClass = _c === void 0 ? "" : _c, wrapperStyle = _a.wrapperStyle, contentStyle = _a.contentStyle, _d = _a.wrapperProps, wrapperProps = _d === void 0 ? {} : _d, _e = _a.contentProps, contentProps = _e === void 0 ? {} : _e;
+  var _f = react.exports.useContext(Context), init = _f.init, cleanupWindowEvents = _f.cleanupWindowEvents;
+  var wrapperRef = react.exports.useRef(null);
+  var contentRef = react.exports.useRef(null);
+  react.exports.useEffect(function() {
+    var wrapper = wrapperRef.current;
+    var content = contentRef.current;
+    if (wrapper !== null && content !== null && init) {
+      init === null || init === void 0 ? void 0 : init(wrapper, content);
+    }
+    return function() {
+      cleanupWindowEvents === null || cleanupWindowEvents === void 0 ? void 0 : cleanupWindowEvents();
+    };
+  }, []);
+  return /* @__PURE__ */ jsx("div", {
+    ...__assign({}, wrapperProps, {
+      ref: wrapperRef,
+      className: "".concat(baseClasses.wrapperClass, " ").concat(styles.wrapper, " ").concat(wrapperClass),
+      style: wrapperStyle
+    }),
+    children: /* @__PURE__ */ jsx("div", {
+      ...__assign({}, contentProps, {
+        ref: contentRef,
+        className: "".concat(baseClasses.contentClass, " ").concat(styles.content, " ").concat(contentClass),
+        style: contentStyle
+      }),
+      children
+    })
+  });
+};
 const PreviewImageDialog = ({
   destroy,
   imgUrl,
   filepath
 }) => {
-  const imgRef = react.exports.useRef(null);
-  const [imgWidth, setImgWidth] = react.exports.useState(-1);
+  const transformRef = react.exports.useRef(null);
+  const [imageLoaded, setImageLoaded] = react.exports.useState(false);
+  const [imageError, setImageError] = react.exports.useState(false);
   const {
     vault
   } = appStore.getState().dailyNotesState.app;
@@ -33207,22 +34948,26 @@ const PreviewImageDialog = ({
       width
     }) => {
       if (width !== 0) {
-        setImgWidth(80);
+        setImageLoaded(true);
       } else {
-        setImgWidth(0);
+        setImageError(true);
       }
     });
   }, []);
   const handleCloseBtnClick = () => {
     destroy();
   };
-  const handleDecreaseImageSize = () => {
-    if (imgWidth > 30) {
-      setImgWidth(imgWidth - 10);
-    }
+  const handleZoomIn = () => {
+    var _a;
+    (_a = transformRef.current) == null ? void 0 : _a.zoomIn(0.3);
   };
-  const handleIncreaseImageSize = () => {
-    setImgWidth(imgWidth + 10);
+  const handleZoomOut = () => {
+    var _a;
+    (_a = transformRef.current) == null ? void 0 : _a.zoomOut(0.3);
+  };
+  const handleResetTransform = () => {
+    var _a;
+    (_a = transformRef.current) == null ? void 0 : _a.resetTransform();
   };
   const convertBase64ToBlob = (base64, type) => {
     var bytes = window.atob(base64);
@@ -33236,24 +34981,30 @@ const PreviewImageDialog = ({
     });
   };
   const copyImageToClipboard = async () => {
-    if ((filepath === null || filepath === void 0) && imgUrl !== null) {
-      const myBase64 = imgUrl.split("base64,")[1];
-      const blobInput = convertBase64ToBlob(myBase64, "image/png");
-      const clipboardItemInput = new ClipboardItem({
-        "image/png": blobInput
-      });
-      window.navigator["clipboard"].write([clipboardItemInput]);
-      new require$$0.Notice("Send to clipboard successfully");
-    } else {
-      const buffer = await vault.adapter.readBinary(filepath);
-      const arr = new Uint8Array(buffer);
-      const blob = new Blob([arr], {
-        type: "image/png"
-      });
-      const item = new ClipboardItem({
-        "image/png": blob
-      });
-      window.navigator["clipboard"].write([item]);
+    try {
+      if ((filepath === null || filepath === void 0) && imgUrl !== null) {
+        const myBase64 = imgUrl.split("base64,")[1];
+        const blobInput = convertBase64ToBlob(myBase64, "image/png");
+        const clipboardItemInput = new ClipboardItem({
+          "image/png": blobInput
+        });
+        await window.navigator["clipboard"].write([clipboardItemInput]);
+        new require$$0.Notice(t$1("Send to clipboard successfully"));
+      } else {
+        const buffer = await vault.adapter.readBinary(filepath);
+        const arr = new Uint8Array(buffer);
+        const blob = new Blob([arr], {
+          type: "image/png"
+        });
+        const item = new ClipboardItem({
+          "image/png": blob
+        });
+        await window.navigator["clipboard"].write([item]);
+        new require$$0.Notice(t$1("Send to clipboard successfully"));
+      }
+    } catch (error) {
+      console.error("Failed to copy image:", error);
+      new require$$0.Notice(t$1("Failed to copy image to clipboard"));
     }
   };
   return /* @__PURE__ */ jsxs(Fragment, {
@@ -33265,35 +35016,67 @@ const PreviewImageDialog = ({
       })
     }), /* @__PURE__ */ jsxs("div", {
       className: "img-container internal-embed image-embed is-loaded",
-      children: [/* @__PURE__ */ jsx("img", {
-        className: imgWidth <= 0 ? "hidden" : "",
-        ref: imgRef,
-        width: imgWidth + "%",
-        src: imgUrl
-      }), /* @__PURE__ */ jsx("span", {
-        className: "loading-text " + (imgWidth === -1 ? "" : "hidden"),
+      children: [!imageLoaded && !imageError && /* @__PURE__ */ jsx("span", {
+        className: "loading-text",
         children: t$1("Image is loading...")
-      }), /* @__PURE__ */ jsx("span", {
-        className: "loading-text " + (imgWidth === 0 ? "" : "hidden"),
+      }), imageError && /* @__PURE__ */ jsx("span", {
+        className: "loading-text",
         children: t$1("\u{1F61F} Cannot load image, image link maybe broken")
+      }), imageLoaded && /* @__PURE__ */ jsx(TransformWrapper, {
+        ref: transformRef,
+        initialScale: 1,
+        minScale: 0.3,
+        maxScale: 8,
+        centerOnInit: true,
+        wheel: {
+          step: 0.1
+        },
+        pinch: {
+          step: 5
+        },
+        panning: {
+          disabled: false,
+          velocityDisabled: false
+        },
+        doubleClick: {
+          disabled: false,
+          mode: "reset"
+        },
+        children: /* @__PURE__ */ jsx(TransformComponent, {
+          wrapperClass: "transform-wrapper",
+          contentClass: "transform-content",
+          children: /* @__PURE__ */ jsx("img", {
+            src: imgUrl,
+            alt: "Preview",
+            style: {
+              maxWidth: "100%",
+              maxHeight: "100%",
+              display: "block"
+            }
+          })
+        })
       })]
     }), /* @__PURE__ */ jsxs("div", {
       className: "action-btns-container",
       children: [/* @__PURE__ */ jsx("button", {
         className: "btn",
-        onClick: handleDecreaseImageSize,
+        onClick: handleZoomOut,
+        title: t$1("Zoom out"),
         children: "\u2796"
       }), /* @__PURE__ */ jsx("button", {
         className: "btn",
-        onClick: handleIncreaseImageSize,
+        onClick: handleZoomIn,
+        title: t$1("Zoom in"),
         children: "\u2795"
       }), /* @__PURE__ */ jsx("button", {
         className: "btn",
-        onClick: () => setImgWidth(80),
+        onClick: handleResetTransform,
+        title: t$1("Reset zoom"),
         children: "\u2B55"
       }), /* @__PURE__ */ jsx("button", {
         className: "btn",
         onClick: copyImageToClipboard,
+        title: t$1("Copy to clipboard"),
         children: "\u{1F4C4}"
       })]
     })]
@@ -33319,8 +35102,8 @@ var react_1 = react.exports;
 var isFunction = function(setStateAction) {
   return typeof setStateAction === "function";
 };
-var useStateRef = function(initialState) {
-  var _a = react_1.useState(initialState), state = _a[0], setState = _a[1];
+var useStateRef = function(initialState2) {
+  var _a = react_1.useState(initialState2), state = _a[0], setState = _a[1];
   var ref = react_1.useRef(state);
   var dispatch = react_1.useCallback(function(setStateAction) {
     ref.current = isFunction(setStateAction) ? setStateAction(ref.current) : setStateAction;
@@ -41895,9 +43678,11 @@ class Memos extends require$$0.ItemView {
     UseDailyOrPeriodic = this.plugin.settings.UseDailyOrPeriodic;
     ShowLeftSideBar = this.plugin.settings.ShowLeftSideBar;
     this.memosComponent = React.createElement(StrictApp);
-    ReactDOM.render(this.memosComponent, this.contentEl);
+    const rootEl = this.contentEl.createDiv({ attr: { id: "root" } });
+    ReactDOM.render(this.memosComponent, rootEl);
   }
   async onClose() {
+    ReactDOM.unmountComponentAtNode(this.contentEl);
   }
 }
 let InsertAfter;
