@@ -43563,6 +43563,7 @@ class Memos extends require$$0.ItemView {
     __publicField(this, "plugin");
     __publicField(this, "hoverPopover");
     __publicField(this, "memosComponent");
+    __publicField(this, "rootEl");
     this.plugin = plugin;
   }
   getDisplayText() {
@@ -43678,11 +43679,23 @@ class Memos extends require$$0.ItemView {
     UseDailyOrPeriodic = this.plugin.settings.UseDailyOrPeriodic;
     ShowLeftSideBar = this.plugin.settings.ShowLeftSideBar;
     this.memosComponent = React.createElement(StrictApp);
-    const rootEl = this.contentEl.createDiv({ attr: { id: "root" } });
-    ReactDOM.render(this.memosComponent, rootEl);
+    this.rootEl = this.containerEl.children[1];
+    this.rootEl.empty();
+    const reactRoot = this.rootEl.createDiv({ cls: "memos-react-root", attr: { id: "root" } });
+    try {
+      ReactDOM.render(this.memosComponent, reactRoot);
+    } catch (error) {
+      console.error("Error rendering Memos:", error);
+    }
   }
   async onClose() {
-    ReactDOM.unmountComponentAtNode(this.contentEl);
+    if (this.rootEl) {
+      const reactRoot = this.rootEl.querySelector("#root");
+      if (reactRoot) {
+        ReactDOM.unmountComponentAtNode(reactRoot);
+      }
+      this.rootEl.empty();
+    }
   }
 }
 let InsertAfter;
