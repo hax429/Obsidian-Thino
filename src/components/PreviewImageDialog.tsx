@@ -4,8 +4,9 @@ import { showDialog } from './Dialog';
 import '../less/preview-image-dialog.less';
 import appStore from '../stores/appStore';
 import Close from '../icons/close.svg?component';
-import { Notice } from 'obsidian';
+import { Notice, Platform } from 'obsidian';
 import { t } from '../translations/helper';
+import { TransformWrapper, TransformComponent, ReactZoomPanPinchRef } from 'react-zoom-pan-pinch';
 
 interface Props extends DialogProps {
   imgUrl: string;
@@ -13,16 +14,17 @@ interface Props extends DialogProps {
 }
 
 const PreviewImageDialog: React.FC<Props> = ({ destroy, imgUrl, filepath }: Props) => {
-  const imgRef = useRef<HTMLImageElement>(null);
-  const [imgWidth, setImgWidth] = useState<number>(-1);
+  const transformRef = useRef<ReactZoomPanPinchRef>(null);
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
+  const [imageError, setImageError] = useState<boolean>(false);
   const { vault } = appStore.getState().dailyNotesState.app;
 
   useEffect(() => {
     utils.getImageSize(imgUrl).then(({ width }) => {
       if (width !== 0) {
-        setImgWidth(80);
+        setImageLoaded(true);
       } else {
-        setImgWidth(0);
+        setImageError(true);
       }
     });
   }, []);
@@ -31,14 +33,16 @@ const PreviewImageDialog: React.FC<Props> = ({ destroy, imgUrl, filepath }: Prop
     destroy();
   };
 
-  const handleDecreaseImageSize = () => {
-    if (imgWidth > 30) {
-      setImgWidth(imgWidth - 10);
-    }
+  const handleZoomIn = () => {
+    transformRef.current?.zoomIn(0.3);
   };
 
-  const handleIncreaseImageSize = () => {
-    setImgWidth(imgWidth + 10);
+  const handleZoomOut = () => {
+    transformRef.current?.zoomOut(0.3);
+  };
+
+  const handleResetTransform = () => {
+    transformRef.current?.resetTransform();
   };
 
   const convertBase64ToBlob = (base64: string, type: string) => {
@@ -52,49 +56,93 @@ const PreviewImageDialog: React.FC<Props> = ({ destroy, imgUrl, filepath }: Prop
   };
 
   const copyImageToClipboard = async () => {
-    if ((filepath === null || filepath === undefined) && imgUrl !== null) {
-      const myBase64 = imgUrl.split('base64,')[1];
-      const blobInput = convertBase64ToBlob(myBase64, 'image/png');
-      const clipboardItemInput = new ClipboardItem({ 'image/png': blobInput });
-      window.navigator['clipboard'].write([clipboardItemInput]);
-      new Notice('Send to clipboard successfully');
-    } else {
-      const buffer = await vault.adapter.readBinary(filepath);
-      const arr = new Uint8Array(buffer);
+    try {
+      if ((filepath === null || filepath === undefined) && imgUrl !== null) {
+        const myBase64 = imgUrl.split('base64,')[1];
+        const blobInput = convertBase64ToBlob(myBase64, 'image/png');
+        const clipboardItemInput = new ClipboardItem({ 'image/png': blobInput });
+        await window.navigator['clipboard'].write([clipboardItemInput]);
+        new Notice(t('Send to clipboard successfully'));
+      } else {
+        const buffer = await vault.adapter.readBinary(filepath);
+        const arr = new Uint8Array(buffer);
 
-      const blob = new Blob([arr], { type: 'image/png' });
+        const blob = new Blob([arr], { type: 'image/png' });
 
-      const item = new ClipboardItem({ 'image/png': blob });
-      window.navigator['clipboard'].write([item]);
+        const item = new ClipboardItem({ 'image/png': blob });
+        await window.navigator['clipboard'].write([item]);
+        new Notice(t('Send to clipboard successfully'));
+      }
+    } catch (error) {
+      console.error('Failed to copy image:', error);
+      new Notice(t('Failed to copy image to clipboard'));
     }
   };
 
   return (
     <>
       <button className="btn close-btn" onClick={handleCloseBtnClick}>
-        {/*<img className="icon-img" src={close} />*/}
         <Close className="icon-img" />
       </button>
 
       <div className="img-container internal-embed image-embed is-loaded">
-        <img className={imgWidth <= 0 ? 'hidden' : ''} ref={imgRef} width={imgWidth + '%'} src={imgUrl} />
-        <span className={'loading-text ' + (imgWidth === -1 ? '' : 'hidden')}>{t('Image is loading...')}</span>
-        <span className={'loading-text ' + (imgWidth === 0 ? '' : 'hidden')}>
-          {t('😟 Cannot load image, image link maybe broken')}
-        </span>
+        {!imageLoaded && !imageError && (
+          <span className="loading-text">{t('Image is loading...')}</span>
+        )}
+        {imageError && (
+          <span className="loading-text">{t('😟 Cannot load image, image link maybe broken')}</span>
+        )}
+        {imageLoaded && (
+          <TransformWrapper
+            ref={transformRef}
+            initialScale={1}
+            minScale={0.3}
+            maxScale={8}
+            centerOnInit={true}
+            wheel={{
+              step: 0.1,
+            }}
+            pinch={{
+              step: 5,
+            }}
+            panning={{
+              disabled: false,
+              velocityDisabled: false,
+            }}
+            doubleClick={{
+              disabled: false,
+              mode: 'reset',
+            }}
+          >
+            <TransformComponent
+              wrapperClass="transform-wrapper"
+              contentClass="transform-content"
+            >
+              <img
+                src={imgUrl}
+                alt="Preview"
+                style={{
+                  maxWidth: '100%',
+                  maxHeight: '100%',
+                  display: 'block',
+                }}
+              />
+            </TransformComponent>
+          </TransformWrapper>
+        )}
       </div>
 
       <div className="action-btns-container">
-        <button className="btn" onClick={handleDecreaseImageSize}>
+        <button className="btn" onClick={handleZoomOut} title={t('Zoom out')}>
           ➖
         </button>
-        <button className="btn" onClick={handleIncreaseImageSize}>
+        <button className="btn" onClick={handleZoomIn} title={t('Zoom in')}>
           ➕
         </button>
-        <button className="btn" onClick={() => setImgWidth(80)}>
+        <button className="btn" onClick={handleResetTransform} title={t('Reset zoom')}>
           ⭕
         </button>
-        <button className="btn" onClick={copyImageToClipboard}>
+        <button className="btn" onClick={copyImageToClipboard} title={t('Copy to clipboard')}>
           📄
         </button>
       </div>
@@ -120,20 +168,4 @@ export default function showPreviewImageDialog(imgUrl: string, filepath?: string
       { imgUrl },
     );
   }
-
-  // setTimeout(() => {
-  //   document.querySelector(".preview-image-dialog").addEventListener("keypress", closeWindowByEsc);
-  // }, 0);
 }
-
-// function closeWindow() {
-//   document.querySelector(".preview-image-dialog .close-btn").click();
-// }
-
-// function closeWindowByEsc(e) {
-//   if (!e) e = window.event;
-//   var keyCode = e.keyCode || e.which;
-//   if (keyCode == '27') {
-//     closeWindow();
-//   }
-// }
