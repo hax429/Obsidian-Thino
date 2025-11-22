@@ -705,7 +705,8 @@ export function formatMemoContent(content: string) {
  * Parse markdown syntax into HTML
  */
 function parseMarkdownSyntax(text: string): string {
-  const lines = text.split('\n');
+  // Normalize line endings and split
+  const lines = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n').split('\n');
   const result: string[] = [];
   let inCodeBlock = false;
   let codeBlockLang = '';
@@ -806,16 +807,17 @@ function parseInlineMarkdown(text: string): string {
   // Inline code (must be processed first to avoid conflicts)
   text = text.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
 
-  // Bold (** or __)
-  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-  text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  // Bold (** or __) - match non-asterisk/underscore content between markers
+  text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/__([^_]+)__/g, '<strong>$1</strong>');
 
-  // Italic (* or _)
-  text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
-  text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+  // Italic (* or _) - match non-asterisk/underscore content between markers
+  // Ensure we don't match single asterisks that are list markers
+  text = text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  text = text.replace(/_([^_]+)_/g, '<em>$1</em>');
 
   // Strikethrough
-  text = text.replace(/~~(.+?)~~/g, '<del>$1</del>');
+  text = text.replace(/~~([^~]+)~~/g, '<del>$1</del>');
 
   return text;
 }

@@ -49369,7 +49369,7 @@ function formatMemoContent(content2) {
   return tempDivContainer.innerHTML;
 }
 function parseMarkdownSyntax(text) {
-  const lines = text.split("\n");
+  const lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
   const result = [];
   let inCodeBlock = false;
   let codeBlockLang = "";
@@ -49442,11 +49442,11 @@ function parseMarkdownSyntax(text) {
 }
 function parseInlineMarkdown(text) {
   text = text.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
-  text = text.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  text = text.replace(/__(.+?)__/g, "<strong>$1</strong>");
-  text = text.replace(/\*(.+?)\*/g, "<em>$1</em>");
-  text = text.replace(/_(.+?)_/g, "<em>$1</em>");
-  text = text.replace(/~~(.+?)~~/g, "<del>$1</del>");
+  text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  text = text.replace(/__([^_]+)__/g, "<strong>$1</strong>");
+  text = text.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  text = text.replace(/_([^_]+)_/g, "<em>$1</em>");
+  text = text.replace(/~~([^~]+)~~/g, "<del>$1</del>");
   return text;
 }
 function escapeHtml(text) {
