@@ -173,6 +173,50 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
               // Use placeholder if provided
               placeholder ? EditorView.contentAttributes.of({ 'data-placeholder': placeholder }) : [],
               livePreviewViewPlugin,
+              // Add Tab key handling for indenting lists
+              EditorView.domEventHandlers({
+                keydown: (event, view) => {
+                  if (event.key === 'Tab') {
+                    event.preventDefault();
+                    const { state } = view;
+                    const { from, to } = state.selection.main;
+                    const line = state.doc.lineAt(from);
+                    const lineText = line.text;
+
+                    // Check if this is a list item or todo item
+                    const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+                    const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+
+                    if (isListItem || isTodoItem) {
+                      // Add indentation (2 spaces)
+                      const indent = event.shiftKey ? -2 : 2;
+                      let newText = lineText;
+
+                      if (indent > 0) {
+                        // Add indentation
+                        newText = '  ' + lineText;
+                      } else {
+                        // Remove indentation (Shift+Tab)
+                        newText = lineText.replace(/^  /, '');
+                      }
+
+                      view.dispatch({
+                        changes: { from: line.from, to: line.to, insert: newText },
+                        selection: { anchor: from + indent },
+                      });
+                      return true;
+                    } else {
+                      // Insert tab character (or spaces)
+                      view.dispatch({
+                        changes: { from, to, insert: '  ' },
+                        selection: { anchor: from + 2 },
+                      });
+                      return true;
+                    }
+                  }
+                  return false;
+                },
+              }),
             );
 
             // Try to get Obsidian's theme and syntax highlighting
@@ -236,6 +280,49 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
               }
             });
 
+            // Add Tab key handling for textarea
+            textArea.addEventListener('keydown', (event) => {
+              if (event.key === 'Tab') {
+                event.preventDefault();
+                const start = textArea.selectionStart;
+                const end = textArea.selectionEnd;
+                const value = textArea.value;
+
+                // Get the current line
+                const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+                const lineEnd = value.indexOf('\n', start);
+                const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
+
+                // Check if this is a list item
+                const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+                const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+
+                if (isListItem || isTodoItem) {
+                  // Indent the line
+                  const indent = event.shiftKey ? -2 : 2;
+                  let newLineText = lineText;
+
+                  if (indent > 0) {
+                    newLineText = '  ' + lineText;
+                  } else {
+                    newLineText = lineText.replace(/^  /, '');
+                  }
+
+                  textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
+                  textArea.selectionStart = textArea.selectionEnd = start + indent;
+                } else {
+                  // Insert tab (2 spaces)
+                  textArea.value = value.substring(0, start) + '  ' + value.substring(end);
+                  textArea.selectionStart = textArea.selectionEnd = start + 2;
+                }
+
+                contentRef.current = textArea.value;
+                if (onContentChange) {
+                  onContentChange(textArea.value);
+                }
+              }
+            });
+
             setIsReady(true);
           }
         } catch (error) {
@@ -269,6 +356,49 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
             contentRef.current = textArea.value;
             if (onContentChange) {
               onContentChange(textArea.value);
+            }
+          });
+
+          // Add Tab key handling for final fallback textarea
+          textArea.addEventListener('keydown', (event) => {
+            if (event.key === 'Tab') {
+              event.preventDefault();
+              const start = textArea.selectionStart;
+              const end = textArea.selectionEnd;
+              const value = textArea.value;
+
+              // Get the current line
+              const lineStart = value.lastIndexOf('\n', start - 1) + 1;
+              const lineEnd = value.indexOf('\n', start);
+              const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
+
+              // Check if this is a list item
+              const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+              const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+
+              if (isListItem || isTodoItem) {
+                // Indent the line
+                const indent = event.shiftKey ? -2 : 2;
+                let newLineText = lineText;
+
+                if (indent > 0) {
+                  newLineText = '  ' + lineText;
+                } else {
+                  newLineText = lineText.replace(/^  /, '');
+                }
+
+                textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
+                textArea.selectionStart = textArea.selectionEnd = start + indent;
+              } else {
+                // Insert tab (2 spaces)
+                textArea.value = value.substring(0, start) + '  ' + value.substring(end);
+                textArea.selectionStart = textArea.selectionEnd = start + 2;
+              }
+
+              contentRef.current = textArea.value;
+              if (onContentChange) {
+                onContentChange(textArea.value);
+              }
             }
           });
 

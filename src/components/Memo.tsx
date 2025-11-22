@@ -674,6 +674,9 @@ export function formatMemoContent(content: string) {
     content = content.replace(WIKI_IMAGE_URL_REG, '').replace(MARKDOWN_URL_REG, '').replace(IMAGE_URL_REG, '');
   }
 
+  // Convert <br> tags to newlines before parsing markdown
+  content = content.replace(/<br\s*\/?>/gi, '\n');
+
   // Parse markdown syntax
   content = parseMarkdownSyntax(content);
 

@@ -48502,7 +48502,58 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
             placeholder ? EditorView.contentAttributes.of({
               "data-placeholder": placeholder
             }) : [],
-            livePreviewViewPlugin
+            livePreviewViewPlugin,
+            EditorView.domEventHandlers({
+              keydown: (event, view2) => {
+                if (event.key === "Tab") {
+                  event.preventDefault();
+                  const {
+                    state
+                  } = view2;
+                  const {
+                    from,
+                    to
+                  } = state.selection.main;
+                  const line = state.doc.lineAt(from);
+                  const lineText = line.text;
+                  const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+                  const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+                  if (isListItem || isTodoItem) {
+                    const indent = event.shiftKey ? -2 : 2;
+                    let newText = lineText;
+                    if (indent > 0) {
+                      newText = "  " + lineText;
+                    } else {
+                      newText = lineText.replace(/^  /, "");
+                    }
+                    view2.dispatch({
+                      changes: {
+                        from: line.from,
+                        to: line.to,
+                        insert: newText
+                      },
+                      selection: {
+                        anchor: from + indent
+                      }
+                    });
+                    return true;
+                  } else {
+                    view2.dispatch({
+                      changes: {
+                        from,
+                        to,
+                        insert: "  "
+                      },
+                      selection: {
+                        anchor: from + 2
+                      }
+                    });
+                    return true;
+                  }
+                }
+                return false;
+              }
+            })
           );
           try {
             const state = activeCM.state;
@@ -48552,6 +48603,37 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
               onContentChange(textArea.value);
             }
           });
+          textArea.addEventListener("keydown", (event) => {
+            if (event.key === "Tab") {
+              event.preventDefault();
+              const start2 = textArea.selectionStart;
+              const end2 = textArea.selectionEnd;
+              const value = textArea.value;
+              const lineStart = value.lastIndexOf("\n", start2 - 1) + 1;
+              const lineEnd = value.indexOf("\n", start2);
+              const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
+              const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+              const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+              if (isListItem || isTodoItem) {
+                const indent = event.shiftKey ? -2 : 2;
+                let newLineText = lineText;
+                if (indent > 0) {
+                  newLineText = "  " + lineText;
+                } else {
+                  newLineText = lineText.replace(/^  /, "");
+                }
+                textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
+                textArea.selectionStart = textArea.selectionEnd = start2 + indent;
+              } else {
+                textArea.value = value.substring(0, start2) + "  " + value.substring(end2);
+                textArea.selectionStart = textArea.selectionEnd = start2 + 2;
+              }
+              contentRef.current = textArea.value;
+              if (onContentChange) {
+                onContentChange(textArea.value);
+              }
+            }
+          });
           setIsReady(true);
         }
       } catch (error) {
@@ -48581,6 +48663,37 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
           contentRef.current = textArea.value;
           if (onContentChange) {
             onContentChange(textArea.value);
+          }
+        });
+        textArea.addEventListener("keydown", (event) => {
+          if (event.key === "Tab") {
+            event.preventDefault();
+            const start2 = textArea.selectionStart;
+            const end2 = textArea.selectionEnd;
+            const value = textArea.value;
+            const lineStart = value.lastIndexOf("\n", start2 - 1) + 1;
+            const lineEnd = value.indexOf("\n", start2);
+            const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
+            const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+            const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+            if (isListItem || isTodoItem) {
+              const indent = event.shiftKey ? -2 : 2;
+              let newLineText = lineText;
+              if (indent > 0) {
+                newLineText = "  " + lineText;
+              } else {
+                newLineText = lineText.replace(/^  /, "");
+              }
+              textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
+              textArea.selectionStart = textArea.selectionEnd = start2 + indent;
+            } else {
+              textArea.value = value.substring(0, start2) + "  " + value.substring(end2);
+              textArea.selectionStart = textArea.selectionEnd = start2 + 2;
+            }
+            contentRef.current = textArea.value;
+            if (onContentChange) {
+              onContentChange(textArea.value);
+            }
           }
         });
         setIsReady(true);
@@ -49354,6 +49467,7 @@ function formatMemoContent(content2) {
   if (shouldHideImageUrl) {
     content2 = content2.replace(WIKI_IMAGE_URL_REG, "").replace(MARKDOWN_URL_REG, "").replace(IMAGE_URL_REG, "");
   }
+  content2 = content2.replace(/<br\s*\/?>/gi, "\n");
   content2 = parseMarkdownSyntax(content2);
   content2 = content2.replace(TAG_REG, "<span class='tag-span'>#$1</span>").replace(FIRST_TAG_REG, "<p><span class='tag-span'>#$2</span>").replace(LINK_REG, "$1<a class='link' target='_blank' rel='noreferrer' href='$2'>$2</a>").replace(MD_LINK_REG, "<a class='link' target='_blank' rel='noreferrer' href='$2'>$1</a>").replace(MEMO_LINK_REG, "<span class='memo-link-text' data-value='$2'>$1</span>").replace(/\^\S{6}/g, "");
   const tempDivContainer = document.createElement("div");
