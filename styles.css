@@ -6706,7 +6706,7 @@ div[data-type='memos_view'] .memo-editor-wrapper .confirm-btn {
   display: none;
 }
 div[data-type='memos_view'] #root {
-  background-color: #f6f5f4;
+  background-color: var(--background-primary);
 }
 div[data-type='memos_view'] .view-content {
   overflow-y: hidden;
