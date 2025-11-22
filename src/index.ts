@@ -11,13 +11,25 @@ export default class MemosPlugin extends Plugin {
   public settings: MemosSettings;
 
   async onload(): Promise<void> {
+    const BUILD_VERSION = 'v2025-11-22-15:30-MARKDOWN-SUPPORT';
     console.log('obsidian-memos loading...');
+    console.log('BUILD VERSION:', BUILD_VERSION);
+    console.error('BUILD VERSION (ERROR LOG):', BUILD_VERSION);
+
+    // VERY VISIBLE DEBUG - Show we're loading the new version
+    new Notice(`Memos Plugin Loading - ${BUILD_VERSION}`, 5000);
+
     await this.loadSettings();
 
     this.registerView(MEMOS_VIEW_TYPE, (leaf) => new Memos(leaf, this));
 
     this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
     console.log(t('welcome'));
+
+    // Another notice after layout is ready
+    setTimeout(() => {
+      new Notice('Memos Plugin FULLY LOADED - Markdown support active!', 5000);
+    }, 2000);
   }
 
   public async loadSettings() {

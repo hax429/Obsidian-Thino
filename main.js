@@ -48368,47 +48368,34 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
 }, ref) => {
   const containerRef = react.exports.useRef(null);
   const editorViewRef = react.exports.useRef(null);
-  const textareaRef = react.exports.useRef(null);
   const contentRef = react.exports.useRef(initialContent);
   const [isReady, setIsReady] = react.exports.useState(false);
+  console.log("[ObsidianNativeEditor] Initializing with BUILD_VERSION: v2025-11-22-15:30-MARKDOWN-SUPPORT");
   react.exports.useImperativeHandle(ref, () => ({
-    element: textareaRef.current || containerRef.current,
+    element: containerRef.current,
     focus: () => {
       if (editorViewRef.current) {
         editorViewRef.current.focus();
-      } else if (textareaRef.current) {
-        textareaRef.current.focus();
       }
     },
     insertText: (text) => {
-      if (editorViewRef.current) {
-        const view = editorViewRef.current;
-        const pos = view.state.selection.main.head;
-        view.dispatch({
-          changes: {
-            from: pos,
-            to: pos,
-            insert: text
-          },
-          selection: {
-            anchor: pos + text.length
-          }
-        });
-        contentRef.current = view.state.doc.toString();
-        if (onContentChange) {
-          onContentChange(contentRef.current);
+      if (!editorViewRef.current)
+        return;
+      const view = editorViewRef.current;
+      const pos = view.state.selection.main.head;
+      view.dispatch({
+        changes: {
+          from: pos,
+          to: pos,
+          insert: text
+        },
+        selection: {
+          anchor: pos + text.length
         }
-      } else if (textareaRef.current) {
-        const textarea = textareaRef.current;
-        const start2 = textarea.selectionStart;
-        const end2 = textarea.selectionEnd;
-        const currentValue = textarea.value;
-        textarea.value = currentValue.substring(0, start2) + text + currentValue.substring(end2);
-        textarea.selectionStart = textarea.selectionEnd = start2 + text.length;
-        contentRef.current = textarea.value;
-        if (onContentChange) {
-          onContentChange(contentRef.current);
-        }
+      });
+      contentRef.current = view.state.doc.toString();
+      if (onContentChange) {
+        onContentChange(contentRef.current);
       }
     },
     setContent: (text) => {
@@ -48425,278 +48412,272 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
         if (onContentChange) {
           onContentChange(text);
         }
-      } else if (textareaRef.current) {
-        textareaRef.current.value = text;
-        if (onContentChange) {
-          onContentChange(text);
-        }
       }
     },
     getContent: () => {
       if (editorViewRef.current) {
         return editorViewRef.current.state.doc.toString();
-      } else if (textareaRef.current) {
-        return textareaRef.current.value;
       }
       return contentRef.current;
     },
     applyFormat: (format) => {
-      if (editorViewRef.current) {
-        const view = editorViewRef.current;
-        const selection = view.state.selection.main;
-        const text = view.state.doc.toString();
-        const result = applyMarkdownFormat(text, selection.from, selection.to, format);
-        view.dispatch({
-          changes: {
-            from: 0,
-            to: text.length,
-            insert: result.newText
-          },
-          selection: {
-            anchor: result.selectionStart,
-            head: result.selectionEnd
-          }
-        });
-        contentRef.current = result.newText;
-        if (onContentChange) {
-          onContentChange(result.newText);
+      if (!editorViewRef.current)
+        return;
+      const view = editorViewRef.current;
+      const selection = view.state.selection.main;
+      const text = view.state.doc.toString();
+      const result = applyMarkdownFormat(text, selection.from, selection.to, format);
+      view.dispatch({
+        changes: {
+          from: 0,
+          to: text.length,
+          insert: result.newText
+        },
+        selection: {
+          anchor: result.selectionStart,
+          head: result.selectionEnd
         }
-      } else if (textareaRef.current) {
-        const textarea = textareaRef.current;
-        const result = applyMarkdownFormat(textarea.value, textarea.selectionStart, textarea.selectionEnd, format);
-        textarea.value = result.newText;
-        textarea.setSelectionRange(result.selectionStart, result.selectionEnd);
-        contentRef.current = result.newText;
-        if (onContentChange) {
-          onContentChange(result.newText);
-        }
+      });
+      contentRef.current = result.newText;
+      if (onContentChange) {
+        onContentChange(result.newText);
       }
     }
   }), [onContentChange]);
   react.exports.useEffect(() => {
-    const setupEditor = async () => {
+    const setupEditor = () => {
       if (!containerRef.current)
         return;
-      const {
-        app: app2
-      } = appStore.getState().dailyNotesState;
-      if (!app2) {
-        console.error("App not available");
-        return;
-      }
+      console.log("[ObsidianNativeEditor] Setting up CodeMirror 6 editor...");
       try {
-        const activeView = app2.workspace.getActiveViewOfType(require$$0.MarkdownView);
-        if (activeView && activeView.editor.cm) {
-          const activeCM = activeView.editor.cm;
-          const extensions = [];
-          extensions.push(
-            EditorView.lineWrapping,
-            EditorView.updateListener.of((update) => {
-              if (update.docChanged) {
-                contentRef.current = update.state.doc.toString();
-                if (onContentChange) {
-                  onContentChange(contentRef.current);
+        const extensions = [
+          EditorView.lineWrapping,
+          livePreviewViewPlugin,
+          placeholder ? EditorView.contentAttributes.of({
+            "data-placeholder": placeholder,
+            "aria-placeholder": placeholder
+          }) : [],
+          EditorView.updateListener.of((update) => {
+            if (update.docChanged) {
+              contentRef.current = update.state.doc.toString();
+              if (onContentChange) {
+                onContentChange(contentRef.current);
+              }
+            }
+          }),
+          EditorView.domEventHandlers({
+            keydown: (event, view2) => {
+              if (event.key === "Tab") {
+                event.preventDefault();
+                const {
+                  state
+                } = view2;
+                const {
+                  from
+                } = state.selection.main;
+                const line = state.doc.lineAt(from);
+                const lineText = line.text;
+                const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
+                const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
+                if (isListItem || isTodoItem) {
+                  const indent = event.shiftKey ? -2 : 2;
+                  let newText = lineText;
+                  if (indent > 0) {
+                    newText = "  " + lineText;
+                  } else {
+                    newText = lineText.replace(/^  /, "");
+                  }
+                  view2.dispatch({
+                    changes: {
+                      from: line.from,
+                      to: line.to,
+                      insert: newText
+                    },
+                    selection: {
+                      anchor: from + indent
+                    }
+                  });
+                  return true;
+                } else {
+                  view2.dispatch({
+                    changes: {
+                      from,
+                      to: from,
+                      insert: "  "
+                    },
+                    selection: {
+                      anchor: from + 2
+                    }
+                  });
+                  return true;
                 }
               }
-            }),
-            placeholder ? EditorView.contentAttributes.of({
-              "data-placeholder": placeholder
-            }) : [],
-            livePreviewViewPlugin,
-            EditorView.domEventHandlers({
-              keydown: (event, view2) => {
-                if (event.key === "Tab") {
+              if (event.key === "Enter" && !event.shiftKey && !event.ctrlKey && !event.metaKey) {
+                const {
+                  state
+                } = view2;
+                const {
+                  from
+                } = state.selection.main;
+                const line = state.doc.lineAt(from);
+                const lineText = line.text;
+                const bulletMatch = lineText.match(/^(\s*)([-*])\s+(.*)$/);
+                if (bulletMatch) {
                   event.preventDefault();
-                  const {
-                    state
-                  } = view2;
-                  const {
-                    from,
-                    to
-                  } = state.selection.main;
-                  const line = state.doc.lineAt(from);
-                  const lineText = line.text;
-                  const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
-                  const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
-                  if (isListItem || isTodoItem) {
-                    const indent = event.shiftKey ? -2 : 2;
-                    let newText = lineText;
-                    if (indent > 0) {
-                      newText = "  " + lineText;
-                    } else {
-                      newText = lineText.replace(/^  /, "");
-                    }
+                  const [, indent, bullet, content2] = bulletMatch;
+                  if (!content2.trim()) {
                     view2.dispatch({
                       changes: {
                         from: line.from,
                         to: line.to,
-                        insert: newText
+                        insert: ""
                       },
                       selection: {
-                        anchor: from + indent
-                      }
-                    });
-                    return true;
-                  } else {
-                    view2.dispatch({
-                      changes: {
-                        from,
-                        to,
-                        insert: "  "
-                      },
-                      selection: {
-                        anchor: from + 2
+                        anchor: line.from
                       }
                     });
                     return true;
                   }
+                  const newLine = `
+${indent}${bullet} `;
+                  view2.dispatch({
+                    changes: {
+                      from,
+                      to: from,
+                      insert: newLine
+                    },
+                    selection: {
+                      anchor: from + newLine.length
+                    }
+                  });
+                  return true;
                 }
-                return false;
-              }
-            })
-          );
-          try {
-            const state = activeCM.state;
-            const mdExtensions = state.facet(EditorState.languageData);
-            if (mdExtensions) {
-              extensions.push(EditorState.languageData.of(() => mdExtensions));
-            }
-          } catch (e) {
-            console.log("Could not copy all editor extensions:", e);
-          }
-          const startState = EditorState.create({
-            doc: initialContent,
-            extensions
-          });
-          const view = new EditorView({
-            state: startState,
-            parent: containerRef.current
-          });
-          editorViewRef.current = view;
-          setIsReady(true);
-          containerRef.current.classList.add("obsidian-cm6-editor");
-        } else {
-          console.log("Using fallback textarea editor");
-          const textArea = document.createElement("textarea");
-          textArea.className = "obsidian-native-editor-input fallback";
-          textArea.placeholder = placeholder;
-          textArea.value = initialContent;
-          textArea.style.cssText = `
-              width: 100%;
-              min-height: 120px;
-              padding: 12px;
-              border: 1px solid var(--background-modifier-border);
-              border-radius: 6px;
-              background: var(--background-primary);
-              color: var(--text-normal);
-              font-family: var(--font-text);
-              font-size: var(--font-text-size);
-              line-height: 1.5;
-              resize: vertical;
-              box-sizing: border-box;
-            `;
-          containerRef.current.appendChild(textArea);
-          textareaRef.current = textArea;
-          textArea.addEventListener("input", () => {
-            contentRef.current = textArea.value;
-            if (onContentChange) {
-              onContentChange(textArea.value);
-            }
-          });
-          textArea.addEventListener("keydown", (event) => {
-            if (event.key === "Tab") {
-              event.preventDefault();
-              const start2 = textArea.selectionStart;
-              const end2 = textArea.selectionEnd;
-              const value = textArea.value;
-              const lineStart = value.lastIndexOf("\n", start2 - 1) + 1;
-              const lineEnd = value.indexOf("\n", start2);
-              const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
-              const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
-              const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
-              if (isListItem || isTodoItem) {
-                const indent = event.shiftKey ? -2 : 2;
-                let newLineText = lineText;
-                if (indent > 0) {
-                  newLineText = "  " + lineText;
-                } else {
-                  newLineText = lineText.replace(/^  /, "");
+                const numberedMatch = lineText.match(/^(\s*)(\d+)\.\s+(.*)$/);
+                if (numberedMatch) {
+                  event.preventDefault();
+                  const [, indent, num, content2] = numberedMatch;
+                  if (!content2.trim()) {
+                    view2.dispatch({
+                      changes: {
+                        from: line.from,
+                        to: line.to,
+                        insert: ""
+                      },
+                      selection: {
+                        anchor: line.from
+                      }
+                    });
+                    return true;
+                  }
+                  const nextNum = parseInt(num) + 1;
+                  const newLine = `
+${indent}${nextNum}. `;
+                  view2.dispatch({
+                    changes: {
+                      from,
+                      to: from,
+                      insert: newLine
+                    },
+                    selection: {
+                      anchor: from + newLine.length
+                    }
+                  });
+                  return true;
                 }
-                textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
-                textArea.selectionStart = textArea.selectionEnd = start2 + indent;
-              } else {
-                textArea.value = value.substring(0, start2) + "  " + value.substring(end2);
-                textArea.selectionStart = textArea.selectionEnd = start2 + 2;
+                const todoMatch = lineText.match(/^(\s*)([-*])\s+\[([ xX])\]\s+(.*)$/);
+                if (todoMatch) {
+                  event.preventDefault();
+                  const [, indent, bullet, , content2] = todoMatch;
+                  if (!content2.trim()) {
+                    view2.dispatch({
+                      changes: {
+                        from: line.from,
+                        to: line.to,
+                        insert: ""
+                      },
+                      selection: {
+                        anchor: line.from
+                      }
+                    });
+                    return true;
+                  }
+                  const newLine = `
+${indent}${bullet} [ ] `;
+                  view2.dispatch({
+                    changes: {
+                      from,
+                      to: from,
+                      insert: newLine
+                    },
+                    selection: {
+                      anchor: from + newLine.length
+                    }
+                  });
+                  return true;
+                }
               }
-              contentRef.current = textArea.value;
-              if (onContentChange) {
-                onContentChange(textArea.value);
-              }
+              return false;
             }
-          });
-          setIsReady(true);
-        }
-      } catch (error) {
-        console.error("Error setting up Obsidian native editor:", error);
-        new require$$0.Notice("Failed to initialize native editor, using fallback");
-        const textArea = document.createElement("textarea");
-        textArea.className = "obsidian-native-editor-input fallback";
-        textArea.placeholder = placeholder;
-        textArea.value = initialContent;
-        textArea.style.cssText = `
-            width: 100%;
-            min-height: 120px;
-            padding: 12px;
-            border: 1px solid var(--background-modifier-border);
-            border-radius: 6px;
-            background: var(--background-primary);
-            color: var(--text-normal);
-            font-family: var(--font-text);
-            font-size: var(--font-text-size);
-            line-height: 1.5;
-            resize: vertical;
-            box-sizing: border-box;
-          `;
-        containerRef.current.appendChild(textArea);
-        textareaRef.current = textArea;
-        textArea.addEventListener("input", () => {
-          contentRef.current = textArea.value;
-          if (onContentChange) {
-            onContentChange(textArea.value);
-          }
+          }),
+          EditorView.theme({
+            "&": {
+              fontSize: "14px",
+              border: "1px solid var(--background-modifier-border)",
+              borderRadius: "6px",
+              backgroundColor: "var(--background-primary)"
+            },
+            ".cm-scroller": {
+              fontFamily: "var(--font-text)",
+              lineHeight: "1.6",
+              padding: "12px"
+            },
+            ".cm-content": {
+              caretColor: "var(--text-normal)",
+              color: "var(--text-normal)"
+            },
+            ".cm-content[data-placeholder]:empty::before": {
+              content: "attr(data-placeholder)",
+              color: "var(--text-faint)",
+              fontStyle: "italic",
+              pointerEvents: "none",
+              position: "absolute"
+            },
+            ".cm-line": {
+              padding: "0 2px"
+            },
+            "&.cm-focused": {
+              outline: "none",
+              borderColor: "var(--background-modifier-border-focus)"
+            },
+            ".cm-activeLine": {
+              backgroundColor: "var(--background-primary-alt)"
+            },
+            ".cm-selectionBackground": {
+              backgroundColor: "var(--text-selection) !important"
+            },
+            "&.cm-focused .cm-selectionBackground": {
+              backgroundColor: "var(--text-selection) !important"
+            },
+            ".cm-cursor": {
+              borderLeftColor: "var(--text-normal)"
+            }
+          })
+        ];
+        const startState = EditorState.create({
+          doc: initialContent,
+          extensions
         });
-        textArea.addEventListener("keydown", (event) => {
-          if (event.key === "Tab") {
-            event.preventDefault();
-            const start2 = textArea.selectionStart;
-            const end2 = textArea.selectionEnd;
-            const value = textArea.value;
-            const lineStart = value.lastIndexOf("\n", start2 - 1) + 1;
-            const lineEnd = value.indexOf("\n", start2);
-            const lineText = value.substring(lineStart, lineEnd === -1 ? value.length : lineEnd);
-            const isListItem = /^\s*([-*]|\d+\.)\s/.test(lineText);
-            const isTodoItem = /^\s*[-*]\s+\[[ xX]\]\s/.test(lineText);
-            if (isListItem || isTodoItem) {
-              const indent = event.shiftKey ? -2 : 2;
-              let newLineText = lineText;
-              if (indent > 0) {
-                newLineText = "  " + lineText;
-              } else {
-                newLineText = lineText.replace(/^  /, "");
-              }
-              textArea.value = value.substring(0, lineStart) + newLineText + value.substring(lineEnd === -1 ? value.length : lineEnd);
-              textArea.selectionStart = textArea.selectionEnd = start2 + indent;
-            } else {
-              textArea.value = value.substring(0, start2) + "  " + value.substring(end2);
-              textArea.selectionStart = textArea.selectionEnd = start2 + 2;
-            }
-            contentRef.current = textArea.value;
-            if (onContentChange) {
-              onContentChange(textArea.value);
-            }
-          }
+        const view = new EditorView({
+          state: startState,
+          parent: containerRef.current
         });
+        editorViewRef.current = view;
         setIsReady(true);
+        console.log("[ObsidianNativeEditor] CodeMirror 6 editor created successfully!");
+        new require$$0.Notice("\u2713 Markdown editor initialized (v2025-11-22-15:30)", 2e3);
+      } catch (error) {
+        console.error("[ObsidianNativeEditor] Failed to create editor:", error);
+        new require$$0.Notice("Failed to initialize editor: " + error.message, 5e3);
       }
     };
     setupEditor();
@@ -48705,26 +48686,18 @@ const ObsidianNativeEditor = react.exports.forwardRef(({
         editorViewRef.current.destroy();
         editorViewRef.current = null;
       }
-      if (containerRef.current) {
-        containerRef.current.innerHTML = "";
-      }
-      textareaRef.current = null;
     };
-  }, [initialContent, placeholder]);
+  }, []);
   react.exports.useEffect(() => {
-    if (isReady && contentRef.current !== initialContent) {
-      if (editorViewRef.current) {
-        const view = editorViewRef.current;
-        view.dispatch({
-          changes: {
-            from: 0,
-            to: view.state.doc.length,
-            insert: initialContent
-          }
-        });
-      } else if (textareaRef.current) {
-        textareaRef.current.value = initialContent;
-      }
+    if (isReady && editorViewRef.current && contentRef.current !== initialContent) {
+      const view = editorViewRef.current;
+      view.dispatch({
+        changes: {
+          from: 0,
+          to: view.state.doc.length,
+          insert: initialContent
+        }
+      });
       contentRef.current = initialContent;
     }
   }, [initialContent, isReady]);
@@ -55619,11 +55592,18 @@ class MemosPlugin extends require$$0.Plugin {
     __publicField(this, "settings");
   }
   async onload() {
+    const BUILD_VERSION = "v2025-11-22-15:30-MARKDOWN-SUPPORT";
     console.log("obsidian-memos loading...");
+    console.log("BUILD VERSION:", BUILD_VERSION);
+    console.error("BUILD VERSION (ERROR LOG):", BUILD_VERSION);
+    new require$$0.Notice(`Memos Plugin Loading - ${BUILD_VERSION}`, 5e3);
     await this.loadSettings();
     this.registerView(MEMOS_VIEW_TYPE, (leaf) => new Memos(leaf, this));
     this.app.workspace.onLayoutReady(this.onLayoutReady.bind(this));
     console.log(t$2("welcome"));
+    setTimeout(() => {
+      new require$$0.Notice("Memos Plugin FULLY LOADED - Markdown support active!", 5e3);
+    }, 2e3);
   }
   async loadSettings() {
     this.settings = Object.assign({}, DEFAULT_SETTINGS, await this.loadData());
