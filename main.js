@@ -49014,30 +49014,6 @@ const appRouter = {
 };
 const memoEditor = "";
 const selectDatePicker = "";
-const SvgTag = ({
-  title,
-  titleId,
-  ...props
-}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", enableBackground: "new 0 0 24 24", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("rect", { fill: "none", height: 24, width: 24 })), /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("path", { d: "M20,10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4H20z M14,14h-4v-4h4V14z" })));
-const ForwardRef$9 = react.exports.forwardRef(SvgTag);
-const SvgImage = ({
-  title,
-  titleId,
-  ...props
-}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" }));
-const ForwardRef$8 = react.exports.forwardRef(SvgImage);
-const SvgJournal = ({
-  title,
-  titleId,
-  ...props
-}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { t: 1642406967115, className: "icon", viewBox: "0 0 1024 1024", xmlns: "http://www.w3.org/2000/svg", "p-id": 1652, width: 26, height: 26, fill: "#1296db", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M544 800.128l-320 0.16-0.064-96.32-0.064-160-0.032-64-0.096-160-0.032-96h576.128L800 223.776 800.256 800 544 800.128zM799.84 160H223.712A63.808 63.808 0 0 0 160 223.744v576.544c0 35.136 28.608 63.68 63.744 63.68h576.512A63.808 63.808 0 0 0 864 800.32V223.744A64 64 0 0 0 799.84 160z", "p-id": 1653 }), /* @__PURE__ */ react.exports.createElement("path", { d: "M680.608 320h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 480h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 640h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M352 320a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 640a32 32 0 1 0 0 64 32 32 0 0 0 0-64", "p-id": 1654 }));
-const ForwardRef$7 = react.exports.forwardRef(SvgJournal);
-const SvgCheckboxActive = ({
-  title,
-  titleId,
-  ...props
-}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z" }));
-const ForwardRef$6 = react.exports.forwardRef(SvgCheckboxActive);
 const showEditorSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgY2xhc3M9Imljb24iIHAtaWQ9IjYxOTQiIHQ9IjE2NDI1NjQ0NTIyMDgiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTUxMiAzMkMyNDggMzIgMzIgMjQ4IDMyIDUxMnMyMTYgNDgwIDQ4MCA0ODAgNDgwLTIxNiA0ODAtNDgwUzc3NiAzMiA1MTIgMzJ6IiBwLWlkPSI2MTk1Ii8+PHBhdGggZD0iTTUxMiAwQzIyOC44IDAgMCAyMjguOCAwIDUxMnMyMjguOCA1MTIgNTEyIDUxMiA1MTItMjI4LjggNTEyLTUxMlM3OTUuMiAwIDUxMiAweiBtMCA5OTJDMjQ4IDk5MiAzMiA3NzYgMzIgNTEyUzI0OCAzMiA1MTIgMzJzNDgwIDIxNiA0ODAgNDgwLTIxNiA0ODAtNDgwIDQ4MHoiIHAtaWQ9IjYxOTYiLz48cGF0aCBmaWxsPSIjOURFOEY3IiBkPSJNNTEyIDUxMm0tMzkyIDBhMzkyIDM5MiAwIDEgMCA3ODQgMCAzOTIgMzkyIDAgMSAwLTc4NCAwWiIgcC1pZD0iNjE5NyIvPjxwYXRoIGZpbGw9IiMxQTE3MTgiIGQ9Ik03ODQgNDk2SDUyOFYyNDBoLTMydjI1NkgyNDB2MzJoMjU2djI1NmgzMlY1MjhoMjU2eiIgcC1pZD0iNjE5OCIvPjwvc3ZnPg==";
 var fromEntries = function fromEntries2(entries) {
   return entries.reduce(function(acc, _ref) {
@@ -50545,6 +50521,135 @@ var usePopper = function usePopper2(referenceElement, popperElement, options) {
     forceUpdate: popperInstanceRef.current ? popperInstanceRef.current.forceUpdate : null
   };
 };
+const RichTextToolbar = ({
+  onFormat,
+  disabled = false
+}) => {
+  const formatButtons = [{
+    format: "bold",
+    label: "B",
+    title: t$1("Bold (Ctrl+B)"),
+    style: {
+      fontWeight: "bold"
+    }
+  }, {
+    format: "italic",
+    label: "I",
+    title: t$1("Italic (Ctrl+I)"),
+    style: {
+      fontStyle: "italic"
+    }
+  }, {
+    format: "strikethrough",
+    label: "S",
+    title: t$1("Strikethrough"),
+    style: {
+      textDecoration: "line-through"
+    }
+  }, {
+    format: "code",
+    label: "</>",
+    title: t$1("Inline Code"),
+    style: {
+      fontFamily: "monospace"
+    }
+  }, {
+    format: "link",
+    label: "\u{1F517}",
+    title: t$1("Insert Link"),
+    style: {}
+  }, {
+    format: "heading1",
+    label: "H1",
+    title: t$1("Heading 1"),
+    style: {
+      fontSize: "1.2em",
+      fontWeight: "bold"
+    }
+  }, {
+    format: "heading2",
+    label: "H2",
+    title: t$1("Heading 2"),
+    style: {
+      fontSize: "1.1em",
+      fontWeight: "bold"
+    }
+  }, {
+    format: "heading3",
+    label: "H3",
+    title: t$1("Heading 3"),
+    style: {
+      fontSize: "1em",
+      fontWeight: "bold"
+    }
+  }, {
+    format: "bulletList",
+    label: "\u2022",
+    title: t$1("Bullet List"),
+    style: {
+      fontSize: "1.5em"
+    }
+  }, {
+    format: "numberList",
+    label: "1.",
+    title: t$1("Numbered List"),
+    style: {}
+  }, {
+    format: "quote",
+    label: '"',
+    title: t$1("Block Quote"),
+    style: {
+      fontSize: "1.3em"
+    }
+  }, {
+    format: "codeBlock",
+    label: "{}",
+    title: t$1("Code Block"),
+    style: {
+      fontFamily: "monospace"
+    }
+  }];
+  const handleButtonClick = (format) => {
+    if (!disabled) {
+      onFormat(format);
+    }
+  };
+  return /* @__PURE__ */ jsx("div", {
+    className: "rich-text-toolbar",
+    children: formatButtons.map((button) => /* @__PURE__ */ jsx("button", {
+      className: "toolbar-btn",
+      onClick: () => handleButtonClick(button.format),
+      title: button.title,
+      disabled,
+      style: button.style,
+      children: button.label
+    }, button.format))
+  });
+};
+const SvgTag = ({
+  title,
+  titleId,
+  ...props
+}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", enableBackground: "new 0 0 24 24", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("rect", { fill: "none", height: 24, width: 24 })), /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("path", { d: "M20,10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4H20z M14,14h-4v-4h4V14z" })));
+const ForwardRef$9 = react.exports.forwardRef(SvgTag);
+const SvgImage = ({
+  title,
+  titleId,
+  ...props
+}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" }));
+const ForwardRef$8 = react.exports.forwardRef(SvgImage);
+const SvgJournal = ({
+  title,
+  titleId,
+  ...props
+}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { t: 1642406967115, className: "icon", viewBox: "0 0 1024 1024", xmlns: "http://www.w3.org/2000/svg", "p-id": 1652, width: 26, height: 26, fill: "#1296db", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M544 800.128l-320 0.16-0.064-96.32-0.064-160-0.032-64-0.096-160-0.032-96h576.128L800 223.776 800.256 800 544 800.128zM799.84 160H223.712A63.808 63.808 0 0 0 160 223.744v576.544c0 35.136 28.608 63.68 63.744 63.68h576.512A63.808 63.808 0 0 0 864 800.32V223.744A64 64 0 0 0 799.84 160z", "p-id": 1653 }), /* @__PURE__ */ react.exports.createElement("path", { d: "M680.608 320h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 480h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 640h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M352 320a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 640a32 32 0 1 0 0 64 32 32 0 0 0 0-64", "p-id": 1654 }));
+const ForwardRef$7 = react.exports.forwardRef(SvgJournal);
+const SvgCheckboxActive = ({
+  title,
+  titleId,
+  ...props
+}, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z" }));
+const ForwardRef$6 = react.exports.forwardRef(SvgCheckboxActive);
 const SvgMicrophone = ({
   title,
   titleId,
@@ -50670,110 +50775,254 @@ const VoiceRecorder = ({
     children: isRecording ? /* @__PURE__ */ jsx(ForwardRef$4, {}) : /* @__PURE__ */ jsx(ForwardRef$5, {})
   });
 };
-const RichTextToolbar = ({
-  onFormat,
-  disabled = false
+function useKeyboardShortcuts(shortcuts, enabled = true) {
+  const handleKeyDown = react.exports.useCallback(
+    (event) => {
+      if (!enabled)
+        return;
+      for (const shortcut of shortcuts) {
+        const ctrlMatch = shortcut.ctrl === void 0 || shortcut.ctrl === (event.ctrlKey || event.metaKey);
+        const shiftMatch = shortcut.shift === void 0 || shortcut.shift === event.shiftKey;
+        const altMatch = shortcut.alt === void 0 || shortcut.alt === event.altKey;
+        const metaMatch = shortcut.meta === void 0 || shortcut.meta === event.metaKey;
+        const keyMatch = shortcut.key.toLowerCase() === event.key.toLowerCase();
+        if (ctrlMatch && shiftMatch && altMatch && metaMatch && keyMatch) {
+          event.preventDefault();
+          event.stopPropagation();
+          shortcut.handler(event);
+          break;
+        }
+      }
+    },
+    [shortcuts, enabled]
+  );
+  react.exports.useEffect(() => {
+    if (enabled) {
+      window.addEventListener("keydown", handleKeyDown);
+      return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+      };
+    }
+  }, [handleKeyDown, enabled]);
+}
+function formatShortcut(shortcut) {
+  const parts = [];
+  if (shortcut.ctrl || shortcut.meta) {
+    parts.push(navigator.platform.includes("Mac") ? "\u2318" : "Ctrl");
+  }
+  if (shortcut.shift) {
+    parts.push("\u21E7");
+  }
+  if (shortcut.alt) {
+    parts.push(navigator.platform.includes("Mac") ? "\u2325" : "Alt");
+  }
+  parts.push(shortcut.key.toUpperCase());
+  return parts.join("+");
+}
+const quickActionsToolbar = "";
+const QuickActionsToolbar = ({
+  onTagClick,
+  onImageClick,
+  onListTaskToggle,
+  onVoiceTranscription,
+  onAudioRecorded,
+  onFormatToggle,
+  isListMode,
+  showFormatToolbar
 }) => {
-  const formatButtons = [{
-    format: "bold",
-    label: "B",
-    title: t$1("Bold (Ctrl+B)"),
-    style: {
-      fontWeight: "bold"
-    }
-  }, {
-    format: "italic",
-    label: "I",
-    title: t$1("Italic (Ctrl+I)"),
-    style: {
-      fontStyle: "italic"
-    }
-  }, {
-    format: "strikethrough",
-    label: "S",
-    title: t$1("Strikethrough"),
-    style: {
-      textDecoration: "line-through"
-    }
-  }, {
-    format: "code",
-    label: "</>",
-    title: t$1("Inline Code"),
-    style: {
-      fontFamily: "monospace"
-    }
-  }, {
-    format: "link",
-    label: "\u{1F517}",
-    title: t$1("Insert Link"),
-    style: {}
-  }, {
-    format: "heading1",
-    label: "H1",
-    title: t$1("Heading 1"),
-    style: {
-      fontSize: "1.2em",
-      fontWeight: "bold"
-    }
-  }, {
-    format: "heading2",
-    label: "H2",
-    title: t$1("Heading 2"),
-    style: {
-      fontSize: "1.1em",
-      fontWeight: "bold"
-    }
-  }, {
-    format: "heading3",
-    label: "H3",
-    title: t$1("Heading 3"),
-    style: {
-      fontSize: "1em",
-      fontWeight: "bold"
-    }
-  }, {
-    format: "bulletList",
-    label: "\u2022",
-    title: t$1("Bullet List"),
-    style: {
-      fontSize: "1.5em"
-    }
-  }, {
-    format: "numberList",
-    label: "1.",
-    title: t$1("Numbered List"),
-    style: {}
-  }, {
-    format: "quote",
-    label: '"',
-    title: t$1("Block Quote"),
-    style: {
-      fontSize: "1.3em"
-    }
-  }, {
-    format: "codeBlock",
-    label: "{}",
-    title: t$1("Code Block"),
-    style: {
-      fontFamily: "monospace"
-    }
-  }];
-  const handleButtonClick = (format) => {
-    if (!disabled) {
-      onFormat(format);
+  const isMobile = require$$0.Platform.isMobile;
+  const shortcuts = {
+    tag: {
+      key: "#",
+      ctrl: true,
+      shift: true,
+      description: "Insert tag"
+    },
+    image: {
+      key: "i",
+      ctrl: true,
+      shift: true,
+      description: "Upload image"
+    },
+    listTask: {
+      key: "l",
+      ctrl: true,
+      shift: true,
+      description: "Toggle list/task"
+    },
+    voice: {
+      key: "v",
+      ctrl: true,
+      shift: true,
+      description: "Voice recorder"
+    },
+    format: {
+      key: "t",
+      ctrl: true,
+      shift: true,
+      description: "Toggle formatting"
     }
   };
-  return /* @__PURE__ */ jsx("div", {
-    className: "rich-text-toolbar",
-    children: formatButtons.map((button) => /* @__PURE__ */ jsx("button", {
-      className: "toolbar-btn",
-      onClick: () => handleButtonClick(button.format),
-      title: button.title,
-      disabled,
-      style: button.style,
-      children: button.label
-    }, button.format))
+  const actions = [{
+    id: "tag",
+    icon: /* @__PURE__ */ jsx(ForwardRef$9, {}),
+    label: t$1("Add tag"),
+    onClick: onTagClick,
+    shortcut: shortcuts.tag,
+    className: "quick-action-tag"
+  }, {
+    id: "image",
+    icon: /* @__PURE__ */ jsx(ForwardRef$8, {}),
+    label: t$1("Upload image"),
+    onClick: onImageClick,
+    shortcut: shortcuts.image,
+    className: "quick-action-image"
+  }, {
+    id: "list-task",
+    icon: isListMode ? /* @__PURE__ */ jsx(ForwardRef$6, {}) : /* @__PURE__ */ jsx(ForwardRef$7, {}),
+    label: isListMode ? t$1("Switch to task") : t$1("Switch to list"),
+    onClick: onListTaskToggle,
+    shortcut: shortcuts.listTask,
+    active: isListMode,
+    className: "quick-action-list-task"
+  }];
+  return /* @__PURE__ */ jsxs("div", {
+    className: `quick-actions-toolbar ${isMobile ? "mobile" : "desktop"}`,
+    children: [/* @__PURE__ */ jsx("div", {
+      className: "quick-actions-group quick-actions-primary",
+      children: actions.map((action) => /* @__PURE__ */ jsxs("button", {
+        className: `quick-action-btn ${action.className || ""} ${action.active ? "active" : ""}`,
+        onClick: action.onClick,
+        title: `${action.label}${action.shortcut ? ` (${formatShortcut(action.shortcut)})` : ""}`,
+        "aria-label": action.label,
+        children: [/* @__PURE__ */ jsx("span", {
+          className: "quick-action-icon",
+          children: action.icon
+        }), !isMobile && /* @__PURE__ */ jsx("span", {
+          className: "quick-action-label",
+          children: action.label
+        }), !isMobile && action.shortcut && /* @__PURE__ */ jsx("span", {
+          className: "quick-action-shortcut",
+          children: formatShortcut(action.shortcut)
+        })]
+      }, action.id))
+    }), /* @__PURE__ */ jsxs("div", {
+      className: "quick-actions-group quick-actions-secondary",
+      children: [/* @__PURE__ */ jsx("div", {
+        className: "quick-action-btn quick-action-voice",
+        title: `${t$1("Voice recorder")}${shortcuts.voice ? ` (${formatShortcut(shortcuts.voice)})` : ""}`,
+        children: /* @__PURE__ */ jsx(VoiceRecorder, {
+          onTranscription: onVoiceTranscription,
+          onAudioRecorded
+        })
+      }), /* @__PURE__ */ jsxs("button", {
+        className: `quick-action-btn quick-action-format ${showFormatToolbar ? "active" : ""}`,
+        onClick: onFormatToggle,
+        title: `${t$1("Toggle formatting toolbar")}${shortcuts.format ? ` (${formatShortcut(shortcuts.format)})` : ""}`,
+        "aria-label": t$1("Toggle formatting toolbar"),
+        children: [/* @__PURE__ */ jsx("span", {
+          className: "quick-action-icon",
+          children: "Aa"
+        }), !isMobile && /* @__PURE__ */ jsx("span", {
+          className: "quick-action-label",
+          children: t$1("Format")
+        }), !isMobile && shortcuts.format && /* @__PURE__ */ jsx("span", {
+          className: "quick-action-shortcut",
+          children: formatShortcut(shortcuts.format)
+        })]
+      })]
+    })]
   });
+};
+const floatingToolbar = "";
+const FloatingToolbar = ({
+  editorRef,
+  onFormat,
+  showAsBottom = false
+}) => {
+  const [isVisible, setIsVisible] = react.exports.useState(false);
+  const [position, setPosition] = react.exports.useState({
+    top: 0,
+    left: 0
+  });
+  const toolbarRef = react.exports.useRef(null);
+  const [isMobile, setIsMobile] = react.exports.useState(require$$0.Platform.isMobile);
+  react.exports.useEffect(() => {
+    const checkSelection2 = () => {
+      var _a;
+      if (!editorRef.current)
+        return;
+      let selection = null;
+      let selectedText = "";
+      if (editorRef.current.element) {
+        const element = editorRef.current.element;
+        if (element.tagName === "TEXTAREA") {
+          const start2 = element.selectionStart;
+          const end2 = element.selectionEnd;
+          selectedText = element.value.substring(start2, end2);
+          if (selectedText && selectedText.length > 0) {
+            const rect = element.getBoundingClientRect();
+            const scrollTop = element.scrollTop;
+            setPosition({
+              top: rect.top - 50 - scrollTop,
+              left: rect.left + rect.width / 2
+            });
+            setIsVisible(true);
+            return;
+          }
+        }
+      }
+      selection = window.getSelection();
+      selectedText = (selection == null ? void 0 : selection.toString()) || "";
+      if (selectedText && selectedText.length > 0 && !showAsBottom) {
+        const range = selection == null ? void 0 : selection.getRangeAt(0);
+        if (range) {
+          const rect = range.getBoundingClientRect();
+          const toolbarWidth = ((_a = toolbarRef.current) == null ? void 0 : _a.offsetWidth) || 300;
+          setPosition({
+            top: rect.top - 50 + window.scrollY,
+            left: rect.left + rect.width / 2 - toolbarWidth / 2 + window.scrollX
+          });
+          setIsVisible(true);
+        }
+      } else {
+        setIsVisible(false);
+      }
+    };
+    const handleSelectionChange = () => {
+      setTimeout(checkSelection2, 10);
+    };
+    const handleMouseUp = () => {
+      setTimeout(checkSelection2, 10);
+    };
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("mouseup", handleMouseUp);
+    return () => {
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [editorRef, showAsBottom]);
+  if (showAsBottom || isMobile) {
+    return isVisible ? /* @__PURE__ */ jsx("div", {
+      className: "floating-toolbar mobile-bottom",
+      children: /* @__PURE__ */ jsx(RichTextToolbar, {
+        onFormat
+      })
+    }) : null;
+  }
+  return isVisible ? /* @__PURE__ */ jsx("div", {
+    ref: toolbarRef,
+    className: "floating-toolbar",
+    style: {
+      position: "fixed",
+      top: `${position.top}px`,
+      left: `${position.left}px`,
+      zIndex: 1e3
+    },
+    children: /* @__PURE__ */ jsx(RichTextToolbar, {
+      onFormat
+    })
+  }) : null;
 };
 const getCursorPostion = (input) => {
   const {
@@ -51418,6 +51667,42 @@ ${audioLink}`);
   const toggleRichToolbar = react.exports.useCallback(() => {
     setShowRichToolbar((prev) => !prev);
   }, []);
+  const shortcuts = react.exports.useMemo(() => [{
+    key: "#",
+    ctrl: true,
+    shift: true,
+    handler: () => handleTagTextBtnClick(),
+    description: "Insert tag"
+  }, {
+    key: "i",
+    ctrl: true,
+    shift: true,
+    handler: () => handleUploadFileBtnClick(),
+    description: "Upload image"
+  }, {
+    key: "l",
+    ctrl: true,
+    shift: true,
+    handler: () => handleChangeStatus(),
+    description: "Toggle list/task"
+  }, {
+    key: "t",
+    ctrl: true,
+    shift: true,
+    handler: () => toggleRichToolbar(),
+    description: "Toggle formatting toolbar"
+  }, {
+    key: "b",
+    ctrl: true,
+    handler: () => handleFormat("bold"),
+    description: "Bold"
+  }, {
+    key: "i",
+    ctrl: true,
+    handler: () => handleFormat("italic"),
+    description: "Italic"
+  }], [handleTagTextBtnClick, handleUploadFileBtnClick, handleChangeStatus, toggleRichToolbar, handleFormat]);
+  useKeyboardShortcuts(shortcuts);
   const showEditStatus = Boolean(globalState.editMemoId);
   const editorConfig = react.exports.useMemo(() => ({
     className: "memo-editor",
@@ -51440,26 +51725,15 @@ ${audioLink}`);
       ref: editorRef,
       ...editorConfig,
       tools: /* @__PURE__ */ jsxs(Fragment, {
-        children: [/* @__PURE__ */ jsx(ForwardRef$9, {
-          className: "action-btn add-tag",
-          onClick: handleTagTextBtnClick
-        }), /* @__PURE__ */ jsx(ForwardRef$8, {
-          className: "action-btn file-upload",
-          onClick: handleUploadFileBtnClick
-        }), !isListShown ? /* @__PURE__ */ jsx(ForwardRef$7, {
-          className: "action-btn list-or-task",
-          onClick: handleChangeStatus
-        }) : /* @__PURE__ */ jsx(ForwardRef$6, {
-          className: "action-btn list-or-task",
-          onClick: handleChangeStatus
-        }), /* @__PURE__ */ jsx(VoiceRecorder, {
-          onTranscription: handleVoiceTranscription,
-          onAudioRecorded: handleAudioRecorded
-        }), /* @__PURE__ */ jsx("button", {
-          className: `action-btn toggle-toolbar ${showRichToolbar ? "active" : ""}`,
-          onClick: toggleRichToolbar,
-          title: t$1("Toggle formatting toolbar"),
-          children: "Aa"
+        children: [/* @__PURE__ */ jsx(QuickActionsToolbar, {
+          onTagClick: handleTagTextBtnClick,
+          onImageClick: handleUploadFileBtnClick,
+          onListTaskToggle: handleChangeStatus,
+          onVoiceTranscription: handleVoiceTranscription,
+          onAudioRecorded: handleAudioRecorded,
+          onFormatToggle: toggleRichToolbar,
+          isListMode: isListShown,
+          showFormatToolbar: showRichToolbar
         }), showRichToolbar && /* @__PURE__ */ jsx("div", {
           className: "rich-toolbar-container",
           children: /* @__PURE__ */ jsx(RichTextToolbar, {
@@ -51467,6 +51741,10 @@ ${audioLink}`);
           })
         })]
       })
+    }), /* @__PURE__ */ jsx(FloatingToolbar, {
+      editorRef,
+      onFormat: handleFormat,
+      showAsBottom: require$$0.Platform.isMobile
     }), /* @__PURE__ */ jsx("div", {
       ref: popperRef,
       className: "date-picker",

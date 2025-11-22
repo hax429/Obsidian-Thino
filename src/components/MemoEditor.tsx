@@ -21,6 +21,9 @@ import { MEMOS_VIEW_TYPE } from '../constants';
 import { t } from '../translations/helper';
 import VoiceRecorder from './VoiceRecorder';
 import RichTextToolbar from './RichTextToolbar';
+import QuickActionsToolbar from './QuickActionsToolbar';
+import FloatingToolbar from './FloatingToolbar';
+import { useKeyboardShortcuts, KeyboardShortcut } from '../hooks/useKeyboardShortcuts';
 
 const getCursorPostion = (input: HTMLTextAreaElement) => {
   const {
@@ -798,6 +801,52 @@ const MemoEditor: React.FC<Props> = () => {
     setShowRichToolbar(prev => !prev);
   }, []);
 
+  // Keyboard shortcuts
+  const shortcuts: KeyboardShortcut[] = useMemo(() => [
+    {
+      key: '#',
+      ctrl: true,
+      shift: true,
+      handler: () => handleTagTextBtnClick(),
+      description: 'Insert tag',
+    },
+    {
+      key: 'i',
+      ctrl: true,
+      shift: true,
+      handler: () => handleUploadFileBtnClick(),
+      description: 'Upload image',
+    },
+    {
+      key: 'l',
+      ctrl: true,
+      shift: true,
+      handler: () => handleChangeStatus(),
+      description: 'Toggle list/task',
+    },
+    {
+      key: 't',
+      ctrl: true,
+      shift: true,
+      handler: () => toggleRichToolbar(),
+      description: 'Toggle formatting toolbar',
+    },
+    {
+      key: 'b',
+      ctrl: true,
+      handler: () => handleFormat('bold'),
+      description: 'Bold',
+    },
+    {
+      key: 'i',
+      ctrl: true,
+      handler: () => handleFormat('italic'),
+      description: 'Italic',
+    },
+  ], [handleTagTextBtnClick, handleUploadFileBtnClick, handleChangeStatus, toggleRichToolbar, handleFormat]);
+
+  useKeyboardShortcuts(shortcuts);
+
   const showEditStatus = Boolean(globalState.editMemoId);
 
   const editorConfig = useMemo(
@@ -824,24 +873,16 @@ const MemoEditor: React.FC<Props> = () => {
         {...editorConfig}
         tools={
           <>
-            <Tag className="action-btn add-tag" onClick={handleTagTextBtnClick} />
-            <ImageSvg className="action-btn file-upload" onClick={handleUploadFileBtnClick} />
-            {!isListShown ? (
-              <JournalSvg className="action-btn list-or-task" onClick={handleChangeStatus} />
-            ) : (
-              <TaskSvg className="action-btn list-or-task" onClick={handleChangeStatus} />
-            )}
-            <VoiceRecorder
-              onTranscription={handleVoiceTranscription}
+            <QuickActionsToolbar
+              onTagClick={handleTagTextBtnClick}
+              onImageClick={handleUploadFileBtnClick}
+              onListTaskToggle={handleChangeStatus}
+              onVoiceTranscription={handleVoiceTranscription}
               onAudioRecorded={handleAudioRecorded}
+              onFormatToggle={toggleRichToolbar}
+              isListMode={isListShown}
+              showFormatToolbar={showRichToolbar}
             />
-            <button
-              className={`action-btn toggle-toolbar ${showRichToolbar ? 'active' : ''}`}
-              onClick={toggleRichToolbar}
-              title={t('Toggle formatting toolbar')}
-            >
-              Aa
-            </button>
             {showRichToolbar && (
               <div className="rich-toolbar-container">
                 <RichTextToolbar onFormat={handleFormat} />
@@ -849,6 +890,11 @@ const MemoEditor: React.FC<Props> = () => {
             )}
           </>
         }
+      />
+      <FloatingToolbar
+        editorRef={editorRef}
+        onFormat={handleFormat}
+        showAsBottom={Platform.isMobile}
       />
       <div ref={popperRef} className="date-picker">
         {isDatePickerOpen && (

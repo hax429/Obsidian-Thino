@@ -1,0 +1,194 @@
+.quick-actions-toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 0;
+  width: 100%;
+
+  .quick-actions-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+
+    &.quick-actions-primary {
+      flex: 1;
+    }
+
+    &.quick-actions-secondary {
+      flex-shrink: 0;
+    }
+  }
+
+  .quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: var(--background-secondary);
+    border: 1px solid var(--background-modifier-border);
+    border-radius: 6px;
+    color: var(--text-normal);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 14px;
+    white-space: nowrap;
+    min-height: 36px;
+
+    &:hover {
+      background: var(--background-modifier-hover);
+      border-color: var(--text-muted);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    &.active {
+      background: var(--interactive-accent);
+      color: var(--text-on-accent);
+      border-color: var(--interactive-accent);
+
+      &:hover {
+        background: var(--interactive-accent-hover);
+      }
+    }
+
+    .quick-action-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+
+      svg {
+        width: 100%;
+        height: 100%;
+        fill: currentColor;
+      }
+    }
+
+    .quick-action-label {
+      font-weight: 500;
+    }
+
+    .quick-action-shortcut {
+      margin-left: auto;
+      padding: 2px 6px;
+      background: var(--background-primary);
+      border-radius: 4px;
+      font-size: 11px;
+      font-family: var(--font-monospace);
+      color: var(--text-muted);
+      opacity: 0.7;
+    }
+  }
+
+  // Voice recorder specific styling
+  .quick-action-voice {
+    padding: 0;
+    background: transparent;
+    border: none;
+
+    &:hover {
+      background: transparent;
+      transform: none;
+      box-shadow: none;
+    }
+  }
+
+  &.mobile {
+    gap: 6px;
+    padding: 6px 0;
+
+    .quick-actions-group {
+      gap: 6px;
+    }
+
+    .quick-action-btn {
+      padding: 8px;
+      min-width: 40px;
+      justify-content: center;
+
+      .quick-action-icon {
+        width: 24px;
+        height: 24px;
+      }
+
+      // Hide labels and shortcuts on mobile
+      .quick-action-label,
+      .quick-action-shortcut {
+        display: none;
+      }
+    }
+  }
+}
+
+// Desktop specific enhancements
+@media (min-width: 769px) {
+  .quick-actions-toolbar.desktop {
+    .quick-action-btn {
+      &:hover .quick-action-shortcut {
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Mobile specific adjustments
+@media (max-width: 768px) {
+  .quick-actions-toolbar {
+    gap: 4px;
+
+    .quick-actions-group {
+      gap: 4px;
+    }
+
+    .quick-action-btn {
+      min-width: 36px;
+      padding: 6px;
+    }
+  }
+}
+
+// Dark theme adjustments
+.theme-dark {
+  .quick-action-btn {
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+// Specific button styling
+.quick-action-tag {
+  .quick-action-icon svg {
+    fill: var(--color-blue);
+  }
+}
+
+.quick-action-image {
+  .quick-action-icon svg {
+    fill: var(--color-green);
+  }
+}
+
+.quick-action-list-task {
+  .quick-action-icon svg {
+    fill: var(--color-orange);
+  }
+
+  &.active .quick-action-icon svg {
+    fill: currentColor;
+  }
+}
+
+.quick-action-format {
+  .quick-action-icon {
+    font-weight: bold;
+    font-size: 16px;
+  }
+}
