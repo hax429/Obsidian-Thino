@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { Notice, Platform } from 'obsidian';
 import { t } from '../translations/helper';
-import MicrophoneSvg from '../icons/microphone.svg?component';
-import StopSvg from '../icons/stop.svg?component';
+import MicrophoneSvg from '../icons/microphone.svg?react';
+import StopSvg from '../icons/stop.svg?react';
 
 interface VoiceRecorderProps {
   onTranscription: (text: string, audioBlob?: Blob) => void;

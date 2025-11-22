@@ -9333,7 +9333,7 @@ function requireReactDom_development() {
       var Mode = 8;
       var ContextConsumer = 9;
       var ContextProvider = 10;
-      var ForwardRef = 11;
+      var ForwardRef2 = 11;
       var Profiler = 12;
       var SuspenseComponent = 13;
       var MemoComponent = 14;
@@ -10231,7 +10231,7 @@ function requireReactDom_development() {
           case IndeterminateComponent:
           case SimpleMemoComponent:
             return describeFunctionComponentFrame(fiber.type);
-          case ForwardRef:
+          case ForwardRef2:
             return describeFunctionComponentFrame(fiber.type.render);
           case Block:
             return describeFunctionComponentFrame(fiber.type._render);
@@ -19132,7 +19132,7 @@ function requireReactDom_development() {
               }
               case Block:
               case FunctionComponent:
-              case ForwardRef:
+              case ForwardRef2:
               case SimpleMemoComponent: {
                 {
                   {
@@ -21754,7 +21754,7 @@ function requireReactDom_development() {
             child = updateClassComponent(null, workInProgress2, Component, resolvedProps, renderLanes2);
             return child;
           }
-          case ForwardRef: {
+          case ForwardRef2: {
             {
               workInProgress2.type = Component = resolveForwardRefForHotReloading(Component);
             }
@@ -22680,7 +22680,7 @@ function requireReactDom_development() {
             return updateSuspenseComponent(current2, workInProgress2, renderLanes2);
           case HostPortal:
             return updatePortalComponent(current2, workInProgress2, renderLanes2);
-          case ForwardRef: {
+          case ForwardRef2: {
             var type = workInProgress2.type;
             var _unresolvedProps2 = workInProgress2.pendingProps;
             var _resolvedProps2 = workInProgress2.elementType === type ? _unresolvedProps2 : resolveDefaultProps(type, _unresolvedProps2);
@@ -22857,7 +22857,7 @@ function requireReactDom_development() {
           case LazyComponent:
           case SimpleMemoComponent:
           case FunctionComponent:
-          case ForwardRef:
+          case ForwardRef2:
           case Fragment2:
           case Mode:
           case Profiler:
@@ -23500,7 +23500,7 @@ function requireReactDom_development() {
       function commitBeforeMutationLifeCycles(current2, finishedWork) {
         switch (finishedWork.tag) {
           case FunctionComponent:
-          case ForwardRef:
+          case ForwardRef2:
           case SimpleMemoComponent:
           case Block: {
             return;
@@ -23621,7 +23621,7 @@ function requireReactDom_development() {
       function commitLifeCycles(finishedRoot, current2, finishedWork, committedLanes) {
         switch (finishedWork.tag) {
           case FunctionComponent:
-          case ForwardRef:
+          case ForwardRef2:
           case SimpleMemoComponent:
           case Block: {
             {
@@ -23824,7 +23824,7 @@ function requireReactDom_development() {
         onCommitUnmount(current2);
         switch (current2.tag) {
           case FunctionComponent:
-          case ForwardRef:
+          case ForwardRef2:
           case MemoComponent:
           case SimpleMemoComponent:
           case Block: {
@@ -24132,7 +24132,7 @@ function requireReactDom_development() {
       function commitWork(current2, finishedWork) {
         switch (finishedWork.tag) {
           case FunctionComponent:
-          case ForwardRef:
+          case ForwardRef2:
           case MemoComponent:
           case SimpleMemoComponent:
           case Block: {
@@ -25682,7 +25682,7 @@ function requireReactDom_development() {
             return;
           }
           var tag = fiber.tag;
-          if (tag !== IndeterminateComponent && tag !== HostRoot && tag !== ClassComponent && tag !== FunctionComponent && tag !== ForwardRef && tag !== MemoComponent && tag !== SimpleMemoComponent && tag !== Block) {
+          if (tag !== IndeterminateComponent && tag !== HostRoot && tag !== ClassComponent && tag !== FunctionComponent && tag !== ForwardRef2 && tag !== MemoComponent && tag !== SimpleMemoComponent && tag !== Block) {
             return;
           }
           var componentName = getComponentName(fiber.type) || "ReactComponent";
@@ -25711,7 +25711,7 @@ function requireReactDom_development() {
       function warnAboutUpdateOnUnmountedFiberInDEV(fiber) {
         {
           var tag = fiber.tag;
-          if (tag !== HostRoot && tag !== ClassComponent && tag !== FunctionComponent && tag !== ForwardRef && tag !== MemoComponent && tag !== SimpleMemoComponent && tag !== Block) {
+          if (tag !== HostRoot && tag !== ClassComponent && tag !== FunctionComponent && tag !== ForwardRef2 && tag !== MemoComponent && tag !== SimpleMemoComponent && tag !== Block) {
             return;
           }
           if ((fiber.flags & PassiveUnmountPendingDev) !== NoFlags) {
@@ -25781,7 +25781,7 @@ function requireReactDom_development() {
           if (isRendering && (executionContext & RenderContext) !== NoContext && !getIsUpdatingOpaqueValueInRenderPhaseInDEV()) {
             switch (fiber.tag) {
               case FunctionComponent:
-              case ForwardRef:
+              case ForwardRef2:
               case SimpleMemoComponent: {
                 var renderingComponentName = workInProgress && getComponentName(workInProgress.type) || "Unknown";
                 var dedupeKey = renderingComponentName;
@@ -26036,7 +26036,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
               }
               break;
             }
-            case ForwardRef: {
+            case ForwardRef2: {
               if ($$typeofNextType === REACT_FORWARD_REF_TYPE) {
                 needsCompareFamilies = true;
               } else if ($$typeofNextType === REACT_LAZY_TYPE) {
@@ -26112,7 +26112,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             case ClassComponent:
               candidateType = type;
               break;
-            case ForwardRef:
+            case ForwardRef2:
               candidateType = type.render;
               break;
           }
@@ -26174,7 +26174,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             case ClassComponent:
               candidateType = type;
               break;
-            case ForwardRef:
+            case ForwardRef2:
               candidateType = type.render;
               break;
           }
@@ -26323,7 +26323,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
         } else if (Component !== void 0 && Component !== null) {
           var $$typeof = Component.$$typeof;
           if ($$typeof === REACT_FORWARD_REF_TYPE) {
-            return ForwardRef;
+            return ForwardRef2;
           }
           if ($$typeof === REACT_MEMO_TYPE) {
             return MemoComponent;
@@ -26387,7 +26387,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
             case ClassComponent:
               workInProgress2.type = resolveClassForHotReloading(current2.type);
               break;
-            case ForwardRef:
+            case ForwardRef2:
               workInProgress2.type = resolveForwardRefForHotReloading(current2.type);
               break;
           }
@@ -26497,7 +26497,7 @@ For more info, visit https://reactjs.org/link/mock-scheduler`);
                       fiberTag = ContextConsumer;
                       break getTag;
                     case REACT_FORWARD_REF_TYPE:
-                      fiberTag = ForwardRef;
+                      fiberTag = ForwardRef2;
                       {
                         resolvedType = resolveForwardRefForHotReloading(resolvedType);
                       }
@@ -32796,8 +32796,7 @@ const SvgClose = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, fill: "#37352f", viewBox: "0 0 24 24", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z" }));
-react.exports.forwardRef(SvgClose);
-const Close = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzM3MzUyZiIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDBWMHoiLz48cGF0aCBkPSJNMTkgNi40MUwxNy41OSA1IDEyIDEwLjU5IDYuNDEgNSA1IDYuNDEgMTAuNTkgMTIgNSAxNy41OSA2LjQxIDE5IDEyIDEzLjQxIDE3LjU5IDE5IDE5IDE3LjU5IDEzLjQxIDEyIDE5IDYuNDF6Ii8+PC9zdmc+";
+const ForwardRef$j = react.exports.forwardRef(SvgClose);
 const AboutSiteDialog = ({
   destroy
 }) => {
@@ -32818,7 +32817,7 @@ const AboutSiteDialog = ({
       }), /* @__PURE__ */ jsx("button", {
         className: "btn close-btn",
         onClick: handleCloseBtnClick,
-        children: /* @__PURE__ */ jsx(Close, {
+        children: /* @__PURE__ */ jsx(ForwardRef$j, {
           className: "icon-img"
         })
       })]
@@ -35017,7 +35016,7 @@ const PreviewImageDialog = ({
     children: [/* @__PURE__ */ jsx("button", {
       className: "btn close-btn",
       onClick: handleCloseBtnClick,
-      children: /* @__PURE__ */ jsx(Close, {
+      children: /* @__PURE__ */ jsx(ForwardRef$j, {
         className: "icon-img"
       })
     }), /* @__PURE__ */ jsxs("div", {
@@ -35212,8 +35211,7 @@ const SvgEdit = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "20px", viewBox: "0 0 24 24", width: "20px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M14.06 9.02l.92.92L5.92 19H5v-.92l9.06-9.06M17.66 3c-.25 0-.51.1-.7.29l-1.83 1.83 3.75 3.75 1.83-1.83c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.2-.2-.45-.29-.71-.29zm-3.6 3.19L3 17.25V21h3.75L17.81 9.94l-3.75-3.75z" }));
-react.exports.forwardRef(SvgEdit);
-const Edit = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjBweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE0LjA2IDkuMDJsLjkyLjkyTDUuOTIgMTlINXYtLjkybDkuMDYtOS4wNk0xNy42NiAzYy0uMjUgMC0uNTEuMS0uNy4yOWwtMS44MyAxLjgzIDMuNzUgMy43NSAxLjgzLTEuODNjLjM5LS4zOS4zOS0xLjAyIDAtMS40MWwtMi4zNC0yLjM0Yy0uMi0uMi0uNDUtLjI5LS43MS0uMjl6bS0zLjYgMy4xOUwzIDE3LjI1VjIxaDMuNzVMMTcuODEgOS45NGwtMy43NS0zLjc1eiIvPjwvc3ZnPgo=";
+const ForwardRef$i = react.exports.forwardRef(SvgEdit);
 const OnlyWhen = (props) => {
   const {
     children,
@@ -35471,13 +35469,13 @@ const MemoCardDialog = (props) => {
           children: [/* @__PURE__ */ jsx("button", {
             className: "btn edit-btn",
             onClick: handleEditMemoBtnClick,
-            children: /* @__PURE__ */ jsx(Edit, {
+            children: /* @__PURE__ */ jsx(ForwardRef$i, {
               className: "icon-img"
             })
           }), /* @__PURE__ */ jsx("button", {
             className: "btn close-btn",
             onClick: props.destroy,
-            children: /* @__PURE__ */ jsx(Close, {
+            children: /* @__PURE__ */ jsx(ForwardRef$j, {
               className: "icon-img"
             })
           })]
@@ -35560,8 +35558,7 @@ const SvgShare = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", enableBackground: "new 0 0 24 24", height: "20px", viewBox: "0 0 24 24", width: "20px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("rect", { fill: "none", height: 24, width: 24 })), /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("path", { d: "M16,5l-1.42,1.42l-1.59-1.59V16h-1.98V4.83L9.42,6.42L8,5l4-4L16,5z M20,10v11c0,1.1-0.9,2-2,2H6c-1.11,0-2-0.9-2-2V10 c0-1.11,0.89-2,2-2h3v2H6v11h12V10h-3V8h3C19.1,8,20,8.89,20,10z" })));
-react.exports.forwardRef(SvgShare);
-const Share = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjIwcHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjIwcHgiIGZpbGw9IiMzNzM1MmYiPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCIvPjwvZz48Zz48cGF0aCBkPSJNMTYsNWwtMS40MiwxLjQybC0xLjU5LTEuNTlWMTZoLTEuOThWNC44M0w5LjQyLDYuNDJMOCw1bDQtNEwxNiw1eiBNMjAsMTB2MTFjMCwxLjEtMC45LDItMiwySDZjLTEuMTEsMC0yLTAuOS0yLTJWMTAgYzAtMS4xMSwwLjg5LTIsMi0yaDN2Mkg2djExaDEyVjEwaC0zVjhoM0MxOS4xLDgsMjAsOC44OSwyMCwxMHoiLz48L2c+PC9zdmc+Cg==";
+const ForwardRef$h = react.exports.forwardRef(SvgShare);
 const getPathOfImage = (vault, image2) => {
   return vault.getResourcePath(image2);
 };
@@ -35831,13 +35828,13 @@ const ShareMemoImageDialog = (props) => {
         children: [/* @__PURE__ */ jsx("button", {
           className: "btn copy-btn",
           onClick: handleCopytoClipboardBtnClick,
-          children: /* @__PURE__ */ jsx(Share, {
+          children: /* @__PURE__ */ jsx(ForwardRef$h, {
             className: "icon-img"
           })
         }), /* @__PURE__ */ jsx("button", {
           className: "btn close-btn",
           onClick: handleCloseBtnClick,
-          children: /* @__PURE__ */ jsx(Close, {
+          children: /* @__PURE__ */ jsx(ForwardRef$j, {
             className: "icon-img"
           })
         })]
@@ -35949,29 +35946,25 @@ const SvgMore = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, fill: "#37352f", viewBox: "0 0 24 24", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }));
-react.exports.forwardRef(SvgMore);
-const More = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iIzM3MzUyZiIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDBWMHoiLz48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0yem0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiLz48L3N2Zz4=";
+const ForwardRef$g = react.exports.forwardRef(SvgMore);
 const SvgComment = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { t: 1650249616615, className: "icon", viewBox: "0 0 1024 1024", xmlns: "http://www.w3.org/2000/svg", "p-id": 2597, width: 20, height: 20, fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M853.333333 768c35.413333 0 64-20.650667 64-55.978667V170.581333A63.978667 63.978667 0 0 0 853.333333 106.666667H170.666667C135.253333 106.666667 106.666667 135.253333 106.666667 170.581333v541.44C106.666667 747.285333 135.338667 768 170.666667 768h201.173333l110.016 117.44a42.752 42.752 0 0 0 60.586667 0.042667L651.904 768H853.333333z m-219.029333-42.666667h-6.250667l-115.797333 129.962667c-0.106667 0.106667-116.010667-129.962667-116.010667-129.962667H170.666667c-11.776 0-21.333333-1.621333-21.333334-13.312V170.581333A21.205333 21.205333 0 0 1 170.666667 149.333333h682.666666c11.776 0 21.333333 9.536 21.333334 21.248v541.44c0 11.754667-9.472 13.312-21.333334 13.312H634.304zM341.333333 490.666667a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z m170.666667 0a42.666667 42.666667 0 1 0 0-85.333334 42.666667 42.666667 0 0 0 0 85.333334z", fill: "#3D3D3D", "p-id": 2598 }));
-react.exports.forwardRef(SvgComment);
-const Comment = "data:image/svg+xml;base64,PHN2ZyB0PSIxNjUwMjQ5NjE2NjE1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjI1OTciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTg1My4zMzMzMzMgNzY4YzM1LjQxMzMzMyAwIDY0LTIwLjY1MDY2NyA2NC01NS45Nzg2NjdWMTcwLjU4MTMzM0E2My45Nzg2NjcgNjMuOTc4NjY3IDAgMCAwIDg1My4zMzMzMzMgMTA2LjY2NjY2N0gxNzAuNjY2NjY3QzEzNS4yNTMzMzMgMTA2LjY2NjY2NyAxMDYuNjY2NjY3IDEzNS4yNTMzMzMgMTA2LjY2NjY2NyAxNzAuNTgxMzMzdjU0MS40NEMxMDYuNjY2NjY3IDc0Ny4yODUzMzMgMTM1LjMzODY2NyA3NjggMTcwLjY2NjY2NyA3NjhoMjAxLjE3MzMzM2wxMTAuMDE2IDExNy40NGE0Mi43NTIgNDIuNzUyIDAgMCAwIDYwLjU4NjY2NyAwLjA0MjY2N0w2NTEuOTA0IDc2OEg4NTMuMzMzMzMzeiBtLTIxOS4wMjkzMzMtNDIuNjY2NjY3aC02LjI1MDY2N2wtMTE1Ljc5NzMzMyAxMjkuOTYyNjY3Yy0wLjEwNjY2NyAwLjEwNjY2Ny0xMTYuMDEwNjY3LTEyOS45NjI2NjctMTE2LjAxMDY2Ny0xMjkuOTYyNjY3SDE3MC42NjY2NjdjLTExLjc3NiAwLTIxLjMzMzMzMy0xLjYyMTMzMy0yMS4zMzMzMzQtMTMuMzEyVjE3MC41ODEzMzNBMjEuMjA1MzMzIDIxLjIwNTMzMyAwIDAgMSAxNzAuNjY2NjY3IDE0OS4zMzMzMzNoNjgyLjY2NjY2NmMxMS43NzYgMCAyMS4zMzMzMzMgOS41MzYgMjEuMzMzMzM0IDIxLjI0OHY1NDEuNDRjMCAxMS43NTQ2NjctOS40NzIgMTMuMzEyLTIxLjMzMzMzNCAxMy4zMTJINjM0LjMwNHpNMzQxLjMzMzMzMyA0OTAuNjY2NjY3YTQyLjY2NjY2NyA0Mi42NjY2NjcgMCAxIDAgMC04NS4zMzMzMzQgNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDAgMCAwIDg1LjMzMzMzNHogbTE3MC42NjY2NjcgMGE0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMSAwIDAtODUuMzMzMzM0IDQyLjY2NjY2NyA0Mi42NjY2NjcgMCAwIDAgMCA4NS4zMzMzMzR6IG0xNzAuNjY2NjY3IDBhNDIuNjY2NjY3IDQyLjY2NjY2NyAwIDEgMCAwLTg1LjMzMzMzNCA0Mi42NjY2NjcgNDIuNjY2NjY3IDAgMCAwIDAgODUuMzMzMzM0eiIgZmlsbD0iIzNEM0QzRCIgcC1pZD0iMjU5OCI+PC9wYXRoPjwvc3ZnPgo=";
+const ForwardRef$f = react.exports.forwardRef(SvgComment);
 const SvgTaskBlank = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "20px", viewBox: "0 0 24 24", width: "20px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" }));
-react.exports.forwardRef(SvgTaskBlank);
-const TaskBlank = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjBweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDV2MTRINVY1aDE0bTAtMkg1Yy0xLjEgMC0yIC45LTIgMnYxNGMwIDEuMS45IDIgMiAyaDE0YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6Ii8+PC9zdmc+Cg==";
+const ForwardRef$e = react.exports.forwardRef(SvgTaskBlank);
 const SvgTask = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "20px", viewBox: "0 0 24 24", width: "20px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z" }));
-react.exports.forwardRef(SvgTask);
-const Task = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjBweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjBweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDNINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMlY1YzAtMS4xLS45LTItMi0yem0wIDE2SDVWNWgxNHYxNHpNMTcuOTkgOWwtMS40MS0xLjQyLTYuNTkgNi41OS0yLjU4LTIuNTctMS40MiAxLjQxIDQgMy45OXoiLz48L3N2Zz4NCg==";
+const ForwardRef$d = react.exports.forwardRef(SvgTask);
 const getInitialAction = () => {
   return {
     type: "initialText",
@@ -38152,9 +38145,9 @@ const Memo = (props) => {
       return;
     }
     if (propsMemo.memoType === "TASK-TODO") {
-      return /* @__PURE__ */ jsx(TaskBlank, {});
+      return /* @__PURE__ */ jsx(ForwardRef$e, {});
     } else if (propsMemo.memoType === "TASK-DONE") {
-      return /* @__PURE__ */ jsx(Task, {});
+      return /* @__PURE__ */ jsx(ForwardRef$d, {});
     }
   };
   const handleMemoDoubleClick = react.exports.useCallback((event) => {
@@ -38243,7 +38236,7 @@ const Memo = (props) => {
         className: "memo-top-right-wrapper",
         children: [CommentOnMemos ? /* @__PURE__ */ jsxs("div", {
           className: "comment-button-wrapper",
-          children: [/* @__PURE__ */ jsx(Comment, {
+          children: [/* @__PURE__ */ jsx(ForwardRef$f, {
             className: "icon-img",
             onClick: handleCommentBlock
           }), commentMemos.length > 0 ? /* @__PURE__ */ jsx("div", {
@@ -38254,7 +38247,7 @@ const Memo = (props) => {
           className: "btns-container",
           children: [/* @__PURE__ */ jsx("span", {
             className: "btn more-action-btn",
-            children: /* @__PURE__ */ jsx(More, {
+            children: /* @__PURE__ */ jsx(ForwardRef$g, {
               className: "icon-img"
             })
           }), /* @__PURE__ */ jsx("div", {
@@ -38541,15 +38534,13 @@ const SvgArrowLeft = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12l4.58-4.59z" }));
-react.exports.forwardRef(SvgArrowLeft);
-const ArrowLeft = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE1LjQxIDcuNDFMMTQgNmwtNiA2IDYgNiAxLjQxLTEuNDFMMTAuODMgMTJsNC41OC00LjU5eiIvPjwvc3ZnPg==";
+const ForwardRef$c = react.exports.forwardRef(SvgArrowLeft);
 const SvgArrowRight = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6-6-6z" }));
-react.exports.forwardRef(SvgArrowRight);
-const ArrowRight = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEwIDZMOC41OSA3LjQxIDEzLjE3IDEybC00LjU4IDQuNTlMMTAgMThsNi02LTYtNnoiLz48L3N2Zz4=";
+const ForwardRef$b = react.exports.forwardRef(SvgArrowRight);
 const DatePicker = (props) => {
   var _a, _b;
   const {
@@ -38600,7 +38591,7 @@ const DatePicker = (props) => {
       children: [/* @__PURE__ */ jsx("span", {
         className: "btn-text",
         onClick: () => handleChangeMonthBtnClick(-1),
-        children: /* @__PURE__ */ jsx(ArrowLeft, {
+        children: /* @__PURE__ */ jsx(ForwardRef$c, {
           className: "icon-img"
         })
       }), /* @__PURE__ */ jsxs("span", {
@@ -38609,7 +38600,7 @@ const DatePicker = (props) => {
       }), /* @__PURE__ */ jsx("span", {
         className: "btn-text",
         onClick: () => handleChangeMonthBtnClick(1),
-        children: /* @__PURE__ */ jsx(ArrowRight, {
+        children: /* @__PURE__ */ jsx(ForwardRef$b, {
           className: "icon-img"
         })
       })]
@@ -38750,25 +38741,25 @@ const DailyMemoDiaryDialog = (props) => {
           children: [/* @__PURE__ */ jsx("span", {
             className: "btn-text",
             onClick: () => setCurrentDateStamp(currentDateStamp - DAILY_TIMESTAMP),
-            children: /* @__PURE__ */ jsx(ArrowLeft, {
+            children: /* @__PURE__ */ jsx(ForwardRef$c, {
               className: "icon-img"
             })
           }), /* @__PURE__ */ jsx("span", {
             className: "btn-text",
             onClick: () => setCurrentDateStamp(currentDateStamp + DAILY_TIMESTAMP),
-            children: /* @__PURE__ */ jsx(ArrowRight, {
+            children: /* @__PURE__ */ jsx(ForwardRef$b, {
               className: "icon-img"
             })
           }), /* @__PURE__ */ jsx("span", {
             className: "btn-text share-btn",
             onClick: handleShareBtnClick,
-            children: /* @__PURE__ */ jsx(Share, {
+            children: /* @__PURE__ */ jsx(ForwardRef$h, {
               className: "icon-img"
             })
           }), /* @__PURE__ */ jsx("span", {
             className: "btn-text",
             onClick: () => props.destroy(),
-            children: /* @__PURE__ */ jsx(Close, {
+            children: /* @__PURE__ */ jsx(ForwardRef$j, {
               className: "icon-img"
             })
           })]
@@ -38868,7 +38859,7 @@ const UserBanner = () => {
       }), /* @__PURE__ */ jsx("span", {
         className: "action-btn menu-popup-btn",
         onClick: handlePopupBtnClick,
-        children: /* @__PURE__ */ jsx(More, {
+        children: /* @__PURE__ */ jsx(ForwardRef$g, {
           className: "icon-img"
         })
       }), /* @__PURE__ */ jsx(MenuBtnsPopup, {
@@ -39157,7 +39148,7 @@ const Selector = (props) => {
         children: currentItem.text
       }), /* @__PURE__ */ jsx("span", {
         className: "arrow-text",
-        children: /* @__PURE__ */ jsx(ArrowRight, {
+        children: /* @__PURE__ */ jsx(ForwardRef$b, {
           className: "icon-img"
         })
       })]
@@ -39261,7 +39252,7 @@ const CreateQueryDialog = (props) => {
       }), /* @__PURE__ */ jsx("button", {
         className: "btn close-btn",
         onClick: destroy,
-        children: /* @__PURE__ */ jsx(Close, {
+        children: /* @__PURE__ */ jsx(ForwardRef$j, {
           className: "icon-img"
         })
       })]
@@ -39446,7 +39437,7 @@ const FilterInputer = (props) => {
       dataSource: Object.values(filterConsts),
       value: filter.type,
       handleValueChanged: handleTypeChange
-    }), inputElements, /* @__PURE__ */ jsx(Close, {
+    }), inputElements, /* @__PURE__ */ jsx(ForwardRef$j, {
       className: "remove-btn",
       onClick: handleRemoveBtnClick
     })]
@@ -39466,8 +39457,7 @@ const SvgMoreWhite = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, fill: "#FFF", viewBox: "0 0 24 24", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { fill: "none", d: "M0 0h24v24H0V0z" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" }));
-react.exports.forwardRef(SvgMoreWhite);
-const MoreWhite = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0iI0ZGRiIgdmlld0JveD0iMCAwIDI0IDI0Ij48cGF0aCBmaWxsPSJub25lIiBkPSJNMCAwaDI0djI0SDBWMHoiLz48cGF0aCBkPSJNNiAxMGMtMS4xIDAtMiAuOS0yIDJzLjkgMiAyIDIgMi0uOSAyLTItLjktMi0yLTJ6bTEyIDBjLTEuMSAwLTIgLjktMiAycy45IDIgMiAyIDItLjkgMi0yLS45LTItMi0yem0tNiAwYy0xLjEgMC0yIC45LTIgMnMuOSAyIDIgMiAyLS45IDItMi0uOS0yLTItMnoiLz48L3N2Zz4=";
+const ForwardRef$a = react.exports.forwardRef(SvgMoreWhite);
 const QueryList = () => {
   const {
     queryState: {
@@ -39600,7 +39590,7 @@ const QueryItemContainer = (props) => {
         children: [/* @__PURE__ */ jsx("span", {
           className: "action-btn toggle-btn",
           onClick: handleShowActionBtnClick,
-          children: isActive ? /* @__PURE__ */ jsx(MoreWhite, {}) : /* @__PURE__ */ jsx(More, {})
+          children: isActive ? /* @__PURE__ */ jsx(ForwardRef$a, {}) : /* @__PURE__ */ jsx(ForwardRef$g, {})
         }), /* @__PURE__ */ jsx("div", {
           className: `action-btns-wrapper ${showActionBtns ? "" : "hidden"}`,
           onMouseLeave: handleActionBtnContainerMouseLeave,
@@ -39748,7 +39738,7 @@ const TagItemContainer = (props) => {
         }), hasSubTags ? /* @__PURE__ */ jsx("span", {
           className: `action-btn toggle-btn ${showSubTags ? "shown" : ""}`,
           onClick: handleToggleBtnClick,
-          children: /* @__PURE__ */ jsx(ArrowRight, {
+          children: /* @__PURE__ */ jsx(ForwardRef$b, {
             className: "icon-img"
           })
         }) : null]
@@ -40034,29 +40024,25 @@ const SvgTag = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", enableBackground: "new 0 0 24 24", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("rect", { fill: "none", height: 24, width: 24 })), /* @__PURE__ */ react.exports.createElement("g", null, /* @__PURE__ */ react.exports.createElement("path", { d: "M20,10V8h-4V4h-2v4h-4V4H8v4H4v2h4v4H4v2h4v4h2v-4h4v4h2v-4h4v-2h-4v-4H20z M14,14h-4v-4h4V14z" })));
-react.exports.forwardRef(SvgTag);
-const Tag = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgMCAwIDI0IDI0IiBoZWlnaHQ9IjI0cHgiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0cHgiIGZpbGw9IiMwMDAwMDAiPjxnPjxyZWN0IGZpbGw9Im5vbmUiIGhlaWdodD0iMjQiIHdpZHRoPSIyNCIvPjwvZz48Zz48cGF0aCBkPSJNMjAsMTBWOGgtNFY0aC0ydjRoLTRWNEg4djRINHYyaDR2NEg0djJoNHY0aDJ2LTRoNHY0aDJ2LTRoNHYtMmgtNHYtNEgyMHogTTE0LDE0aC00di00aDRWMTR6Ii8+PC9nPjwvc3ZnPg==";
+const ForwardRef$9 = react.exports.forwardRef(SvgTag);
 const SvgImage = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#000000", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-4.86 8.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z" }));
-react.exports.forwardRef(SvgImage);
-const ImageSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzAwMDAwMCI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDV2MTRINVY1aDE0bTAtMkg1Yy0xLjEgMC0yIC45LTIgMnYxNGMwIDEuMS45IDIgMiAyaDE0YzEuMSAwIDItLjkgMi0yVjVjMC0xLjEtLjktMi0yLTJ6bS00Ljg2IDguODZsLTMgMy44N0w5IDEzLjE0IDYgMTdoMTJsLTMuODYtNS4xNHoiLz48L3N2Zz4=";
+const ForwardRef$8 = react.exports.forwardRef(SvgImage);
 const SvgJournal = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { t: 1642406967115, className: "icon", viewBox: "0 0 1024 1024", xmlns: "http://www.w3.org/2000/svg", "p-id": 1652, width: 26, height: 26, fill: "#1296db", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M544 800.128l-320 0.16-0.064-96.32-0.064-160-0.032-64-0.096-160-0.032-96h576.128L800 223.776 800.256 800 544 800.128zM799.84 160H223.712A63.808 63.808 0 0 0 160 223.744v576.544c0 35.136 28.608 63.68 63.744 63.68h576.512A63.808 63.808 0 0 0 864 800.32V223.744A64 64 0 0 0 799.84 160z", "p-id": 1653 }), /* @__PURE__ */ react.exports.createElement("path", { d: "M680.608 320h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 480h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M680.608 640h-224a32 32 0 0 0 0 64h224a32 32 0 0 0 0-64M352 320a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 480a32 32 0 1 0 0 64 32 32 0 0 0 0-64M352 640a32 32 0 1 0 0 64 32 32 0 0 0 0-64", "p-id": 1654 }));
-react.exports.forwardRef(SvgJournal);
-const JournalSvg = "data:image/svg+xml;base64,PHN2ZyB0PSIxNjQyNDA2OTY3MTE1IiBjbGFzcz0iaWNvbiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjE2NTIiIHdpZHRoPSIyNiIgaGVpZ2h0PSIyNiIgZmlsbD0iIzEyOTZkYiI+PHBhdGggZD0iTTU0NCA4MDAuMTI4bC0zMjAgMC4xNi0wLjA2NC05Ni4zMi0wLjA2NC0xNjAtMC4wMzItNjQtMC4wOTYtMTYwLTAuMDMyLTk2aDU3Ni4xMjhMODAwIDIyMy43NzYgODAwLjI1NiA4MDAgNTQ0IDgwMC4xMjh6TTc5OS44NCAxNjBIMjIzLjcxMkE2My44MDggNjMuODA4IDAgMCAwIDE2MCAyMjMuNzQ0djU3Ni41NDRjMCAzNS4xMzYgMjguNjA4IDYzLjY4IDYzLjc0NCA2My42OGg1NzYuNTEyQTYzLjgwOCA2My44MDggMCAwIDAgODY0IDgwMC4zMlYyMjMuNzQ0QTY0IDY0IDAgMCAwIDc5OS44NCAxNjB6IiBwLWlkPSIxNjUzIj48L3BhdGg+PHBhdGggZD0iTTY4MC42MDggMzIwaC0yMjRhMzIgMzIgMCAwIDAgMCA2NGgyMjRhMzIgMzIgMCAwIDAgMC02NE02ODAuNjA4IDQ4MGgtMjI0YTMyIDMyIDAgMCAwIDAgNjRoMjI0YTMyIDMyIDAgMCAwIDAtNjRNNjgwLjYwOCA2NDBoLTIyNGEzMiAzMiAwIDAgMCAwIDY0aDIyNGEzMiAzMiAwIDAgMCAwLTY0TTM1MiAzMjBhMzIgMzIgMCAxIDAgMCA2NCAzMiAzMiAwIDAgMCAwLTY0TTM1MiA0ODBhMzIgMzIgMCAxIDAgMCA2NCAzMiAzMiAwIDAgMCAwLTY0TTM1MiA2NDBhMzIgMzIgMCAxIDAgMCA2NCAzMiAzMiAwIDAgMCAwLTY0IiBwLWlkPSIxNjU0Ij48L3BhdGg+PC9zdmc+";
+const ForwardRef$7 = react.exports.forwardRef(SvgJournal);
 const SvgCheckboxActive = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z" }));
-react.exports.forwardRef(SvgCheckboxActive);
-const TaskSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE5IDNINWMtMS4xIDAtMiAuOS0yIDJ2MTRjMCAxLjEuOSAyIDIgMmgxNGMxLjEgMCAyLS45IDItMlY1YzAtMS4xLS45LTItMi0yem0wIDE2SDVWNWgxNHYxNHpNMTcuOTkgOWwtMS40MS0xLjQyLTYuNTkgNi41OS0yLjU4LTIuNTctMS40MiAxLjQxIDQgMy45OXoiLz48L3N2Zz4K";
+const ForwardRef$6 = react.exports.forwardRef(SvgCheckboxActive);
 const showEditorSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzNiIgaGVpZ2h0PSIzNiIgY2xhc3M9Imljb24iIHAtaWQ9IjYxOTQiIHQ9IjE2NDI1NjQ0NTIyMDgiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCI+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTUxMiAzMkMyNDggMzIgMzIgMjQ4IDMyIDUxMnMyMTYgNDgwIDQ4MCA0ODAgNDgwLTIxNiA0ODAtNDgwUzc3NiAzMiA1MTIgMzJ6IiBwLWlkPSI2MTk1Ii8+PHBhdGggZD0iTTUxMiAwQzIyOC44IDAgMCAyMjguOCAwIDUxMnMyMjguOCA1MTIgNTEyIDUxMiA1MTItMjI4LjggNTEyLTUxMlM3OTUuMiAwIDUxMiAweiBtMCA5OTJDMjQ4IDk5MiAzMiA3NzYgMzIgNTEyUzI0OCAzMiA1MTIgMzJzNDgwIDIxNiA0ODAgNDgwLTIxNiA0ODAtNDgwIDQ4MHoiIHAtaWQ9IjYxOTYiLz48cGF0aCBmaWxsPSIjOURFOEY3IiBkPSJNNTEyIDUxMm0tMzkyIDBhMzkyIDM5MiAwIDEgMCA3ODQgMCAzOTIgMzkyIDAgMSAwLTc4NCAwWiIgcC1pZD0iNjE5NyIvPjxwYXRoIGZpbGw9IiMxQTE3MTgiIGQ9Ik03ODQgNDk2SDUyOFYyNDBoLTMydjI1NkgyNDB2MzJoMjU2djI1NmgzMlY1MjhoMjU2eiIgcC1pZD0iNjE5OCIvPjwvc3ZnPg==";
 var fromEntries = function fromEntries2(entries) {
   return entries.reduce(function(acc, _ref) {
@@ -41569,15 +41555,13 @@ const SvgMicrophone = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M19 10v2a7 7 0 0 1-14 0v-2" }), /* @__PURE__ */ react.exports.createElement("line", { x1: 12, y1: 19, x2: 12, y2: 23 }), /* @__PURE__ */ react.exports.createElement("line", { x1: 8, y1: 23, x2: 16, y2: 23 }));
-react.exports.forwardRef(SvgMicrophone);
-const MicrophoneSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwYXRoIGQ9Ik0xMiAxYTMgMyAwIDAgMC0zIDN2OGEzIDMgMCAwIDAgNiAwVjRhMyAzIDAgMCAwLTMtM3oiPjwvcGF0aD48cGF0aCBkPSJNMTkgMTB2MmE3IDcgMCAwIDEtMTQgMHYtMiI+PC9wYXRoPjxsaW5lIHgxPSIxMiIgeTE9IjE5IiB4Mj0iMTIiIHkyPSIyMyI+PC9saW5lPjxsaW5lIHgxPSI4IiB5MT0iMjMiIHgyPSIxNiIgeTI9IjIzIj48L2xpbmU+PC9zdmc+Cg==";
+const ForwardRef$5 = react.exports.forwardRef(SvgMicrophone);
 const SvgStop = ({
   title,
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, viewBox: "0 0 24 24", fill: "currentColor", stroke: "none", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("rect", { x: 6, y: 6, width: 12, height: 12, rx: 2 }));
-react.exports.forwardRef(SvgStop);
-const StopSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJjdXJyZW50Q29sb3IiIHN0cm9rZT0ibm9uZSI+PHJlY3QgeD0iNiIgeT0iNiIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiByeD0iMiI+PC9yZWN0Pjwvc3ZnPgo=";
+const ForwardRef$4 = react.exports.forwardRef(SvgStop);
 const VoiceRecorder = ({
   onTranscription,
   onAudioRecorded
@@ -41688,7 +41672,7 @@ const VoiceRecorder = ({
     onClick: toggleRecording,
     title: isRecording ? t$1("Stop recording") : t$1("Start voice recording"),
     "aria-label": isRecording ? "Stop recording" : "Start voice recording",
-    children: isRecording ? /* @__PURE__ */ jsx(StopSvg, {}) : /* @__PURE__ */ jsx(MicrophoneSvg, {})
+    children: isRecording ? /* @__PURE__ */ jsx(ForwardRef$4, {}) : /* @__PURE__ */ jsx(ForwardRef$5, {})
   });
 };
 const RichTextToolbar = ({
@@ -42461,16 +42445,16 @@ ${audioLink}`);
       ref: editorRef,
       ...editorConfig,
       tools: /* @__PURE__ */ jsxs(Fragment, {
-        children: [/* @__PURE__ */ jsx(Tag, {
+        children: [/* @__PURE__ */ jsx(ForwardRef$9, {
           className: "action-btn add-tag",
           onClick: handleTagTextBtnClick
-        }), /* @__PURE__ */ jsx(ImageSvg, {
+        }), /* @__PURE__ */ jsx(ForwardRef$8, {
           className: "action-btn file-upload",
           onClick: handleUploadFileBtnClick
-        }), !isListShown ? /* @__PURE__ */ jsx(JournalSvg, {
+        }), !isListShown ? /* @__PURE__ */ jsx(ForwardRef$7, {
           className: "action-btn list-or-task",
           onClick: handleChangeStatus
-        }) : /* @__PURE__ */ jsx(TaskSvg, {
+        }) : /* @__PURE__ */ jsx(ForwardRef$6, {
           className: "action-btn list-or-task",
           onClick: handleChangeStatus
         }), /* @__PURE__ */ jsx(VoiceRecorder, {
@@ -42521,8 +42505,7 @@ const SvgSearch = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" }));
-react.exports.forwardRef(SvgSearch);
-const Search = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTE1LjUgMTRoLS43OWwtLjI4LS4yN0MxNS40MSAxMi41OSAxNiAxMS4xMSAxNiA5LjUgMTYgNS45MSAxMy4wOSAzIDkuNSAzUzMgNS45MSAzIDkuNSA1LjkxIDE2IDkuNSAxNmMxLjYxIDAgMy4wOS0uNTkgNC4yMy0xLjU3bC4yNy4yOHYuNzlsNSA0Ljk5TDIwLjQ5IDE5bC00Ljk5LTV6bS02IDBDNy4wMSAxNCA1IDExLjk5IDUgOS41UzcuMDEgNSA5LjUgNSAxNCA3LjAxIDE0IDkuNSAxMS45OSAxNCA5LjUgMTR6Ii8+PC9zdmc+";
+const ForwardRef$3 = react.exports.forwardRef(SvgSearch);
 const SearchBar = () => {
   const {
     locationState: {
@@ -42580,7 +42563,7 @@ const SearchBar = () => {
     className: "search-bar-container",
     children: [/* @__PURE__ */ jsxs("div", {
       className: "search-bar-inputer",
-      children: [/* @__PURE__ */ jsx(Search, {
+      children: [/* @__PURE__ */ jsx(ForwardRef$3, {
         className: "icon-img"
       }), /* @__PURE__ */ jsx("input", {
         className: "text-input",
@@ -42630,8 +42613,7 @@ const SvgMenu = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", height: "24px", viewBox: "0 0 24 24", width: "24px", fill: "#37352f", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M0 0h24v24H0V0z", fill: "none" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" }));
-react.exports.forwardRef(SvgMenu);
-const MenuSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMThoMTh2LTJIM3Yyem0wLTVoMTh2LTJIM3Yyem0wLTd2MmgxOFY2SDN6Ii8+PC9zdmc+";
+const ForwardRef$2 = react.exports.forwardRef(SvgMenu);
 const MemosHeader = () => {
   const {
     locationState: {
@@ -42672,7 +42654,7 @@ const MemosHeader = () => {
         children: /* @__PURE__ */ jsx("button", {
           className: "action-btn",
           onClick: handleShowSidebarBtnClick,
-          children: /* @__PURE__ */ jsx(MenuSvg, {
+          children: /* @__PURE__ */ jsx(ForwardRef$2, {
             className: "icon-img"
           })
         })
@@ -42689,8 +42671,7 @@ const SvgCopy = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { width: 24, height: 24, viewBox: "0 0 48 48", fill: "none", xmlns: "http://www.w3.org/2000/svg", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("path", { d: "M13 12.4316V7.8125C13 6.2592 14.2592 5 15.8125 5H40.1875C41.7408 5 43 6.2592 43 7.8125V32.1875C43 33.7408 41.7408 35 40.1875 35H35.5163", stroke: "#333", strokeWidth: 3, strokeLinecap: "round", strokeLinejoin: "round" }), /* @__PURE__ */ react.exports.createElement("path", { d: "M32.1875 13H7.8125C6.2592 13 5 14.2592 5 15.8125V40.1875C5 41.7408 6.2592 43 7.8125 43H32.1875C33.7408 43 35 41.7408 35 40.1875V15.8125C35 14.2592 33.7408 13 32.1875 13Z", fill: "none", stroke: "#333", strokeWidth: 3, strokeLinejoin: "round" }));
-react.exports.forwardRef(SvgCopy);
-const Copy = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz48c3ZnIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDQ4IDQ4IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMyAxMi40MzE2VjcuODEyNUMxMyA2LjI1OTIgMTQuMjU5MiA1IDE1LjgxMjUgNUg0MC4xODc1QzQxLjc0MDggNSA0MyA2LjI1OTIgNDMgNy44MTI1VjMyLjE4NzVDNDMgMzMuNzQwOCA0MS43NDA4IDM1IDQwLjE4NzUgMzVIMzUuNTE2MyIgc3Ryb2tlPSIjMzMzIiBzdHJva2Utd2lkdGg9IjMiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjxwYXRoIGQ9Ik0zMi4xODc1IDEzSDcuODEyNUM2LjI1OTIgMTMgNSAxNC4yNTkyIDUgMTUuODEyNVY0MC4xODc1QzUgNDEuNzQwOCA2LjI1OTIgNDMgNy44MTI1IDQzSDMyLjE4NzVDMzMuNzQwOCA0MyAzNSA0MS43NDA4IDM1IDQwLjE4NzVWMTUuODEyNUMzNSAxNC4yNTkyIDMzLjc0MDggMTMgMzIuMTg3NSAxM1oiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzMzMyIgc3Ryb2tlLXdpZHRoPSIzIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PC9zdmc+";
+const ForwardRef$1 = react.exports.forwardRef(SvgCopy);
 const memolist = "";
 let copyShownMemos;
 const MemoList = () => {
@@ -43046,7 +43027,7 @@ const MemoFilter = () => {
     }), /* @__PURE__ */ jsx("div", {
       className: "copy-memo",
       onClick: handleCopyClick,
-      children: /* @__PURE__ */ jsx(Copy, {
+      children: /* @__PURE__ */ jsx(ForwardRef$1, {
         className: "icon-img"
       })
     })]
@@ -43113,7 +43094,7 @@ const DeletedMemo = (props) => {
         className: "btns-container",
         children: [/* @__PURE__ */ jsx("span", {
           className: "btn more-action-btn",
-          children: /* @__PURE__ */ jsx(More, {
+          children: /* @__PURE__ */ jsx(ForwardRef$g, {
             className: "icon-img"
           })
         }), /* @__PURE__ */ jsx("div", {
@@ -43143,6 +43124,7 @@ const DeletedMemo = (props) => {
   });
 };
 const memoTrash = "";
+const MenuSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMThoMTh2LTJIM3Yyem0wLTVoMTh2LTJIM3Yyem0wLTd2MmgxOFY2SDN6Ii8+PC9zdmc+";
 const MemoTrash = () => {
   const {
     locationState: {
@@ -43282,8 +43264,7 @@ const SvgArchive = ({
   titleId,
   ...props
 }, ref) => /* @__PURE__ */ react.exports.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", width: 24, height: 24, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", ref, "aria-labelledby": titleId, ...props }, title ? /* @__PURE__ */ react.exports.createElement("title", { id: titleId }, title) : null, /* @__PURE__ */ react.exports.createElement("polyline", { points: "21 8 21 21 3 21 3 8" }), /* @__PURE__ */ react.exports.createElement("rect", { x: 1, y: 3, width: 22, height: 5 }), /* @__PURE__ */ react.exports.createElement("line", { x1: 10, y1: 12, x2: 14, y2: 12 }));
-react.exports.forwardRef(SvgArchive);
-const ArchiveSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjIxIDggMjEgMjEgMyAyMSAzIDgiPjwvcG9seWxpbmU+PHJlY3QgeD0iMSIgeT0iMyIgd2lkdGg9IjIyIiBoZWlnaHQ9IjUiPjwvcmVjdD48bGluZSB4MT0iMTAiIHkxPSIxMiIgeDI9IjE0IiB5Mj0iMTIiPjwvbGluZT48L3N2Zz4K";
+const ForwardRef = react.exports.forwardRef(SvgArchive);
 const ArchivedMemo = (props) => {
   const {
     memo: propsMemo,
@@ -43309,14 +43290,14 @@ const ArchivedMemo = (props) => {
       className: "memo-top-wrapper",
       children: [/* @__PURE__ */ jsxs("span", {
         className: "time-text",
-        children: [/* @__PURE__ */ jsx(ArchiveSvg, {
+        children: [/* @__PURE__ */ jsx(ForwardRef, {
           className: "archive-icon"
         }), t$1("ARCHIVED"), " \u2022 ", memo2.createdAtStr]
       }), /* @__PURE__ */ jsxs("div", {
         className: "btns-container",
         children: [/* @__PURE__ */ jsx("span", {
           className: "btn more-action-btn",
-          children: /* @__PURE__ */ jsx(More, {
+          children: /* @__PURE__ */ jsx(ForwardRef$g, {
             className: "icon-img"
           })
         }), /* @__PURE__ */ jsx("div", {
@@ -43342,6 +43323,7 @@ const ArchivedMemo = (props) => {
   });
 };
 const memoArchive = "";
+const ArchiveSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjIxIDggMjEgMjEgMyAyMSAzIDgiPjwvcG9seWxpbmU+PHJlY3QgeD0iMSIgeT0iMyIgd2lkdGg9IjIyIiBoZWlnaHQ9IjUiPjwvcmVjdD48bGluZSB4MT0iMTAiIHkxPSIxMiIgeDI9IjE0IiB5Mj0iMTIiPjwvbGluZT48L3N2Zz4K";
 const MemoArchive = () => {
   const {
     locationState: {
