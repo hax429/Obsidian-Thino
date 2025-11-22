@@ -670,12 +670,22 @@ const Memo: React.FC<Props> = (props: Props) => {
 export function formatMemoContent(content: string) {
   const { shouldHideImageUrl } = globalStateService.getState();
 
+  // VERY VISIBLE DEBUG - This will show a popup notification
+  if (typeof Notice !== 'undefined') {
+    try {
+      new Notice('formatMemoContent called! Check console for details.', 3000);
+    } catch (e) {
+      console.error('Failed to show notice:', e);
+    }
+  }
+
   if (shouldHideImageUrl) {
     content = content.replace(WIKI_IMAGE_URL_REG, '').replace(MARKDOWN_URL_REG, '').replace(IMAGE_URL_REG, '');
   }
 
   // Debug: log original content
   console.log('[Memo Debug] Original content:', JSON.stringify(content));
+  console.error('[Memo Debug - ERROR LOG] Original content:', JSON.stringify(content).substring(0, 100));
 
   // Convert <br> tags to newlines before parsing markdown
   content = content.replace(/<br\s*\/?>/gi, '\n');

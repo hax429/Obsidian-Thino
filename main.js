@@ -49464,10 +49464,18 @@ function formatMemoContent(content2) {
   const {
     shouldHideImageUrl
   } = globalStateService.getState();
+  if (typeof require$$0.Notice !== "undefined") {
+    try {
+      new require$$0.Notice("formatMemoContent called! Check console for details.", 3e3);
+    } catch (e) {
+      console.error("Failed to show notice:", e);
+    }
+  }
   if (shouldHideImageUrl) {
     content2 = content2.replace(WIKI_IMAGE_URL_REG, "").replace(MARKDOWN_URL_REG, "").replace(IMAGE_URL_REG, "");
   }
   console.log("[Memo Debug] Original content:", JSON.stringify(content2));
+  console.error("[Memo Debug - ERROR LOG] Original content:", JSON.stringify(content2).substring(0, 100));
   content2 = content2.replace(/<br\s*\/?>/gi, "\n");
   console.log("[Memo Debug] After br replacement:", JSON.stringify(content2));
   content2 = parseMarkdownSyntax(content2);
