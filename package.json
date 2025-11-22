@@ -7,12 +7,14 @@
   "scripts": {
     "lint": "eslint . --ext .ts",
     "dev": "npm run lint && vite build --watch --mode development",
+    "dev:deploy": "vite build --watch --mode development & ./watch-and-deploy.sh",
     "lint:fix": "npm run lint -- -- -- fix",
     "prettier": "npx prettier src test --check",
     "prettier:fix": "npm run prettier -- -- write",
     "format": "npm run prettier:fix && npm run lint:fix",
     "build:nolint": "NODE_ENV=production rollup -c",
     "build": "vite build",
+    "build:deploy": "vite build && ./deploy-to-vault.sh",
     "test": "jest",
     "test:watch": "yarn test -- --watch"
   },
