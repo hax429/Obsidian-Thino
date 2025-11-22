@@ -363,7 +363,7 @@ export async function getMemos(): Promise<allKindsofMemos> {
 
   if (folder === '' || folder === undefined) {
     new Notice(t('Please check your daily note plugin OR periodic notes plugin settings'));
-    return;
+    return { memos: [], commentMemos: [] };
   }
   const dailyNotesFolder = vault.getAbstractFileByPath(normalizePath(folder)) as TFolder;
 

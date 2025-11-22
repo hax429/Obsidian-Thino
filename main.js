@@ -30401,9 +30401,9 @@ var utils;
   }
   utils2.getImageSize = getImageSize;
   async function createDailyNoteCheck(date) {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     let file;
-    if ((_c = (_b = (_a = window.app.plugins) == null ? void 0 : _a.getPlugin("periodic-notes")) == null ? void 0 : _b.calendarSetManager.getActiveConfig("day")) == null ? void 0 : _c.enabled) {
+    if ((_d = (_c = (_b = (_a = window.app.plugins) == null ? void 0 : _a.getPlugin("periodic-notes")) == null ? void 0 : _b.calendarSetManager) == null ? void 0 : _c.getActiveConfig("day")) == null ? void 0 : _d.enabled) {
       const periodicNotes = window.app.plugins.getPlugin("periodic-notes");
       file = await periodicNotes.createPeriodicNote("day", date);
       return file;
@@ -31454,7 +31454,7 @@ async function getMemos() {
   const folder = getDailyNotePath();
   if (folder === "" || folder === void 0) {
     new require$$0.Notice(t$1("Please check your daily note plugin OR periodic notes plugin settings"));
-    return;
+    return { memos: [], commentMemos: [] };
   }
   const dailyNotesFolder = vault.getAbstractFileByPath(require$$0.normalizePath(folder));
   if (!dailyNotesFolder) {
