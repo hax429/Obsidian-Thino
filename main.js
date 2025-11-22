@@ -49467,7 +49467,9 @@ function formatMemoContent(content2) {
   if (shouldHideImageUrl) {
     content2 = content2.replace(WIKI_IMAGE_URL_REG, "").replace(MARKDOWN_URL_REG, "").replace(IMAGE_URL_REG, "");
   }
+  console.log("[Memo Debug] Original content:", JSON.stringify(content2));
   content2 = content2.replace(/<br\s*\/?>/gi, "\n");
+  console.log("[Memo Debug] After br replacement:", JSON.stringify(content2));
   content2 = parseMarkdownSyntax(content2);
   content2 = content2.replace(TAG_REG, "<span class='tag-span'>#$1</span>").replace(FIRST_TAG_REG, "<p><span class='tag-span'>#$2</span>").replace(LINK_REG, "$1<a class='link' target='_blank' rel='noreferrer' href='$2'>$2</a>").replace(MD_LINK_REG, "<a class='link' target='_blank' rel='noreferrer' href='$2'>$1</a>").replace(MEMO_LINK_REG, "<span class='memo-link-text' data-value='$2'>$1</span>").replace(/\^\S{6}/g, "");
   const tempDivContainer = document.createElement("div");
@@ -49490,6 +49492,7 @@ function parseMarkdownSyntax(text) {
   let codeBlockContent = [];
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
+    console.log(`[Memo Debug] Line ${i}:`, JSON.stringify(line));
     if (line.trim().startsWith("```")) {
       if (!inCodeBlock) {
         inCodeBlock = true;

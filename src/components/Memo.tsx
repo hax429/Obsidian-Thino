@@ -674,8 +674,14 @@ export function formatMemoContent(content: string) {
     content = content.replace(WIKI_IMAGE_URL_REG, '').replace(MARKDOWN_URL_REG, '').replace(IMAGE_URL_REG, '');
   }
 
+  // Debug: log original content
+  console.log('[Memo Debug] Original content:', JSON.stringify(content));
+
   // Convert <br> tags to newlines before parsing markdown
   content = content.replace(/<br\s*\/?>/gi, '\n');
+
+  // Debug: log after br replacement
+  console.log('[Memo Debug] After br replacement:', JSON.stringify(content));
 
   // Parse markdown syntax
   content = parseMarkdownSyntax(content);
@@ -717,6 +723,9 @@ function parseMarkdownSyntax(text: string): string {
 
   for (let i = 0; i < lines.length; i++) {
     let line = lines[i];
+
+    // Debug: log each line
+    console.log(`[Memo Debug] Line ${i}:`, JSON.stringify(line));
 
     // Handle code blocks
     if (line.trim().startsWith('```')) {
