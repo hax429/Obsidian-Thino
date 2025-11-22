@@ -1,4 +1,4 @@
-import React, { forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useRef } from 'react';
+import React, { forwardRef, ReactNode, useCallback, useContext, useEffect, useImperativeHandle, useRef, useState as useReactState } from 'react';
 import TinyUndo from 'tiny-undo';
 import appContext from '../../stores/appContext';
 import { storage } from '../../helpers/storage';
@@ -16,6 +16,7 @@ import { t } from '../../translations/helper';
 import useState from 'react-usestateref';
 import { MEMOS_VIEW_TYPE } from '../../constants';
 import { applyMarkdownFormat } from '../../helpers/editorFormatting';
+import ObsidianNativeEditor from '../ObsidianNativeEditor';
 
 type ItemProps = {
   entity: {
@@ -80,9 +81,10 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
     onContentChange: handleContentChangeCallback,
   } = props;
   const editorRef = useRef<HTMLTextAreaElement>(null);
+  const obsidianEditorRef = useRef<EditorRefActions>(null);
   const tinyUndoRef = useRef<TinyUndo | null>(null);
   const refresh = useRefresh();
-  // const [value, setValue] = useState("")
+  const [editorContent, setEditorContent] = useReactState(initialContent);
 
   const [, setHeight, currentHeightRef] = useState(0);
   // const [showDatePicker, toggleShowDatePicker] = useToggle(false);
@@ -155,55 +157,63 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
 
   useImperativeHandle(
     ref,
-    () => ({
-      element: editorRef.current as HTMLTextAreaElement,
-      focus: () => {
-        if (FocusOnEditor) {
-          editorRef.current?.focus();
-        }
-      },
-      insertText: (rawText: string) => {
-        if (!editorRef.current) {
-          return;
-        }
+    () => {
+      // If using Obsidian native editor, delegate to its ref
+      if (inputerType === 'memo' && obsidianEditorRef.current) {
+        return obsidianEditorRef.current;
+      }
 
-        const prevValue = editorRef.current.value;
-        editorRef.current.value =
-          prevValue.slice(0, editorRef.current.selectionStart) +
-          rawText +
-          prevValue.slice(editorRef.current.selectionStart);
-        handleContentChangeCallback(editorRef.current.value);
-        refresh();
-      },
-      setContent: (text: string) => {
-        if (editorRef.current) {
-          editorRef.current.value = text;
+      // Otherwise use the regular textarea ref
+      return {
+        element: editorRef.current as HTMLTextAreaElement,
+        focus: () => {
+          if (FocusOnEditor) {
+            editorRef.current?.focus();
+          }
+        },
+        insertText: (rawText: string) => {
+          if (!editorRef.current) {
+            return;
+          }
+
+          const prevValue = editorRef.current.value;
+          editorRef.current.value =
+            prevValue.slice(0, editorRef.current.selectionStart) +
+            rawText +
+            prevValue.slice(editorRef.current.selectionStart);
           handleContentChangeCallback(editorRef.current.value);
           refresh();
-        }
-      },
-      getContent: (): string => {
-        return editorRef.current?.value ?? '';
-      },
-      applyFormat: (format: string) => {
-        if (!editorRef.current) {
-          return;
-        }
+        },
+        setContent: (text: string) => {
+          if (editorRef.current) {
+            editorRef.current.value = text;
+            handleContentChangeCallback(editorRef.current.value);
+            refresh();
+          }
+        },
+        getContent: (): string => {
+          return editorRef.current?.value ?? '';
+        },
+        applyFormat: (format: string) => {
+          if (!editorRef.current) {
+            return;
+          }
 
-        const text = editorRef.current.value;
-        const start = editorRef.current.selectionStart;
-        const end = editorRef.current.selectionEnd;
+          const text = editorRef.current.value;
+          const start = editorRef.current.selectionStart;
+          const end = editorRef.current.selectionEnd;
 
-        const result = applyMarkdownFormat(text, start, end, format);
+          const result = applyMarkdownFormat(text, start, end, format);
 
-        editorRef.current.value = result.newText;
-        editorRef.current.setSelectionRange(result.selectionStart, result.selectionEnd);
-        editorRef.current.focus();
-        handleContentChangeCallback(result.newText);
-        refresh();
-      },
-    }),
-    [],
+          editorRef.current.value = result.newText;
+          editorRef.current.setSelectionRange(result.selectionStart, result.selectionEnd);
+          editorRef.current.focus();
+          handleContentChangeCallback(result.newText);
+          refresh();
+        },
+      };
+    },
+    [inputerType],
   );
 
   const handleInsertTrigger = (event: { currentTrigger: string; item: any }) => {
@@ -285,21 +295,25 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
   }, []);
 
   const handleCommonConfirmBtnClick = useCallback(() => {
-    if (!editorRef.current) {
-      return;
-    }
+    let content = '';
 
-    if (inputerType === 'memo') {
-      editorRef.current.value = getEditorContentCache();
+    if (inputerType === 'memo' && obsidianEditorRef.current) {
+      content = obsidianEditorRef.current.getContent();
+      handleConfirmBtnClickCallback(content);
+      obsidianEditorRef.current.setContent('');
+      setEditorContent('');
+    } else if (editorRef.current) {
+      if (inputerType === 'memo') {
+        editorRef.current.value = getEditorContentCache();
+      }
+      handleConfirmBtnClickCallback(editorRef.current.value);
+      editorRef.current.value = '';
     }
-
-    handleConfirmBtnClickCallback(editorRef.current.value);
-    editorRef.current.value = '';
 
     refresh();
     // After confirm btn clicked, tiny-undo should reset state(clear actions and index)
     tinyUndoRef.current?.resetState();
-  }, []);
+  }, [inputerType, handleConfirmBtnClickCallback]);
 
   const handleCommonCancelBtnClick = useCallback(() => {
     handleCancelBtnClickCallback();
@@ -310,8 +324,13 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
   };
 
   const getEditorContent = (): string => {
+    // For Obsidian native editor, just return the cached content
+    if (inputerType === 'memo') {
+      return getEditorContentCache();
+    }
+
     if (!editorRef.current) {
-      return;
+      return '';
     }
 
     editorRef.current.value = getEditorContentCache();
@@ -325,52 +344,14 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
   return (
     <div className={'common-editor-wrapper ' + className}>
       {inputerType === 'memo' ? (
-        <ReactTextareaAutocomplete
+        <ObsidianNativeEditor
+          ref={obsidianEditorRef}
           className="common-editor-inputer scroll"
-          loadingComponent={Loading}
           placeholder={placeholder}
-          movePopupAsYouType={true}
-          value={getEditorContent()}
-          innerRef={(textarea) => {
-            editorRef.current = textarea;
-          }}
-          onInput={handleEditorInput}
-          onKeyDown={handleEditorKeyDown}
-          style={{
-            minHeight: 48,
-            maxHeight: `${currentHeightRef.current > 400 ? currentHeightRef.current - 400 : 100}px`,
-          }}
-          dropdownStyle={{
-            minWidth: 180,
-            maxHeight: 250,
-            overflowY: 'auto',
-          }}
-          minChar={0}
-          onItemSelected={handleInsertTrigger}
-          scrollToItem={true}
-          trigger={{
-            '#': {
-              dataProvider: (token) => {
-                actualToken = token;
-                return usedTags(token).map(({ name, char }) => ({ name, char }));
-              },
-              //eslint-disable-next-line
-              component: TItem,
-              afterWhitespace: true,
-              output: (item) => item.char,
-            },
-            '[[': {
-              dataProvider: (token) => {
-                actualToken = token;
-                return getSuggestions(token)
-                  .slice(0, 10)
-                  .map(({ name, char, file }) => ({ name, char, file }));
-              },
-              //eslint-disable-next-line
-              component: TItem,
-              afterWhitespace: true,
-              output: (item: string) => item.char,
-            },
+          initialContent={getEditorContent()}
+          onContentChange={(content) => {
+            setEditorContent(content);
+            handleContentChangeCallback(content);
           }}
         />
       ) : (
@@ -400,7 +381,7 @@ const Editor = forwardRef((props: EditorProps, ref: React.ForwardedRef<EditorRef
           <Only when={showConfirmBtn}>
             <button
               className="action-btn confirm-btn"
-              disabled={!editorRef.current?.value}
+              disabled={inputerType === 'memo' ? !editorContent : !editorRef.current?.value}
               onClick={handleCommonConfirmBtnClick}
             >
               {SaveMemoButtonLabel}
