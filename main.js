@@ -43124,7 +43124,6 @@ const DeletedMemo = (props) => {
   });
 };
 const memoTrash = "";
-const MenuSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB3aWR0aD0iMjRweCIgZmlsbD0iIzM3MzUyZiI+PHBhdGggZD0iTTAgMGgyNHYyNEgwVjB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTMgMThoMTh2LTJIM3Yyem0wLTVoMTh2LTJIM3Yyem0wLTd2MmgxOFY2SDN6Ii8+PC9zdmc+";
 const MemoTrash = () => {
   const {
     locationState: {
@@ -43229,7 +43228,7 @@ const MemoTrash = () => {
           children: /* @__PURE__ */ jsx("button", {
             className: "action-btn",
             onClick: handleShowSidebarBtnClick,
-            children: /* @__PURE__ */ jsx(MenuSvg, {
+            children: /* @__PURE__ */ jsx(ForwardRef$2, {
               className: "icon-img"
             })
           })
@@ -43323,7 +43322,6 @@ const ArchivedMemo = (props) => {
   });
 };
 const memoArchive = "";
-const ArchiveSvg = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9ImN1cnJlbnRDb2xvciIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxwb2x5bGluZSBwb2ludHM9IjIxIDggMjEgMjEgMyAyMSAzIDgiPjwvcG9seWxpbmU+PHJlY3QgeD0iMSIgeT0iMyIgd2lkdGg9IjIyIiBoZWlnaHQ9IjUiPjwvcmVjdD48bGluZSB4MT0iMTAiIHkxPSIxMiIgeDI9IjE0IiB5Mj0iMTIiPjwvbGluZT48L3N2Zz4K";
 const MemoArchive = () => {
   const {
     locationState: {
@@ -43420,7 +43418,7 @@ const MemoArchive = () => {
         className: "page-header",
         children: [/* @__PURE__ */ jsxs("div", {
           className: "title-container",
-          children: [/* @__PURE__ */ jsx(ArchiveSvg, {
+          children: [/* @__PURE__ */ jsx(ForwardRef, {
             className: "icon-img"
           }), /* @__PURE__ */ jsx("span", {
             className: "title-text",
@@ -43429,14 +43427,14 @@ const MemoArchive = () => {
         }), /* @__PURE__ */ jsx("button", {
           className: `action-btn toggle-sidebar-btn ${isMobileView ? "" : "hidden"}`,
           onClick: handleShowSidebarBtnClick,
-          children: /* @__PURE__ */ jsx(MenuSvg, {
+          children: /* @__PURE__ */ jsx(ForwardRef$2, {
             className: "icon-img"
           })
         })]
       }), /* @__PURE__ */ jsx(MemoFilter, {}), !loadingState.isLoading && /* @__PURE__ */ jsx(Fragment, {
         children: shownMemos.length === 0 ? /* @__PURE__ */ jsxs("div", {
           className: "empty-state",
-          children: [/* @__PURE__ */ jsx(ArchiveSvg, {
+          children: [/* @__PURE__ */ jsx(ForwardRef, {
             className: "empty-icon"
           }), /* @__PURE__ */ jsx("p", {
             className: "empty-text",
@@ -43606,7 +43604,7 @@ const Setting = () => {
           children: /* @__PURE__ */ jsx("button", {
             className: "action-btn",
             onClick: handleShowSidebarBtnClick,
-            children: /* @__PURE__ */ jsx(MenuSvg, {
+            children: /* @__PURE__ */ jsx(ForwardRef$2, {
               className: "icon-img"
             })
           })

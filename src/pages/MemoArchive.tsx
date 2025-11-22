@@ -9,8 +9,8 @@ import Only from '../components/common/OnlyWhen';
 import ArchivedMemo from '../components/ArchivedMemo';
 import MemoFilter from '../components/MemoFilter';
 import '../less/memo-archive.less';
-import MenuSvg from '../icons/menu.svg?component';
-import ArchiveSvg from '../icons/archive.svg?component';
+import MenuSvg from '../icons/menu.svg?react';
+import ArchiveSvg from '../icons/archive.svg?react';
 import { Notice } from 'obsidian';
 import { t } from '../translations/helper';
 
