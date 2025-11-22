@@ -10,8 +10,6 @@ interface StorageData {
   shouldSplitMemoWord: boolean;
   // 是否隐藏图片链接地址
   shouldHideImageUrl: boolean;
-  // markdown 解析开关
-  shouldUseMarkdownParser: boolean;
 
   // Editor setting
   useTinyUndoHistoryCache: boolean;

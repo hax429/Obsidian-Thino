@@ -7,13 +7,11 @@ class GlobalStateService {
     const cachedSetting = storage.get([
       'shouldSplitMemoWord',
       'shouldHideImageUrl',
-      'shouldUseMarkdownParser',
       'useTinyUndoHistoryCache',
     ]);
     const defaultAppSetting = {
       shouldSplitMemoWord: cachedSetting.shouldSplitMemoWord ?? true,
       shouldHideImageUrl: cachedSetting.shouldHideImageUrl ?? true,
-      shouldUseMarkdownParser: cachedSetting.shouldUseMarkdownParser ?? true,
       useTinyUndoHistoryCache: cachedSetting.useTinyUndoHistoryCache ?? false,
     };
 

@@ -17,13 +17,13 @@
     "test:watch": "yarn test -- --watch"
   },
   "dependencies": {
-    "@types/marked": "^5.0.2",
-    "marked": "^17.0.1",
+    "easymde": "^2.20.0",
     "obsidian": "0.16.3",
     "obsidian-daily-notes-interface": "^0.9.4",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-popper": "^2.3.0",
+    "react-simplemde-editor": "^5.2.0",
     "react-zoom-pan-pinch": "^3.7.0",
     "tiny-undo": "^0.0.10"
   },

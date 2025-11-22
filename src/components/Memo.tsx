@@ -1,4 +1,3 @@
-import React, { memo, useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import {
   FIRST_TAG_REG,
   IMAGE_URL_REG,
@@ -10,7 +9,6 @@ import {
   WIKI_IMAGE_URL_REG,
 } from '../helpers/consts';
 import useState from 'react-usestateref';
-import { encodeHtml, parseMarkedToHtml, parseRawTextToHtml } from '../helpers/marked';
 import utils, { getDailyNoteFormat } from '../helpers/utils';
 import useToggle from '../hooks/useToggle';
 import { globalStateService, memoService, resourceService } from '../services';
@@ -669,33 +667,12 @@ const Memo: React.FC<Props> = (props: Props) => {
   );
 };
 
-export function formatMemoContent(content: string, memoid?: string) {
-  content = encodeHtml(content);
-  content = parseRawTextToHtml(content)
-    .split('<br>')
-    .map((t) => {
-      return `<p>${t !== '' ? t : '<br>'}</p>`;
-    })
-    .join('');
-
-  const { shouldUseMarkdownParser, shouldHideImageUrl } = globalStateService.getState();
-
-  if (shouldUseMarkdownParser) {
-    content = parseMarkedToHtml(content, memoid);
-  }
+export function formatMemoContent(content: string) {
+  const { shouldHideImageUrl } = globalStateService.getState();
 
   if (shouldHideImageUrl) {
     content = content.replace(WIKI_IMAGE_URL_REG, '').replace(MARKDOWN_URL_REG, '').replace(IMAGE_URL_REG, '');
   }
-
-  // console.log(content);
-
-  // 中英文之间加空格
-  // if (shouldSplitMemoWord) {
-  //   content = content
-  //     .replace(/([\u4e00-\u9fa5])([A-Za-z0-9?.,;[\]]+)/g, "$1 $2")
-  //     .replace(/([A-Za-z0-9?.,;[\]]+)([\u4e00-\u9fa5])/g, "$1 $2");
-  // }
 
   content = content
     .replace(TAG_REG, "<span class='tag-span'>#$1</span>")
@@ -704,17 +681,6 @@ export function formatMemoContent(content: string, memoid?: string) {
     .replace(MD_LINK_REG, "<a class='link' target='_blank' rel='noreferrer' href='$2'>$1</a>")
     .replace(MEMO_LINK_REG, "<span class='memo-link-text' data-value='$2'>$1</span>")
     .replace(/\^\S{6}/g, '');
-
-  // const contentMark = content.split('');
-
-  // if(/(.*)<a(.*)/g.test(content)){
-
-  // }
-  //   for(let i=0; i<content.length;i++){
-  //     let mark = false;
-  //     let aMark = false;
-  //     if(contentMark[i])
-  //   }
 
   const tempDivContainer = document.createElement('div');
   tempDivContainer.innerHTML = content;

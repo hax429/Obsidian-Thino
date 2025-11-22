@@ -1,7 +1,6 @@
 export interface AppSetting {
   shouldSplitMemoWord: boolean;
   shouldHideImageUrl: boolean;
-  shouldUseMarkdownParser: boolean;
   useTinyUndoHistoryCache: boolean;
 }
 
@@ -150,7 +149,6 @@ export const defaultState: State = {
   commentMemoId: '',
   shouldSplitMemoWord: true,
   shouldHideImageUrl: true,
-  shouldUseMarkdownParser: true,
   useTinyUndoHistoryCache: false,
   isMobileView: false,
   showSiderbarInMobileView: false,
