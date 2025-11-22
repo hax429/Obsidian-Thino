@@ -674,6 +674,10 @@ export function formatMemoContent(content: string) {
     content = content.replace(WIKI_IMAGE_URL_REG, '').replace(MARKDOWN_URL_REG, '').replace(IMAGE_URL_REG, '');
   }
 
+  // Parse markdown syntax
+  content = parseMarkdownSyntax(content);
+
+  // Apply existing tag and link formatting
   content = content
     .replace(TAG_REG, "<span class='tag-span'>#$1</span>")
     .replace(FIRST_TAG_REG, "<p><span class='tag-span'>#$2</span>")
@@ -695,6 +699,134 @@ export function formatMemoContent(content: string) {
   }
 
   return tempDivContainer.innerHTML;
+}
+
+/**
+ * Parse markdown syntax into HTML
+ */
+function parseMarkdownSyntax(text: string): string {
+  const lines = text.split('\n');
+  const result: string[] = [];
+  let inCodeBlock = false;
+  let codeBlockLang = '';
+  let codeBlockContent: string[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+
+    // Handle code blocks
+    if (line.trim().startsWith('```')) {
+      if (!inCodeBlock) {
+        inCodeBlock = true;
+        codeBlockLang = line.trim().substring(3).trim();
+        codeBlockContent = [];
+      } else {
+        inCodeBlock = false;
+        const code = codeBlockContent.join('\n');
+        result.push(`<pre class="code-block"><code class="language-${codeBlockLang}">${escapeHtml(code)}</code></pre>`);
+        codeBlockContent = [];
+        codeBlockLang = '';
+      }
+      continue;
+    }
+
+    if (inCodeBlock) {
+      codeBlockContent.push(line);
+      continue;
+    }
+
+    // Handle headings
+    const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+    if (headingMatch) {
+      const level = headingMatch[1].length;
+      const headingText = parseInlineMarkdown(headingMatch[2]);
+      result.push(`<h${level}>${headingText}</h${level}>`);
+      continue;
+    }
+
+    // Handle blockquotes/callouts
+    if (line.trim().startsWith('>')) {
+      const quoteText = parseInlineMarkdown(line.replace(/^>\s*/, ''));
+      result.push(`<blockquote class="markdown-callout">${quoteText}</blockquote>`);
+      continue;
+    }
+
+    // Handle todo lists
+    const todoMatch = line.match(/^(\s*)([-*])\s+\[([ xX])\]\s+(.+)$/);
+    if (todoMatch) {
+      const indent = todoMatch[1].length;
+      const checked = todoMatch[3].toLowerCase() === 'x';
+      const todoText = parseInlineMarkdown(todoMatch[4]);
+      const indentClass = indent > 0 ? ` indent-${Math.min(Math.floor(indent / 2), 4)}` : '';
+      result.push(
+        `<div class="task-list-item${indentClass}">` +
+        `<input type="checkbox" ${checked ? 'checked' : ''} disabled /> ` +
+        `<span class="task-text">${todoText}</span>` +
+        `</div>`
+      );
+      continue;
+    }
+
+    // Handle unordered lists
+    const unorderedListMatch = line.match(/^(\s*)([-*])\s+(.+)$/);
+    if (unorderedListMatch) {
+      const indent = unorderedListMatch[1].length;
+      const listText = parseInlineMarkdown(unorderedListMatch[3]);
+      const indentClass = indent > 0 ? ` indent-${Math.min(Math.floor(indent / 2), 4)}` : '';
+      result.push(`<div class="list-item${indentClass}">• ${listText}</div>`);
+      continue;
+    }
+
+    // Handle ordered lists
+    const orderedListMatch = line.match(/^(\s*)(\d+)\.\s+(.+)$/);
+    if (orderedListMatch) {
+      const indent = orderedListMatch[1].length;
+      const number = orderedListMatch[2];
+      const listText = parseInlineMarkdown(orderedListMatch[3]);
+      const indentClass = indent > 0 ? ` indent-${Math.min(Math.floor(indent / 2), 4)}` : '';
+      result.push(`<div class="list-item${indentClass}">${number}. ${listText}</div>`);
+      continue;
+    }
+
+    // Handle regular paragraphs with inline markdown
+    if (line.trim()) {
+      result.push(`<p>${parseInlineMarkdown(line)}</p>`);
+    } else {
+      result.push('<br>');
+    }
+  }
+
+  return result.join('\n');
+}
+
+/**
+ * Parse inline markdown (bold, italic, code, strikethrough)
+ */
+function parseInlineMarkdown(text: string): string {
+  // Inline code (must be processed first to avoid conflicts)
+  text = text.replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+
+  // Bold (** or __)
+  text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  text = text.replace(/__(.+?)__/g, '<strong>$1</strong>');
+
+  // Italic (* or _)
+  text = text.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  text = text.replace(/_(.+?)_/g, '<em>$1</em>');
+
+  // Strikethrough
+  text = text.replace(/~~(.+?)~~/g, '<del>$1</del>');
+
+  return text;
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text: string): string {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
 }
 
 export default memo(Memo);

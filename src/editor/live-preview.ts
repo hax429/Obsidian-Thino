@@ -2,7 +2,6 @@ import { ViewPlugin, ViewUpdate, Decoration, DecorationSet } from '@codemirror/v
 import { EditorView } from '@codemirror/view';
 import { RangeSetBuilder } from '@codemirror/state';
 import { syntaxTree } from '@codemirror/language';
-import { tokenClassNodeProp } from '@codemirror/stream-parser';
 
 const livePreviewViewPlugin = ViewPlugin.fromClass(
   class {
@@ -28,53 +27,44 @@ const livePreviewViewPlugin = ViewPlugin.fromClass(
         syntaxTree(view.state).iterate({
           from,
           to,
-          enter: (type, from, to) => {
-            const tokenProps = type.prop(tokenClassNodeProp);
-            if (tokenProps) {
-              const props = new Set(tokenProps.split(' '));
+          enter: (node) => {
+            const nodeName = node.name;
+            const nodeFrom = node.from;
+            const nodeTo = node.to;
 
-              if (props.has('strong')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-strong' }));
+            // Handle strong/bold
+            if (nodeName === 'StrongEmphasis') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-strong' }));
+            }
+            // Handle emphasis/italic
+            if (nodeName === 'Emphasis') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-em' }));
+            }
+            // Handle strikethrough
+            if (nodeName === 'Strikethrough') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-strikethrough' }));
+            }
+            // Handle inline code
+            if (nodeName === 'InlineCode') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-inline-code' }));
+            }
+            // Handle headings
+            for (let i = 1; i <= 6; i++) {
+              if (nodeName === `ATXHeading${i}` || nodeName === `SetextHeading${i}`) {
+                builder.add(nodeFrom, nodeTo, Decoration.mark({ class: `cm-h${i}` }));
               }
-              if (props.has('em')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-em' }));
-              }
-              if (props.has('strikethrough')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-strikethrough' }));
-              }
-              if (props.has('inline-code')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-inline-code' }));
-                builder.add(from, from + 1, Decoration.replace({}));
-                builder.add(to - 1, to, Decoration.replace({}));
-              }
-              if (props.has('formatting-list-ol') || props.has('formatting-list-ul')) {
-                builder.add(from, to, Decoration.replace({}));
-              }
-              if (props.has('formatting-header')) {
-                builder.add(from, to, Decoration.replace({}));
-              }
-              if (props.has('formatting-quote')) {
-                builder.add(from, to, Decoration.replace({}));
-              }
-              if (props.has('formatting-code-block')) {
-                builder.add(from, to, Decoration.replace({}));
-              }
-
-              for (let i = 1; i <= 6; i++) {
-                if (props.has(`h${i}`)) {
-                  builder.add(from, to, Decoration.mark({ class: `cm-h${i}` }));
-                }
-              }
-
-              if (props.has('list-1')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-list-1' }));
-              }
-              if (props.has('quote')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-blockquote' }));
-              }
-              if (props.has('code-block')) {
-                builder.add(from, to, Decoration.mark({ class: 'cm-code-block' }));
-              }
+            }
+            // Handle lists
+            if (nodeName === 'BulletList' || nodeName === 'OrderedList') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-list-1' }));
+            }
+            // Handle blockquotes
+            if (nodeName === 'Blockquote') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-blockquote' }));
+            }
+            // Handle code blocks
+            if (nodeName === 'FencedCode' || nodeName === 'CodeBlock') {
+              builder.add(nodeFrom, nodeTo, Decoration.mark({ class: 'cm-code-block' }));
             }
           },
         });
