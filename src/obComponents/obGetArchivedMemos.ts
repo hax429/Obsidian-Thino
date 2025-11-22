@@ -131,7 +131,7 @@ const getTaskType = (memoTaskType: string): string => {
 
 const lineContainsTime = (line: string): boolean => {
   let regexMatch: string;
-  let indent = '\\s*';
+  const indent = '\\s*';
 
   if (
     DefaultMemoComposition !== '' &&
@@ -142,9 +142,10 @@ const lineContainsTime = (line: string): boolean => {
       '^' +
       indent +
       '(-|\\*)\\s(\\[(.{1})\\]\\s)?' +
-      DefaultMemoComposition
-        .replace(/{TIME}/g, '(\\<time\\>)?\\d{1,2}:\\d{2}(\\<\\/time\\>)?')
-        .replace(/{CONTENT}/g, '(.*)$');
+      DefaultMemoComposition.replace(/{TIME}/g, '(\\<time\\>)?\\d{1,2}:\\d{2}(\\<\\/time\\>)?').replace(
+        /{CONTENT}/g,
+        '(.*)$',
+      );
   } else {
     regexMatch = '^' + indent + '(-|\\*)\\s(\\[(.{1})\\]\\s)?(\\<time\\>)?\\d{1,2}\\:\\d{2}(.*)$';
   }
@@ -171,9 +172,10 @@ const extractTextFromTodoLine = (line: string): string => {
   ) {
     regexMatch =
       '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?' +
-      DefaultMemoComposition
-        .replace(/{TIME}/g, '(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?')
-        .replace(/{CONTENT}/g, '(.*)$');
+      DefaultMemoComposition.replace(/{TIME}/g, '(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?').replace(
+        /{CONTENT}/g,
+        '(.*)$',
+      );
   } else {
     regexMatch = '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?\\s?(.*)$';
   }
@@ -192,9 +194,10 @@ const extractHourFromBulletLine = (line: string): string => {
   ) {
     regexHourMatch =
       '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?' +
-      DefaultMemoComposition
-        .replace(/{TIME}/g, '(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(\\<\\/time\\>)?')
-        .replace(/{CONTENT}/g, '(.*)$');
+      DefaultMemoComposition.replace(/{TIME}/g, '(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(\\<\\/time\\>)?').replace(
+        /{CONTENT}/g,
+        '(.*)$',
+      );
   } else {
     regexHourMatch = '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(.*)$';
   }
@@ -213,9 +216,10 @@ const extractMinFromBulletLine = (line: string): string => {
   ) {
     regexHourMatch =
       '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?' +
-      DefaultMemoComposition
-        .replace(/{TIME}/g, '(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(\\<\\/time\\>)?')
-        .replace(/{CONTENT}/g, '(.*)$');
+      DefaultMemoComposition.replace(/{TIME}/g, '(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(\\<\\/time\\>)?').replace(
+        /{CONTENT}/g,
+        '(.*)$',
+      );
   } else {
     regexHourMatch = '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?(\\<time\\>)?(\\d{1,2})\\:(\\d{2})(.*)$';
   }

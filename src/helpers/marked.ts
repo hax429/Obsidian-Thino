@@ -1,37 +1,12 @@
-// import { getFile } from "../obComponents/obUpdateMemo";
+import { marked } from 'marked';
 import { TFile } from 'obsidian';
 import appStore from '../stores/appStore';
-
-/**
- * 实现一个简易版的 markdown 解析
- * - 列表解析；
- * - 代码块；
- * - 加粗/斜体；
- * - TODO;
- */
-const CODE_BLOCK_REG = /```([\s\S]*?)```/g;
-const BOLD_TEXT_REG = /\*\*(.+?)\*\*/g;
-const EM_TEXT_REG = /\*(.+?)\*/g;
-const TODO_BLOCK_REG = /\[ \] /g;
-const DONE_BLOCK_REG = /\[.{1}\] /g;
-const DOT_LI_REG = /^[*-]/g;
-const NUM_LI_REG = /(\d+)\. /g;
-// const BR_REG = /\<br\>/g;
 
 const INTERNAL_MD_REG = /\[\[([^\]]+)\]\]/g;
 const EXRERNAL_MD_REG = /\[([^\]]+)\]\((([^\]]+).md)\)/g;
 
 const parseMarkedToHtml = (markedStr: string, memoid?: string): string => {
-  const htmlText = markedStr
-    .replace(CODE_BLOCK_REG, "<pre lang=''>$1</pre>")
-    .replace(DOT_LI_REG, "<span class='counter-block'>•</span>")
-    .replace(NUM_LI_REG, "<span class='counter-block'>$1.</span>")
-    .replace(TODO_BLOCK_REG, "<span class='todo-block' data-type='todo'>⬜</span>")
-    .replace(DONE_BLOCK_REG, "<span class='todo-block' data-type='done'>✅</span>")
-    .replace(BOLD_TEXT_REG, '<strong>$1</strong>')
-    .replace(EM_TEXT_REG, '<em>$1</em>')
-    .replace(/&lt;br&gt;/g, '</p><p>')
-    .replace(/&amp;/g, '&');
+  const htmlText = marked.parse(markedStr);
 
   let newHtmlText = htmlText;
 

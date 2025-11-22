@@ -5,6 +5,7 @@ import { EditorState, Extension } from '@codemirror/state';
 import appStore from '../stores/appStore';
 import { EditorRefActions } from './Editor/Editor';
 import { applyMarkdownFormat } from '../helpers/editorFormatting';
+import livePreviewViewPlugin from '../editor/live-preview';
 
 interface ObsidianNativeEditorProps {
   className?: string;
@@ -12,6 +13,7 @@ interface ObsidianNativeEditorProps {
   placeholder?: string;
   onContentChange?: (content: string) => void;
 }
+
 
 /**
  * ObsidianNativeEditor - A wrapper component that embeds Obsidian's native CodeMirror 6 editor
@@ -170,6 +172,7 @@ const ObsidianNativeEditor = forwardRef<EditorRefActions, ObsidianNativeEditorPr
               }),
               // Use placeholder if provided
               placeholder ? EditorView.contentAttributes.of({ 'data-placeholder': placeholder }) : [],
+              livePreviewViewPlugin,
             );
 
             // Try to get Obsidian's theme and syntax highlighting

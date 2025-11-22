@@ -83,9 +83,10 @@ const extractContentfromText = (line: string): string => {
   ) {
     regexMatch =
       '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?' +
-      DefaultMemoComposition
-        .replace(/{TIME}/g, '(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?')
-        .replace(/{CONTENT}/g, '(.*)$');
+      DefaultMemoComposition.replace(/{TIME}/g, '(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?').replace(
+        /{CONTENT}/g,
+        '(.*)$',
+      );
   } else {
     regexMatch = '^\\s*[\\-\\*]\\s(\\[(.{1})\\]\\s?)?(\\<time\\>)?((\\d{1,2})\\:(\\d{2}))?(\\<\\/time\\>)?\\s?(.*)$';
   }

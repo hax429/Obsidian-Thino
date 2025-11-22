@@ -60,10 +60,13 @@ export function applyMarkdownFormat(
       }
       break;
 
-    case 'heading1':
+    case 'heading1': {
       // Find the start of the current line
       const lineStart1 = before.lastIndexOf('\n') + 1;
-      const lineContent1 = text.substring(lineStart1, after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length);
+      const lineContent1 = text.substring(
+        lineStart1,
+        after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length,
+      );
       const cleanLine1 = lineContent1.replace(/^#{1,6}\s*/, '');
       before = text.substring(0, lineStart1);
       after = text.substring(lineStart1 + lineContent1.length);
@@ -71,10 +74,14 @@ export function applyMarkdownFormat(
       newSelectionStart = lineStart1;
       newSelectionEnd = lineStart1 + formatted.length;
       break;
+    }
 
-    case 'heading2':
+    case 'heading2': {
       const lineStart2 = before.lastIndexOf('\n') + 1;
-      const lineContent2 = text.substring(lineStart2, after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length);
+      const lineContent2 = text.substring(
+        lineStart2,
+        after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length,
+      );
       const cleanLine2 = lineContent2.replace(/^#{1,6}\s*/, '');
       before = text.substring(0, lineStart2);
       after = text.substring(lineStart2 + lineContent2.length);
@@ -82,10 +89,14 @@ export function applyMarkdownFormat(
       newSelectionStart = lineStart2;
       newSelectionEnd = lineStart2 + formatted.length;
       break;
+    }
 
-    case 'heading3':
+    case 'heading3': {
       const lineStart3 = before.lastIndexOf('\n') + 1;
-      const lineContent3 = text.substring(lineStart3, after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length);
+      const lineContent3 = text.substring(
+        lineStart3,
+        after.indexOf('\n', selectionEnd) >= 0 ? after.indexOf('\n', selectionEnd) + selectionEnd : text.length,
+      );
       const cleanLine3 = lineContent3.replace(/^#{1,6}\s*/, '');
       before = text.substring(0, lineStart3);
       after = text.substring(lineStart3 + lineContent3.length);
@@ -93,45 +104,63 @@ export function applyMarkdownFormat(
       newSelectionStart = lineStart3;
       newSelectionEnd = lineStart3 + formatted.length;
       break;
+    }
 
-    case 'bulletList':
+    case 'bulletList': {
       if (hasSelection) {
         const lines = selectedText.split('\n');
-        formatted = lines.map(line => (line.trim() ? `- ${line.replace(/^[-*]\s*/, '')}` : line)).join('\n');
+        formatted = lines.map((line) => (line.trim() ? `- ${line.replace(/^[-*]\s*/, '')}` : line)).join('\n');
       } else {
         formatted = `- ${selectedText || 'list item'}`;
         newSelectionStart = selectionStart + 2;
         newSelectionEnd = newSelectionStart + 9;
       }
       break;
+    }
 
-    case 'numberList':
+    case 'numberList': {
       if (hasSelection) {
         const lines = selectedText.split('\n');
-        formatted = lines.map((line, index) => (line.trim() ? `${index + 1}. ${line.replace(/^\d+\.\s*/, '')}` : line)).join('\n');
+        formatted = lines
+          .map((line, index) => (line.trim() ? `${index + 1}. ${line.replace(/^\d+\.\s*/, '')}` : line))
+          .join('\n');
       } else {
         formatted = `1. ${selectedText || 'list item'}`;
         newSelectionStart = selectionStart + 3;
         newSelectionEnd = newSelectionStart + 9;
       }
       break;
+    }
 
-    case 'quote':
+    case 'quote': {
       if (hasSelection) {
         const lines = selectedText.split('\n');
-        formatted = lines.map(line => `> ${line.replace(/^>\s*/, '')}`).join('\n');
+        formatted = lines.map((line) => `> ${line.replace(/^>\s*/, '')}`).join('\n');
       } else {
         formatted = `> ${selectedText || 'quote'}`;
         newSelectionStart = selectionStart + 2;
         newSelectionEnd = newSelectionStart + 5;
       }
       break;
+    }
 
     case 'codeBlock':
       formatted = `\`\`\`\n${selectedText || 'code'}\n\`\`\``;
       newSelectionStart = selectionStart + 4;
       newSelectionEnd = hasSelection ? selectionStart + formatted.length - 4 : newSelectionStart + 4;
       break;
+
+    case 'taskList': {
+      if (hasSelection) {
+        const lines = selectedText.split('\n');
+        formatted = lines.map((line) => (line.trim() ? `- [ ] ${line.replace(/^-\s\[\s\]\s*/, '')}` : line)).join('\n');
+      } else {
+        formatted = `- [ ] ${selectedText || 'task item'}`;
+        newSelectionStart = selectionStart + 6;
+        newSelectionEnd = newSelectionStart + 9;
+      }
+      break;
+    }
 
     default:
       return { newText: text, selectionStart, selectionEnd };

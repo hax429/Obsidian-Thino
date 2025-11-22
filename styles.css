@@ -2374,6 +2374,62 @@ div[data-type='memos_view'] .image-container > img {
   line-height: 26px;
   font-size: 14px;
 }
+.memo-content-text h1,
+.memo-content-text h2,
+.memo-content-text h3,
+.memo-content-text h4,
+.memo-content-text h5,
+.memo-content-text h6 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+.memo-content-text h1 {
+  font-size: 1.8em;
+}
+.memo-content-text h2 {
+  font-size: 1.5em;
+}
+.memo-content-text h3 {
+  font-size: 1.2em;
+}
+.memo-content-text ul,
+.memo-content-text ol {
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.memo-content-text li {
+  margin-bottom: 5px;
+}
+.memo-content-text blockquote {
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 5px solid #ccc;
+  background-color: #f9f9f9;
+}
+.memo-content-text strong {
+  font-weight: bold;
+}
+.memo-content-text em {
+  font-style: italic;
+}
+.memo-content-text code {
+  font-family: monospace;
+  background-color: #f0f0f0;
+  padding: 2px 4px;
+  border-radius: 4px;
+}
+.memo-content-text pre {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.memo-content-text .task-list-item {
+  list-style-type: none;
+}
 .theme-light div[data-type='memos_view'] .memo-wrapper {
   display: flex;
   flex-direction: column;

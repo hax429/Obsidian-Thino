@@ -189,8 +189,8 @@ export default {
   'Open Memos Successfully': 'Open Memos Successfully',
   'Fetch Error': '😭 Fetch Error',
   'Copied to clipboard Successfully': 'Copied to clipboard Successfully',
-  'words': 'words',
-  'word': 'word',
+  words: 'words',
+  word: 'word',
   'Check if you opened Daily Notes Plugin Or Periodic Notes Plugin':
     'Check if you opened Daily Notes Plugin Or Periodic Notes Plugin',
   'Please finish the last filter setting first': 'Please finish the last filter setting first',

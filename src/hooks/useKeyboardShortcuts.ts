@@ -15,7 +15,7 @@ export interface KeyboardShortcut {
  * @param shortcuts - Array of keyboard shortcut configurations
  * @param enabled - Whether shortcuts are enabled (default: true)
  */
-export function useKeyboardShortcuts(shortcuts: KeyboardShortcut[], enabled: boolean = true) {
+export function useKeyboardShortcuts(shortcuts: KeyboardShortcut[], enabled = true) {
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
