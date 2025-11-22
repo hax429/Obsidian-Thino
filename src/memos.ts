@@ -11,6 +11,7 @@ export class Memos extends ItemView {
   plugin: MemosPlugin;
   hoverPopover: HoverPopover | null;
   private memosComponent: React.ReactElement;
+  private rootEl: HTMLElement;
 
   constructor(leaf: WorkspaceLeaf, plugin: MemosPlugin) {
     super(leaf);
@@ -168,14 +169,26 @@ export class Memos extends ItemView {
     this.memosComponent = React.createElement(App);
 
     // Create a root div element for React to render into
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const rootEl = (this as any).contentEl.createDiv({ attr: { id: 'root' } });
-    ReactDOM.render(this.memosComponent, rootEl);
+    this.rootEl = this.containerEl.children[1] as HTMLElement;
+    this.rootEl.empty();
+    const reactRoot = this.rootEl.createDiv({ cls: 'memos-react-root', attr: { id: 'root' } });
+
+    // Render the React component
+    try {
+      ReactDOM.render(this.memosComponent, reactRoot);
+    } catch (error) {
+      console.error('Error rendering Memos:', error);
+    }
   }
 
   async onClose() {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    ReactDOM.unmountComponentAtNode((this as any).contentEl);
+    if (this.rootEl) {
+      const reactRoot = this.rootEl.querySelector('#root');
+      if (reactRoot) {
+        ReactDOM.unmountComponentAtNode(reactRoot);
+      }
+      this.rootEl.empty();
+    }
   }
 }
 

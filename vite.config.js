@@ -6,7 +6,18 @@ import svgr from 'vite-plugin-svgr';
 
 export default defineConfig(({ mode }) => {
   return {
-    plugins: [react(), svgr({ keepEmittedAssets: true })],
+    plugins: [
+      react(),
+      svgr({
+        svgrOptions: {
+          exportType: 'named',
+          ref: true,
+          svgo: false,
+          titleProp: true,
+        },
+        include: '**/*.svg?component',
+      }),
+    ],
     build: {
       sourcemap: mode === 'development' ? 'inline' : false,
       minify: false,
