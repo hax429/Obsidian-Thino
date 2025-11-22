@@ -10,7 +10,7 @@ export default defineConfig(({ mode }) => {
       react(),
       svgr({
         svgrOptions: {
-          exportType: 'named',
+          exportType: 'default',
           ref: true,
           svgo: false,
           titleProp: true,
